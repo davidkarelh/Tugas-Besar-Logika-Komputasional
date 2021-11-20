@@ -14,7 +14,7 @@ start :-
     chooseJob(Job), nl,
     /* mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Time), */
     /*Count:  1       2          3           4          5           6           7            8        9      10    11    12 */
-    mainLoop(Job,1,0,0,0,0,0,0,0,100,500,1), !.
+    mainLoop(Job,     1,         0,          0,         0,          0,          0,           0,       0,    100,  500,    1), !.
 
 /* Time dan Gold belum di adjust dengan nilai yang seharusnya */
 mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Time) :-
@@ -59,6 +59,7 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                         addexpranchingv(Expranching, ExpranchingX),
                         mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, ExpranchingX, Expcurr, Expcap, Gold, Time);
 
+                    /* Sistem penambahan exp di bawah sudah menghandle kasus level up */
                     Input == 'addexpcurr',
                         addexpcurrv(Expcurr, ExpcurrX),
                         (
