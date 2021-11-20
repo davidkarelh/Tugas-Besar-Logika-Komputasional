@@ -195,3 +195,4 @@ s :-
       -> write('Move invalid')
       ; map_init(M),moveS(M, X, Y, Mout), print_matrix(Mout)
    ). 
+   
