@@ -10,7 +10,7 @@ start :-
     write('Setelah beberapa jam berpikir keras, Brianaldo'), nl,
     write('tiba-tiba terpikirkan bahwa Ia memiliki ladang di'), nl,
     write('kampung halamannya. Oleh karena itu, Ia memutuskan'), nl,
-    write('untuk balik ke kampung halamannya untuk bekerja'),
+    write('untuk balik ke kampung halamannya untuk bekerja'), nl,
     chooseJob(Job), nl,
     /* mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Time), */
     /*Count:  1       2          3           4          5           6           7            8        9      10    11    12 */
@@ -56,9 +56,17 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
             addexpranchingv(Expranching, ExpranchingX),
             mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, ExpranchingX, Expcurr, Expcap, Gold, Time);
 
+        /* Sistem penambahan exp di bawah sudah menghandle kasus level up */
         Input == 'addexpcurr',
             addexpcurrv(Expcurr, ExpcurrX),
-            mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, ExpcurrX, Expcap, Gold, Time);
+            (
+                (ExpcurrX >= Expcap) ->
+                    write('Level Up!\n'),
+                    addlv(Lv, LvX),
+                    addexpcapv(Expcap, ExpcapX),
+                    mainLoop(Job, LvX, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, ExpcurrX, ExpcapX, Gold, Time)
+                ;mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, ExpcurrX, Expcap, Gold, Time)
+            );
 
         Input == 'addexpcap',
             addexpcapv(Expcap, ExpcapX),
@@ -75,18 +83,18 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
 
 
 startGame :-
-	write('Welcome To Harvest Star'), nl,
-	nl, nl, 
-	write('>>> HARVEST STAR <<<'), nl,
-	write('1. start     : memulai permainan'), nl,
-	write('2. map       : menampilkan peta'), nl,
-	write('3. status    : menampilkan kondisi terkini'), nl,
-	write('4. w         : bergerak 1 langkah ke utara'), nl,
-	write('5. s         : bergerak 1 langkah ke selatan'), nl,
-	write('6. d         : bergerak 1 langkah ke timur'), nl,
-	write('7. a         : bergerak 1 langkah ke barat'), nl,
-	write('8. help      : menampilkan segala bantuan'), nl,
-	nl, !.
+    write('Welcome To Harvest Star'), nl,
+    nl, nl, 
+    write('>>> HARVEST STAR <<<'), nl,
+    write('1. start     : memulai permainan'), nl,
+    write('2. map       : menampilkan peta'), nl,
+    write('3. status    : menampilkan kondisi terkini'), nl,
+    write('4. w         : bergerak 1 langkah ke utara'), nl,
+    write('5. s         : bergerak 1 langkah ke selatan'), nl,
+    write('6. d         : bergerak 1 langkah ke timur'), nl,
+    write('7. a         : bergerak 1 langkah ke barat'), nl,
+    write('8. help      : menampilkan segala bantuan'), nl,
+    nl, !.
 
 chooseJob(Job) :-
     write('Welcome to Harvest Star, Choose your job'), nl,
