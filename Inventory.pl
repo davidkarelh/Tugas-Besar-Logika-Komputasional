@@ -17,32 +17,60 @@ throwItem :-
     displayList(_X),
     write('\nWhat do you want to throw?\n> '),
     read(_Z),
-    searchInventory(_X, _Z, _Element, _Index),
-    len(_Element, _N),
-    write('\nYou have '),
-    (_N == 3 -> 
-        _Element = [_C, _, _D];
-        _Element = [_C, _D]),
-    displayItem(_Element),    
-    write('. How many do you want to throw?\n> '),
-    read(_W),
-    (_W > _C -> 
-        write('\nYou don’t have enough '),
-        write(_Z),
-        write('. Cancelling…\n');
-        deleteAt(_X, _Index, _Y),
-        (_W == _C ->
-            Output = _Y;
-            _Temp is _C - _W,
-            (_N == 3 -> 
-                _El = [_Temp, _E, _D];
-                _El = [_Temp, _D]),
-            insertAt(_Y, _El, _Index, Output)),
-        write('\nYou threw away '),
-        write(_W),
-        write(' '),
-        write(_Z),
-        write('.\n')),
+    _Item2 = [_, _Z],
+    _Item3 = [_, _, _Z],
+    ((searchInventory(_X, _Item2, _, _)); searchInventoryName(_X, _Item3, _, _)),
+    (searchInventory(_X, _Item2, _Element, _Index) -> 
+        write('\nYou have '),
+        _Element = [_C, _D],
+        displayItem(_Element),    
+        write('. How many do you want to throw?\n> '),
+        read(_W),
+        (_W > _C -> 
+            !, write('\nYou don’t have enough '),
+            write(_Z),
+            write('. Cancelling…\n'),
+            Output = _X;
+            deleteAt(_X, _Index, _Y),
+            (_W == _C ->
+                Output = _Y;
+                _Temp is _C - _W,
+                _El = [_Temp, _D],
+                insertAt(_Y, _El, _Index, Output)),
+            write('\nYou threw away '),
+            write(_W),
+            write(' '),
+            write(_Z),
+            write('.\n'));
+        write('\nLevel?\n> '),
+        read(_Level),
+        _Item3N = [_, _Level, _Z],
+        searchInventory(_X, _Item3N, _ElementN, _IndexN),
+        _ElementN = [_C, _, _],
+        write('\nYou have '),
+        displayItem(_ElementN),
+        write('. How many do you want to throw?\n> '),
+        read(_W),
+        (_W > _C -> 
+            write('\nYou don’t have enough Level'),
+            write(_Level),
+            write(' '),
+            write(_Z),
+            write('. Cancelling…\n'),
+            Output = _X;
+            deleteAt(_X, _Index, _Y),
+            (_W == _C ->
+                Output = _Y;
+                _Temp is _C - _W,
+                _El = [_Temp, _D],
+                insertAt(_Y, _El, _Index, Output)),
+            write('\nYou threw away '),
+            write(_W),
+            write(' Level '),
+            write(_Level),
+            write(' '),
+            write(_Z),
+            write('.\n'))),
     retractall(inventory_list(_)),
     asserta(inventory_list(Output)).
 
@@ -50,11 +78,11 @@ insertItem(_Item) :-
     inventory_list(_X),
     len(_Item, _N),
     (_N == 3 ->
-        _Item = [_Plus, _, _Y];
-        _Item = [_Plus, _Y]),
+        _Item = [_Plus, _, _];
+        _Item = [_Plus, _]),
     totalItem(_X, _Total),
     _Total + _Plus < 100,
-    (searchInventory(_X, _Y, _Element, _Index) -> 
+    (searchInventory(_X, _Item, _Element, _Index) -> 
         deleteAt(_X, _Index, _Temp),
         (_N == 3 -> 
             _Element = [_A, _C, _B],
@@ -67,6 +95,13 @@ insertItem(_Item) :-
         (_N == 3 -> 
             insertEquipment(_X, _Item, Output);
             insertLast(_X, _Item, Output))),
+    retractall(inventory_list(_)),
+    asserta(inventory_list(Output)).
+
+deleteItem(_Item) :-
+    inventory_list(_X),
+    searchInventory(_X, _Item, _Element, _Index),
+    deleteAt(_X, _Index, Output),
     retractall(inventory_list(_)),
     asserta(inventory_list(Output)).
 
@@ -101,16 +136,37 @@ displayItem(_X) :-
         write(' '),
         write(_B)).
 
-searchInventory([_X | _Y], _Z, Element, Index) :-
-    len(_X, _N),
-    (_N == 3 -> 
-        _X = [_, _C, _B];
-        _X = [_, _B]),
-    _B == _Z, !,
+searchInventory([_X | _Y], _Item, Element, Index) :-
+    len(_X, _NInventory),
+    len(_X, _NItem),
+    _NItem == _NInventory,
+    (_NItem == 3 -> 
+        _X = [_, _InvenLevel, _InvenName],
+        _Item = [_, _ItemLevel, _ItemName],
+        _InvenLevel == _ItemLevel;
+        _X = [_, _InvenName],
+        _Item = [_, _ItemName]),
+    _ItemName == _InvenName, !,
     Element = _X,
     Index is 1.
-searchInventory([_X | _Y], _Z, Element, Index) :- 
-    searchInventory(_Y, _Z, Element, IndexN),
+searchInventory([_X | _Y], _Item, Element, Index) :- 
+    searchInventory(_Y, _Item, Element, IndexN),
+    Index is IndexN + 1.
+
+searchInventoryName([_X | _Y], _Item, Element, Index) :-
+    len(_X, _NInventory),
+    len(_X, _NItem),
+    _NItem == _NInventory,
+    (_NItem == 3 -> 
+        _X = [_, _InvenLevel, _InvenName],
+        _Item = [_, _ItemLevel, _ItemName];
+        _X = [_, _InvenName],
+        _Item = [_, _ItemName]),
+    _ItemName == _InvenName, !,
+    Element = _X,
+    Index is 1.
+searchInventoryName([_X | _Y], _Item, Element, Index) :- 
+    searchInventory(_Y, _Item, Element, IndexN),
     Index is IndexN + 1.
 
 insertAt(Xs, Element, 1, [Element | Xs]) :- !.
