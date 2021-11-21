@@ -31,5 +31,8 @@ addgoldv(Gold, GoldX) :-
     GoldX is Gold+999.
 /* End of Note */
 
+addgoldquest(Gold, GoldX, Addition) :-
+    GoldX is Gold+Addition.
+
 addtimev(Time, TimeX) :-
     TimeX is Time+1.

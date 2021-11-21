@@ -12,52 +12,52 @@ start :-
     write('kampung halamannya. Oleh karena itu, Ia memutuskan'), nl,
     write('untuk balik ke kampung halamannya untuk bekerja'), nl,
     chooseJob(Job), nl,
-    /* mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Time), */
-    /*Count:  1       2          3           4          5           6           7            8        9      10    11    12 */
-    mainLoop(Job,     1,         0,          0,         0,          0,          0,           0,       0,    100,  500,    1), !.
+    /* mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Time, Qharvest, Qfish, Qranch), */
+    /*Count:  1       2          3           4          5           6           7            8        9      10    11    12        13     14      15*/
+    mainLoop(Job,     1,         0,          0,         0,          0,          0,           0,       0,    100,  500,    1,        1,     1,      1), !.
 
 /* Time dan Gold belum di adjust dengan nilai yang seharusnya */
-mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Time) :-
+mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Time, Qharvest, Qfish, Qranch) :-
     (Time < 10) ->
         (
             (Gold < 3000) ->
                 read(Input),
                 (
                     Input == 'status',
-                        status(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Time),
-                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Time);
+                        status(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Time, Qharvest, Qfish, Qranch),
+                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Time, Qharvest, Qfish, Qranch);
                     Input == 'quest',
-                        quest(Lv),
-                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Time);
+                        quest(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Time, Qharvest, Qfish, Qranch),
+                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Time, Qharvest, Qfish, Qranch);
 
                     /* Bagian bawah cuman testing add aspek aja */
                     Input == 'addlv',
                         addlv(Lv, LvX),
-                        mainLoop(Job, LvX, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Time);
+                        mainLoop(Job, LvX, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Time, Qharvest, Qfish, Qranch);
 
                     Input == 'addlvfarming',
                         addlvfarmingv(Lvfarming, LvfarmingX),
-                        mainLoop(Job, Lv, LvfarmingX, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Time);
+                        mainLoop(Job, Lv, LvfarmingX, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Time, Qharvest, Qfish, Qranch);
 
                     Input == 'addexpfarming',
                         addexpfarmingv(Expfarming, ExpfarmingX),
-                        mainLoop(Job, Lv, Lvfarming, ExpfarmingX, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Time);
+                        mainLoop(Job, Lv, Lvfarming, ExpfarmingX, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Time, Qharvest, Qfish, Qranch);
 
                     Input == 'addlvfishing',
                         addlvfishingv(Lvfishing, LvfishingX),
-                        mainLoop(Job, Lv, Lvfarming, Expfarming, LvfishingX, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Time);
+                        mainLoop(Job, Lv, Lvfarming, Expfarming, LvfishingX, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Time, Qharvest, Qfish, Qranch);
 
                     Input == 'addexpfishing',
                         addexpfishingv(Expfishing, ExpfishingX),
-                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, ExpfishingX, Lvranching, Expranching, Expcurr, Expcap, Gold, Time);
+                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, ExpfishingX, Lvranching, Expranching, Expcurr, Expcap, Gold, Time, Qharvest, Qfish, Qranch);
 
                     Input == 'addlvranching',
                         addlvranchingv(Lvranching, LvranchingX),
-                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, LvranchingX, Expranching, Expcurr, Expcap, Gold, Time);
+                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, LvranchingX, Expranching, Expcurr, Expcap, Gold, Time, Qharvest, Qfish, Qranch);
 
                     Input == 'addexpranching',
                         addexpranchingv(Expranching, ExpranchingX),
-                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, ExpranchingX, Expcurr, Expcap, Gold, Time);
+                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, ExpranchingX, Expcurr, Expcap, Gold, Time, Qharvest, Qfish, Qranch);
 
                     /* Sistem penambahan exp di bawah sudah menghandle kasus level up */
                     Input == 'addexpcurr',
@@ -67,21 +67,34 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                                 write('Level Up!\n'),
                                 addlv(Lv, LvX),
                                 addexpcapv(Expcap, ExpcapX),
-                                mainLoop(Job, LvX, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, ExpcurrX, ExpcapX, Gold, Time)
-                            ;mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, ExpcurrX, Expcap, Gold, Time)
+                                mainLoop(Job, LvX, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, ExpcurrX, ExpcapX, Gold, Time, Qharvest, Qfish, Qranch)
+                            ;mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, ExpcurrX, Expcap, Gold, Time, Qharvest, Qfish, Qranch)
                         );
 
                     Input == 'addexpcap',
                         addexpcapv(Expcap, ExpcapX),
-                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, ExpcapX, Gold, Time);
+                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, ExpcapX, Gold, Time, Qharvest, Qfish, Qranch);
 
                     Input == 'addgold',
                         addgoldv(Gold, GoldX),
-                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, GoldX, Time);
+                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, GoldX, Time, Qharvest, Qfish, Qranch);
 
                     Input == 'addtime',
                         addtimev(Time, TimeX),
-                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, TimeX)
+                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, TimeX, Qharvest, Qfish, Qranch);
+
+                    /* Bagian bawah cuman testing reduce aspek aja */
+                    Input == 'redQharvest',
+                        redQharvest(Qharvest, QharvestX),
+                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Time, QharvestX, Qfish, Qranch);
+
+                    Input == 'redQfish',
+                        redQfish(Qfish, QfishX),
+                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Time, Qharvest, QfishX, Qranch);
+
+                    Input == 'redQranch',
+                        redQranch(Qranch, QranchX),
+                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Time, Qharvest, Qfish, QranchX)
                 )
             ;write('Penagih hutang tiba di kebun anda dan anda langsung melunasi hutang anda \nCONGRATULATION YOU WIN!')
         )
@@ -117,7 +130,7 @@ chooseJob(Job) :-
         chooseJob(Job)
     ).
 
-status(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Time) :-
+status(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Time, Qharvest, Qfish, Qranch) :-
     write('Job: '),
     (
         Job =:= 1,
