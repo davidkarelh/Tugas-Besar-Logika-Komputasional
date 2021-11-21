@@ -1,6 +1,3 @@
-addlv(Lv, LvX) :-
-    LvX is Lv+1.
-
 redQharvest(Qharvest, QharvestX) :-
     (Qharvest > 0) ->
         QharvestX is Qharvest-1
