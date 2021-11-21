@@ -204,12 +204,12 @@ s :-
       -> write('Move invalid')
       ; map_init(M),moveS(M, X, Y, Mout), print_matrix(Mout)
    ). 
-
-% tes :- 
-%    map_init(M),
-%    scan_player(_, X, Y),
-%    find_matrix(M,X,Y,L),
-%    write(L),nl,
-%    scan_matrix(M,'P',0,Out1,Out2),
-%    write(Out1),nl,
-%    write(Out2),nl.
+   
+tes :- 
+   map_init(M),
+   scan_player(_, X, Y),
+   find_matrix(M,X,Y,L),
+   write(L),nl,
+   scan_matrix(M,'P',0,Out1,Out2),
+   write(Out1),nl,
+   write(Out2),nl.

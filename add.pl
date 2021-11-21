@@ -2,7 +2,7 @@ addlv(Lv, LvX) :-
     LvX is Lv+1.
 
 addlvfarmingv(Lvfarming, LvfarmingX) :-
-    LvfarmingX is Lvfarmingo+1.
+    LvfarmingX is Lvfarming+1.
 
 addexpfarmingv(Expfarming, ExpfarmingX) :-
     ExpfarmingX is Expfarming+20.
