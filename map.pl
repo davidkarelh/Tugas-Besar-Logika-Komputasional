@@ -34,11 +34,15 @@ find_row([_|List],N,Out) :-
 find_row([Element|_],0,Element).
 
 %Menhasilkan elem yang ada pada koordinat tertentu di matriks
+% find_matrikx(M,X,Y,Out)
+% M matriks
+% X,Y koordinat
+% Out karakter di koordinat itu
 find_matrix([_|List],N1,N2,Out) :-
-   N1_1 is N1 - 1,
-   find_matrix(List,N1_1,N2,Out).
-find_matrix([Row|_],0,N2,Out) :-
-   find_row(Row, N2, Out).
+   N2_2 is N2 - 1,
+   find_matrix(List,N1,N2_2,Out).
+find_matrix([Row|_],N1,0,Out) :-
+   find_row(Row, N1, Out).
 
 %Menhasilkan elem yang ada pada koordinat tertentu di map
 %X, Y koordinat
@@ -57,6 +61,11 @@ scan_row([Head|List],X,N,Out) :-
    ).
 
 %Mencari elemen tertentu pada matriks (hanya bisa jika elemen nya unik(hanya ada satu))
+% scan_matrix(M,C,N,Out1,Out2)
+% M matriks
+% C karakter yang ingin dicari
+% N dibiarin 0
+% Out1,Out2 koordinat
 scan_matrix([],_,_,-1,-1).
 scan_matrix([Head|List],X,N,Out1,Out2) :- 
    scan_row(Head,X,0,OutR),
@@ -195,3 +204,12 @@ s :-
       -> write('Move invalid')
       ; map_init(M),moveS(M, X, Y, Mout), print_matrix(Mout)
    ). 
+
+% tes :- 
+%    map_init(M),
+%    scan_player(_, X, Y),
+%    find_matrix(M,X,Y,L),
+%    write(L),nl,
+%    scan_matrix(M,'P',0,Out1,Out2),
+%    write(Out1),nl,
+%    write(Out2),nl.
