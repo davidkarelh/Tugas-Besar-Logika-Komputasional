@@ -8,6 +8,9 @@
 % Perlu pengimplementasian waktu untuk implementasi kesiapan panen
 % Exp juga belum diimplementasikan pada file ini
 % Asumsi pemain masih bisa berjalan di atas area yang digali atau ditanam
+% Belum mengimplementasikan menyimpan hasil panen ke inventori
+% Belum implementasi jika inventori penuh apa yang terjadi
+
 
 % trueMap sama seperti map biasa hanya saja simbol tile-nya bisa berubah karena dinamis, di sini digunakan untuk
 % menyimpan simbol tile saat pemain sedang berada di tile tersebut

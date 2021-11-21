@@ -3,7 +3,11 @@
 
 :- dynamic((rng/1)).
 
-% implementasi randomizer seperti bisa dimodifikasi sesuai exp
+% implementasi randomizer seperti ini bisa dimodifikasi sesuai exp dan rarity ikan
+% Belum implementasi jika inventori penuh apa yang terjadi
+% Belum mengimplementasikan exp
+% Belum mengimplementasikan menyimpan ikan ke inventori
+% Masih harus memmikirkan berbagai jenis ikan, rarity, dan harganya
 
 rng(50).
 
