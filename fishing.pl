@@ -14,10 +14,9 @@ rng(50).
 generateRandom :-
     rng(N),
     retract(rng(N)),
-    get_time(TimeStamp),
+    real_time(TimeStamp),
     A is (mod(TimeStamp, 99) + 1),
-    X is mod((A * N + N), 100),
-    asserta(rng(X))
+    asserta(rng(A))
     . 
 
 
@@ -53,7 +52,7 @@ validasi_fish(Out) :-
     cek_air_sekeliling(M, X, Y, V),
     (
         (V =:= 1)
-        -> Out is 0, !
+        -> Out is 1, !
         ; Out is 0, !
     ).
 
