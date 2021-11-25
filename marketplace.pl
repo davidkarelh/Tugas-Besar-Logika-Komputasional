@@ -9,15 +9,81 @@
 
 /* Deklarasi Fakta */
 % TO DO : Tambahin Items dan Equipment di file lain (?)
-item(egg, 100).
-item(carrot, 50).
-item(corn, 30).
+item(1, egg, 100).
+item(2, carrot, 50).
+item(3, corn, 30).
+equipment(4, 2, shovel, 300).
 
 /* Deklarasi Rules */
 
-market.
+market :-
+    % TO DO : Validasi posisi
+    write('\nWhat do you want to do?'),
+    write('\n1. Buy'),
+    write('\n2. Sell\n> '),
+    read(_X),
+    (_X == buy ->
+        buy;
+        (_X == sell ->
+            sell;
+            false
+        )
+    ).
 
-buy.
+buy :-
+    write('\nHere are the list of items and equipments available to buy\n'),
+    forall(item(_X, _Y, _Z), (
+        write(_X),
+        write('. '),
+        write(_Y),
+        write(' ('),
+        write(_Z),
+        write(' golds)'),
+        write('\n'))),
+    forall(equipment(_X, _Y, _Z, _W), (
+        write(_X),
+        write('. Level '),
+        write(_Y),
+        write(' '),
+        write(_Z),
+        write(' ('),
+        write(_W),
+        write(' golds)'),
+        write('\n'))),
+    write('\nWhat do you want to buy?\n> '),
+    read(_A),
+    (_A > 3 -> % TO DO : Edit sesuai banyak item dan equipment
+        equipment(_A, _B, _C, _D),
+        write('\nHow many do you want to buy?\n> '),
+        read(_E),
+        % TO DO: Validasi uang dan charged uang
+        _F is _E * _D,
+        insertItem([_E, _B, _C]),
+        write('\nYou have bought '),
+        write(_E),
+        write(' Level '),
+        write(_B),
+        write(' '),
+        write(_C),
+        write('.\n'),
+        write('You are charged '),
+        write(_F),
+        write(' golds.\n');
+        item(_A, _B, _C),
+        write('\nHow many do you want to buy?\n> '),
+        read(_E),
+        % TO DO: Validasi uang dan charged uang
+        _F is _E * _C,
+        insertItem([_E, _B]),
+        write('\nYou have bought '),
+        write(_E),
+        write(' '),
+        write(_B),
+        write('.\n'),
+        write('You are charged '),
+        write(_F),
+        write(' golds.\n')
+    ).
 
 sell :-
     inventory_list(_X),
@@ -48,7 +114,7 @@ sell :-
             write(_Y),
             write('.\n'),
             write('You received '),
-            item(_Y, _W),
+            item(_, _Y, _W),
             _V is _W * _Z,
             % TO DO : Tambahin uang player
             write(_V),
