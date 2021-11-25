@@ -13,66 +13,70 @@ inventory :-
 
 throwItem :-
     inventory_list(_X),
-    write('\n'),
-    displayList(_X),
-    write('\nWhat do you want to throw?\n> '),
-    read(_Z),
-    _Item2 = [_, _Z],
-    _Item3 = [_, _, _Z],
-    ((searchInventory(_X, _Item2, _, _)); searchInventoryName(_X, _Item3, _, _)),
-    (searchInventory(_X, _Item2, _Element, _Index) -> 
-        write('\nYou have '),
-        _Element = [_C, _D],
-        displayItem(_Element),    
-        write('. How many do you want to throw?\n> '),
-        read(_W),
-        (_W > _C -> 
-            !, write('\nYou don’t have enough '),
-            write(_Z),
-            write('. Cancelling…\n'),
-            Output = _X;
-            deleteAt(_X, _Index, _Y),
-            (_W == _C ->
-                Output = _Y;
-                _Temp is _C - _W,
-                _El = [_Temp, _D],
-                insertAt(_Y, _El, _Index, Output)),
-            write('\nYou threw away '),
-            write(_W),
-            write(' '),
-            write(_Z),
-            write('.\n'));
-        write('\nLevel?\n> '),
-        read(_Level),
-        _Item3N = [_, _Level, _Z],
-        searchInventory(_X, _Item3N, _ElementN, _IndexN),
-        _ElementN = [_C, _, _],
-        write('\nYou have '),
-        displayItem(_ElementN),
-        write('. How many do you want to throw?\n> '),
-        read(_W),
-        (_W > _C -> 
-            write('\nYou don’t have enough Level'),
-            write(_Level),
-            write(' '),
-            write(_Z),
-            write('. Cancelling…\n'),
-            Output = _X;
-            deleteAt(_X, _Index, _Y),
-            (_W == _C ->
-                Output = _Y;
-                _Temp is _C - _W,
-                _El = [_Temp, _D],
-                insertAt(_Y, _El, _Index, Output)),
-            write('\nYou threw away '),
-            write(_W),
-            write(' Level '),
-            write(_Level),
-            write(' '),
-            write(_Z),
-            write('.\n'))),
-    retractall(inventory_list(_)),
-    asserta(inventory_list(Output)).
+    len(_X, _CHECKEMPTY),
+    (_CHECKEMPTY == 0 ->
+        write('\nYou don\'t have any items to throw!\n');
+        write('\nYour inventory\n'),
+        displayList(_X),
+        write('\nWhat do you want to throw?\n> '),
+        read(_Z),
+        _Item2 = [_, _Z],
+        _Item3 = [_, _, _Z],
+        ((searchInventory(_X, _Item2, _, _)); searchInventoryName(_X, _Item3, _, _)),
+        (searchInventory(_X, _Item2, _Element, _Index) -> 
+            write('\nYou have '),
+            _Element = [_C, _D],
+            displayItem(_Element),    
+            write('. How many do you want to throw?\n> '),
+            read(_W),
+            (_W > _C -> 
+                !, write('\nYou don’t have enough '),
+                write(_Z),
+                write('. Cancelling…\n'),
+                Output = _X;
+                deleteAt(_X, _Index, _Y),
+                (_W == _C ->
+                    Output = _Y;
+                    _Temp is _C - _W,
+                    _El = [_Temp, _D],
+                    insertAt(_Y, _El, _Index, Output)),
+                write('\nYou threw away '),
+                write(_W),
+                write(' '),
+                write(_Z),
+                write('.\n'));
+            write('\nLevel?\n> '),
+            read(_Level),
+            _Item3N = [_, _Level, _Z],
+            searchInventory(_X, _Item3N, _ElementN, _IndexN),
+            _ElementN = [_C, _, _],
+            write('\nYou have '),
+            displayItem(_ElementN),
+            write('. How many do you want to throw?\n> '),
+            read(_W),
+            (_W > _C -> 
+                write('\nYou don’t have enough Level'),
+                write(_Level),
+                write(' '),
+                write(_Z),
+                write('. Cancelling…\n'),
+                Output = _X;
+                deleteAt(_X, _Index, _Y),
+                (_W == _C ->
+                    Output = _Y;
+                    _Temp is _C - _W,
+                    _El = [_Temp, _D],
+                    insertAt(_Y, _El, _Index, Output)),
+                write('\nYou threw away '),
+                write(_W),
+                write(' Level '),
+                write(_Level),
+                write(' '),
+                write(_Z),
+                write('.\n'))),
+        retractall(inventory_list(_)),
+        asserta(inventory_list(Output))
+    ).
 
 insertItem(_Item) :-
     inventory_list(_X),
@@ -183,6 +187,8 @@ deleteAt([X | Xs], Position, [X | Result]) :-
 insertLast([], Item, [Item]).
 insertLast([_X | _Y], Item, [_X | L]) :- insertLast(_Y, Item, L).
 
+indexInsertEquipment([], Count) :-
+    Count is 1.
 indexInsertEquipment([_X | _Y], Count) :-
     len(_X, _N),
     _N == 2, 
@@ -194,6 +200,3 @@ indexInsertEquipment([_X | _Y], Count) :-
 insertEquipment(_X, Equipment, A)   :-
     indexInsertEquipment(_X, _Count),
     insertAt(_X, Equipment, _Count, A).
-
-
-
