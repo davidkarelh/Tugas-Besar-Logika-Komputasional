@@ -5,4 +5,4 @@
 :- include('quest.pl').
 
 /* Start Game */
-/* ketik 'startGame' */
+:- initialization(startGame).

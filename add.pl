@@ -34,5 +34,19 @@ addgoldv(Gold, GoldX) :-
 addgoldquest(Gold, GoldX, Addition) :-
     GoldX is Gold+Addition.
 
-addtimev(Time, TimeX) :-
-    TimeX is Time+1.
+add_hourv(Hour, HourX) :-
+    HourX is Hour+1.
+
+add_dayv(Day, DayX) :-
+    DayX is Day+1.
+
+
+/* DEBUG CHEAT */
+add_goldcheatv(Gold, GoldX) :-
+    GoldX is Gold + 50000.
+
+add_daycheatv(Day, DayX) :-
+    DayX is Day + 50.
+
+add_hourcheatv(Hour, HourX) :-
+    HourX is Hour + 5.
