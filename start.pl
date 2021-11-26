@@ -124,7 +124,10 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
 
                     Input == 'redQranch',
                         redQranch(Qranch, QranchX),
-                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, QranchX)
+                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, QranchX);
+
+                    write('Input invalid\n'),
+                    mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch)
                 )
             ;write('Penagih hutang tiba di kebun anda dan anda langsung melunasi hutang anda \nCONGRATULATION YOU WIN!\n')
         )
@@ -151,24 +154,31 @@ chooseJob(Job, Lvfarming, Lvfishing, Lvranching) :-
     write('1. Fisherman'), nl,
     write('2. Farmer'), nl,
     write('3. Rancher'), nl,
-    read(Job),
+    read(JobX),
     (
-        Job =:= 1,
+        (JobX =:= 1) ->
+            Job is JobX,
             Lvfarming is 0,
             Lvfishing is 5,
             Lvranching is 0,
-            write('You choose Fisherman, let\'s go'),nl, !;
-        Job =:= 2,
+            write('You choose Fisherman, let\'s go');
+
+        (JobX =:= 2) ->
+            Job is JobX,
             Lvfarming is 5,
             Lvfishing is 0,
             Lvranching is 0,
-            write('You choose Farmer, let\'s go'), nl, !;
-        Job =:= 3,
+            write('You choose Farmer, let\'s go');
+
+        (JobX =:= 3) ->
+            Job is JobX,
             Lvfarming is 0,
             Lvfishing is 0,
             Lvranching is 5,
             write('You choose Rancher, let\'s go');
-        write('Pilihan tidak valid\n')
+
+        write('Invalid Input'),
+        chooseJob(Job, Lvfarming, Lvfishing, Lvranching)
     ).
 
 status(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch) :-
