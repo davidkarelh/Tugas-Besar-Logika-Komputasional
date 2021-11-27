@@ -26,9 +26,9 @@ house(Hour, Day, NewHour, NewDay, diary):-
                 read(Entry),
                 readDiary(Entry);
             INPUT == 'exit',
-                true;
+                true
         )
-    ); 
+    );
     write('Kamu tidak di rumah').
 
 writeDiary(Day):-
