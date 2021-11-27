@@ -19,16 +19,20 @@ house(Hour, Day, NewHour, NewDay):-
             INPUT == 'writeDiary',
                 write('Write your diary for Day '), write(Day), write('\n'),
                 writeDiary(Day),
-                write('Day '), write(Day), write(' entry saved');
+                write('Day '), write(Day), write(' entry saved'),
+                NewDay is Day, NewHour is Hour;
             INPUT == 'readDiary',
                 write('Which entry do you want to read?\n'),
                 read(Entry),
-                readDiary(Entry);
+                readDiary(Entry),
+                NewDay is Day, NewHour is Hour;
             INPUT == 'exit',
-                true
+                true,
+                NewDay is Day, NewHour is Hour
         )
     );
-    write('Kamu tidak di rumah').
+    write('Kamu tidak di rumah'),
+    NewDay is Day, NewHour is Hour.
 
 writeDiary(Day):-
     read(InputDiary),
