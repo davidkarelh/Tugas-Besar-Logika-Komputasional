@@ -1,8 +1,9 @@
 /* File */
 :- include('add.pl').
+:- include('alchemist.pl').
 :- include('reduce.pl').
 :- include('start.pl').
 :- include('quest.pl').
 
 /* Start Game */
-/* ketik 'startGame' */
+:- initialization(startGame).

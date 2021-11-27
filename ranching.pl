@@ -1,7 +1,7 @@
 :- include('map.pl').
 :- include('Inventory.pl').
 
-:- dynamic((chicken/1, sheep/1, cow/1, trueMap/1)).
+:- dynamic((chicken/1, cow/1, sheep/1, pig/1, ostrich/1, tiger/1, mythical_duck/1, trueMap/1)).
 
 % Asumsi hewan ternak hanya ada 3 jenis
 % trueMap sama seperti pada farming gunanya
@@ -12,8 +12,12 @@
 % Belum mengimplementasikan pembelian hewan ternak dari Marketplace
 
 chicken(0).
-sheep(0).
 cow(0).
+sheep(0).
+pig(0).
+ostrich(0).
+tiger(0).
+mythical_duck(0).
 
 initiate_true_map :-
     map_init(M),
