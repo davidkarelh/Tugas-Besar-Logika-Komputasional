@@ -1,202 +1,261 @@
+:-include('item.pl').
+
 /* Deklarasi Fakta */
-:-dynamic(inventory_list/1).
-inventory_list([]).
+:-dynamic(inventory_item_list/1).
+inventory_item_list([]).
+% Contoh: inventory_item_list([[1, carrot, 10], [10, wheat_seed, 10], [11, melon_seed, 10], [2, potato, 10]]).
+
+:-dynamic(inventory_equipment_list/1).
+inventory_equipment_list([]).
+% Contoh: inventory_equipment_list([[36, shovel, 3], [38, samurai, 1]]).
 
 /* Deklarasi Rules */
+/* Rules Utama */
+% inventory.
+% I.S. -
+% F.S. Menampilkan seluruh Item dan Equipment pada layar
 inventory :- 
-    inventory_list(_X),
-    totalItem(_X, _Y),
-    write('\nYour inventory ('),
-    write(_Y),
-    write(' / 100)\n'), !,
-    displayList(_X).
+    totalInventory(_N),
+    write('\nYour inventory ('), write(_N), write(' / 100)\n'), !,
+    displayInventory.
 
+% throwItem.
+% I.S. -
+% F.S. Item terbuang dari inventory jika ada
 throwItem :-
-    inventory_list(_X),
-    len(_X, _CHECKEMPTY),
-    (_CHECKEMPTY == 0 ->
-        write('\nYou don\'t have any items to throw!\n');
-        write('\nYour inventory\n'),
-        displayList(_X),
-        write('\nWhat do you want to throw?\n> '),
-        read(_Z),
-        _Item2 = [_, _Z],
-        _Item3 = [_, _, _Z],
-        ((searchInventory(_X, _Item2, _, _)); searchInventoryName(_X, _Item3, _, _)),
-        (searchInventory(_X, _Item2, _Element, _Index) -> 
-            write('\nYou have '),
-            _Element = [_C, _D],
-            displayItem(_Element),    
-            write('. How many do you want to throw?\n> '),
-            read(_W),
-            (_W > _C -> 
-                !, write('\nYou don’t have enough '),
-                write(_Z),
-                write('. Cancelling…\n'),
-                Output = _X;
-                deleteAt(_X, _Index, _Y),
-                (_W == _C ->
-                    Output = _Y;
-                    _Temp is _C - _W,
-                    _El = [_Temp, _D],
-                    insertAt(_Y, _El, _Index, Output)),
-                write('\nYou threw away '),
-                write(_W),
-                write(' '),
-                write(_Z),
-                write('.\n'));
-            write('\nLevel?\n> '),
-            read(_Level),
-            _Item3N = [_, _Level, _Z],
-            searchInventory(_X, _Item3N, _ElementN, _IndexN),
-            _ElementN = [_C, _, _],
-            write('\nYou have '),
-            displayItem(_ElementN),
-            write('. How many do you want to throw?\n> '),
-            read(_W),
-            (_W > _C -> 
-                write('\nYou don’t have enough Level'),
-                write(_Level),
-                write(' '),
-                write(_Z),
-                write('. Cancelling…\n'),
-                Output = _X;
-                deleteAt(_X, _Index, _Y),
-                (_W == _C ->
-                    Output = _Y;
-                    _Temp is _C - _W,
-                    _El = [_Temp, _D],
-                    insertAt(_Y, _El, _Index, Output)),
-                write('\nYou threw away '),
-                write(_W),
-                write(' Level '),
-                write(_Level),
-                write(' '),
-                write(_Z),
-                write('.\n'))),
-        retractall(inventory_list(_)),
-        asserta(inventory_list(Output))
+    inventory,
+    totalInventory(_Z),
+    (_Z == 0 -> 
+        write('\nNothing to throw. Cancelling...'), fail;
+        true),
+    write('\nWhat do you want to throw?\n> '),
+    read(_Throw),
+    item(_ID, _Throw, _),
+    (_ID >= 36, _ID =< 38 ->
+        (searchEquipment(_ID, _Element, _) ->
+            !, _Element = [_, _Throw, _Level],
+            deleteEquipment(_ID),
+            write('\nYou threw away 1 Level '), write(_Level), write(' '), write(_Throw), write('.\n');
+            write('\nYou don\'t have '), write(_Throw), write('. Cancelling...')
+        );
+        searchItem(_ID, _Element, _), !,
+        _Element = [_, _, _N],
+        write('\nYou have '), write(_N), write(' '), write(_Throw), write('. How many do you want to throw?\n> '),
+        read(_ThrowN),
+        (_ThrowN > _N ->
+            write('\nYou don\'t have enough'), write(_Throw), write('. Cancelling...');
+            decreaseItem(_ID, _ThrowN),
+            write('\nYou threw away '), write(_ThrowN), write(' '), write(_Throw), write('.\n')
+        )
     ).
 
-insertItem(_Item) :-
-    inventory_list(_X),
-    len(_Item, _N),
-    (_N == 3 ->
-        _Item = [_Plus, _, _];
-        _Item = [_Plus, _]),
-    totalItem(_X, _Total),
-    _Total + _Plus < 100,
-    (searchInventory(_X, _Item, _Element, _Index) -> 
-        deleteAt(_X, _Index, _Temp),
-        (_N == 3 -> 
-            _Element = [_A, _C, _B],
-            _D is _A + _Plus,
-            _New = [_D, _C, _B];
-            _Element = [_A, _B],
-            _D is _A + _Plus,
-            _New = [_D, _B]),
-        insertAt(_Temp, _New, _Index, Output);
-        (_N == 3 -> 
-            insertEquipment(_X, _Item, Output);
-            insertLast(_X, _Item, Output))),
-    retractall(inventory_list(_)),
-    asserta(inventory_list(Output)).
+/* Rules Pembantu */
+% totalEquipment (output N : integer).
+% I.S. -
+% F.S. N adalah banyaknya Equipment
+totalEquipment(N) :-
+    inventory_equipment_list(_X),
+    totalEquipment(_X, N).
+totalEquipment([], N) :- N is 0.
+totalEquipment([_X | _Y], N) :-
+    totalEquipment(_Y, Nn),
+    N is Nn + 1.
 
-deleteItem(_Item) :-
-    inventory_list(_X),
-    searchInventory(_X, _Item, _Element, _Index),
-    deleteAt(_X, _Index, Output),
-    retractall(inventory_list(_)),
-    asserta(inventory_list(Output)).
-
+% totalItem (output N : integer).
+% I.S. -
+% F.S. N adalah banyaknya Item
+totalItem(N) :-
+    inventory_item_list(_X),
+    totalItem(_X, N).
 totalItem([], N) :- N is 0.
 totalItem([_X | _Y], N) :-
     totalItem(_Y, Nn),
-    _X = [_Z | _],
+    _X = [_, _, _Z],
     N is Nn + _Z.
 
-len([], N) :- N is 0.
-len([_ | _Y], N) :- 
-    len(_Y, _Nn), 
-    N is _Nn + 1.
+% totalInventory (output N : integer).
+% I.S. -
+% F.S. N adalah banyaknya Item dan Equipment di inventory
+totalInventory(N) :-
+    totalEquipment(NE),
+    totalItem(NI),
+    N is NE + NI.
 
-displayList([]).
-displayList([_X | _Y]) :-
-    displayItem(_X),
-    write('\n'),
-    displayList(_Y).
+% displayInventory.
+% I.S. -
+% F.S. Menampilkan seluruh Item dan Equipment pada layar
+displayInventory :-
+    displayEquipment,
+    displayItem.
 
-displayItem(_X) :-
-    len(_X, _N),
-    (_N == 3 ->
-        _X = [_A, _B, _C], 
-        write(_A),
-        write(' Level '),
-        write(_B),
-        write(' '),
-        write(_C);
-        _X = [_A, _B],
-        write(_A),
-        write(' '),
-        write(_B)).
+% displayEquipment.
+% I.S. -
+% F.S. Menampilkan seluruh Equipment pada layar
+displayEquipment :-
+    inventory_equipment_list(_X),
+    displayEquipment(_X).
+displayEquipment([]).
+displayEquipment([_X | _Y]) :-
+    _X = [_A, _B, _C],
+    write('1 Level '), write(_C), write(' '), write(_B), write('\n'),
+    displayEquipment(_Y).
 
-searchInventory([_X | _Y], _Item, Element, Index) :-
-    len(_X, _NInventory),
-    len(_X, _NItem),
-    _NItem == _NInventory,
-    (_NItem == 3 -> 
-        _X = [_, _InvenLevel, _InvenName],
-        _Item = [_, _ItemLevel, _ItemName],
-        _InvenLevel == _ItemLevel;
-        _X = [_, _InvenName],
-        _Item = [_, _ItemName]),
-    _ItemName == _InvenName, !,
+% displayItem. 
+% I.S. -
+% F.S. Menampilkan seluruh Item pada layar
+displayItem :-
+    inventory_item_list(_X),
+    displayItem(_X).
+displayItem([]).
+displayItem([_X | _Y]) :-
+    _X = [_A, _B, _C],
+    write(_C), write(' '), write(_B), write('\n'),
+    displayItem(_Y).
+
+% displaySeed.
+% I.S. -
+% F.S. Menampilkan seluruh seed (Item ID 8 - 14) yang ada di inventory pada layar
+displaySeed :-
+    inventory_item_list(_X),
+    displaySeed(_X).
+displaySeed([]).
+displaySeed([_X | _Y]) :-
+    _X = [_A, _B, _C],
+    (_A >= 8, _A =< 14 -> 
+        write('- '), write(_C), write(' '), write(_B), write('\n');
+        true
+    ),
+    displaySeed(_Y).
+
+% insertItem (input _ID : integer, input _N : integer)
+% I.S. _ID merupakan id item valid, _N terdefinisi
+% F.S. Jika input masih dibawah kapasitas, item dimasukan atau kuantitas item ditambahkan,
+%      Jika tidak, tidak melakukan apa apa
+insertItem(_ID, _N) :-
+    totalInventory(_NI),
+    _Total is _NI + _N,
+    _Total =< 100,
+    item(_ID, Name, _),
+    inventory_item_list(_ItemList),
+    (searchItem(_ID, _Element, _Index) ->
+        _Element = [_, _, NItem],
+        NOutput is NItem + _N,
+        deleteAt(_ItemList, _Index, _Temp),
+        insertAt(_Temp, [_ID, Name, NOutput], _Index, Output);
+        insertLast(_ItemList, [_ID, Name, _N], Output)
+    ),
+    retractall(inventory_item_list(_)),
+    asserta(inventory_item_list(Output)).
+
+% deleteItem (input _ID : integer)
+% I.S. _ID merupakan id item valid
+% F.S. item dengan id _ID terhapus dari list item
+deleteItem(_ID) :-
+    searchItem(_ID, _, _Index),
+    inventory_item_list(_X),
+    deleteAt(_X, _Index, Output),
+    retractall(inventory_item_list(_)),
+    asserta(inventory_item_list(Output)).
+
+% decreaseItem (input _ID : integer, input _NDecrease : integer)
+% I.S. _ID merupakan id item valid, _NDecrease terdefinis
+% F.S. Mengurangkan Item sebanyak _NDecrease, deleteItem jika habis
+decreaseItem(_ID, _NDecrease) :-
+    searchItem(_ID, _Element, _Index),
+    _Element = [_, _Name, _N],
+    _NDecrease =< _N,
+    (_NDecrease == _N ->
+        deleteItem(_ID);
+        inventory_item_list(_X),
+        deleteAt(_X, _Index, _Temp),
+        _NOutput is _N - _NDecrease,
+        insertAt(_Temp, [_ID, _Name, _NOutput], _Index, Output),
+        retractall(inventory_item_list(_)),
+        asserta(inventory_item_list(Output))
+    ).
+
+% searchItem (input _ID : integer, output Element : [ID, Name, Quantity], output Index : integer)
+% I.S. _ID merupakan id item valid
+% F.S. Jika ditemukan, Elemen dan Index menjadi Elemen dan Index yang dicari
+searchItem(_ID, Element, Index) :-
+    inventory_item_list(_X),
+    searchItem(_X, _ID, NElement, NIndex),
+    Element = NElement,
+    Index is NIndex.
+searchItem([_X | _Y], _ID, Element, Index) :-
+    _X = [_A, _B, _C],
+    _ID =:= _A, !, 
     Element = _X,
     Index is 1.
-searchInventory([_X | _Y], _Item, Element, Index) :- 
-    searchInventory(_Y, _Item, Element, IndexN),
-    Index is IndexN + 1.
+searchItem([_X | _Y], _ID, Element, Index) :-
+    searchItem(_Y, _ID, Element, NIndex),
+    Index is NIndex + 1.
 
-searchInventoryName([_X | _Y], _Item, Element, Index) :-
-    len(_X, _NInventory),
-    len(_X, _NItem),
-    _NItem == _NInventory,
-    (_NItem == 3 -> 
-        _X = [_, _InvenLevel, _InvenName],
-        _Item = [_, _ItemLevel, _ItemName];
-        _X = [_, _InvenName],
-        _Item = [_, _ItemName]),
-    _ItemName == _InvenName, !,
+% insertEquipment (input _ID : integer, input _N : integer)
+% I.S. _ID merupakan id equipment valid, _N terdefinisi
+% F.S. Jika Equipment sudah ada pada inventory, menambahkan level Equipment sebanyak _N
+%      Jika belum dan kapasitas inventory masih tercukupi, equipment ditambakan pada inventory dengan level _N
+insertEquipment(_ID, _N) :-
+    inventory_equipment_list(_EquipmentList),
+    (searchEquipment(_ID, _Element, _Index) ->
+        _Element = [_, Name, _Level],
+        _LevelOutput is _Level + _N,
+        deleteAt(_EquipmentList, _Index, _Temp),
+        insertAt(_Temp, [_ID, Name, _LevelOutput], _Index, Output);
+        totalInventory(_NI),
+        _Total is _NI + 1,
+        _Total =< 100,
+        item(_ID, Name, _),
+        insertLast(_EquipmentList, [_ID, Name, _N], Output)
+    ),
+    retractall(inventory_equipment_list(_)),
+    asserta(inventory_equipment_list(Output)).
+
+% deleteEquipment (input _ID : integer)
+% I.S. _ID merupakan id equipment valid
+% F.S. item dengan id _ID terhapus dari list equipment
+deleteEquipment(_ID) :-
+    searchEquipment(_ID, _, _Index),
+    inventory_equipment_list(_X),
+    deleteAt(_X, _Index, Output),
+    retractall(inventory_equipment_list(_)),
+    asserta(inventory_equipment_list(Output)).
+
+% searchEquipment (input _ID : integer, output Element : [ID, Name, Level], output Index : integer)
+% I.S. _ID merupakan id equipment valid 
+% F.S. Jika ditemukan, Elemen dan Index menjadi Elemen dan Index yang dicari
+searchEquipment(_ID, Element, Index) :-
+    inventory_equipment_list(_X),
+    searchEquipment(_X, _ID, NElement, NIndex),
+    Element = NElement,
+    Index is NIndex.
+searchEquipment([_X | _Y], _ID, Element, Index) :-
+    _X = [_A, _B, _C],
+    _ID =:= _A, !, 
     Element = _X,
     Index is 1.
-searchInventoryName([_X | _Y], _Item, Element, Index) :- 
-    searchInventory(_Y, _Item, Element, IndexN),
-    Index is IndexN + 1.
+searchEquipment([_X | _Y], _ID, Element, Index) :-
+    searchEquipment(_Y, _ID, Element, NIndex),
+    Index is NIndex + 1.
 
+% insertLast (input [_X | _Y] : List, input Item : Element List, output Output : List)
+% I.S. [_X | _Y] terdefinisi
+% F.S. Item dimasukkan di akhir [_X | _Y] menghasilkan Output
+insertLast([], Item, [Item]).
+insertLast([_X | _Y], Item, [_X | L]) :- insertLast(_Y, Item, L).
+
+% insertAt (input [_X | _Y] : List, input Item : Element List, input Index : integer, output Output : List)
+% I.S. [_X | _Y] terdefinisi
+% F.S. Item dimasukkan di index Index pada [_X | _Y] menghasilkan Output
 insertAt(Xs, Element, 1, [Element | Xs]) :- !.
 insertAt([X | Xs], Element, Position, [X | Result]) :- 
     PositionN is Position - 1, 
     insertAt(Xs, Element, PositionN, Result).
 
+% deleteAt (input [_X | _Y] : List, input Index : integer, output Output : List)
+% I.S. [_X | _Y] terdefinisi
+% F.S. Item dengan index Index dihapuskan pada [_X | _Y] menghasilkan Output
 deleteAt([_ | Xs], 1, Xs) :- !.
 deleteAt([X | Xs], Position, [X | Result]) :- 
     PositionN is Position - 1, 
     deleteAt(Xs, PositionN, Result).
-
-
-insertLast([], Item, [Item]).
-insertLast([_X | _Y], Item, [_X | L]) :- insertLast(_Y, Item, L).
-
-indexInsertEquipment([], Count) :-
-    Count is 1.
-indexInsertEquipment([_X | _Y], Count) :-
-    len(_X, _N),
-    _N == 2, 
-    !, Count is 1.
-indexInsertEquipment([_X | _Y], Count) :- 
-    indexInsertEquipment(_Y, CountN),
-    Count is CountN + 1.
-
-insertEquipment(_X, Equipment, A)   :-
-    indexInsertEquipment(_X, _Count),
-    insertAt(_X, Equipment, _Count, A).
