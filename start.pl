@@ -133,7 +133,7 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
 
                     Input == 'redQranch',
                         redQranch(Qranch, QranchX),
-                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, QranchX);
+                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, QranchX, Alc);
 
                     write('Input invalid\n'),
                     mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
@@ -212,4 +212,10 @@ status(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expran
     write('Time Details:'), nl,
     write('Day: '), write(Day), nl,
     write('Hour: '), write(Hour), nl,
+    (
+        (Qharvest=:=0, Qfish=:=0, Qranch=:=0) ->
+            write('You have done your quest, you can now clam the reward');
+        write('You have ongoing quest')
+    ),
+    nl,
     nl.

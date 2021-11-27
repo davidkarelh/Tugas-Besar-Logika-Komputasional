@@ -3,7 +3,7 @@
 /* Baris kedua pasti fish */
 /* Baris ketiga pasti ranch item */
 
-quest(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Time, Qharvest, Qfish, Qranch) :-
+quest(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc) :-
     write('Welcome To Quest\n'),
     (Qharvest=:=0, Qfish=:=0, Qranch=:=0) ->
         (
@@ -27,7 +27,7 @@ quest(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranc
             write('- '), write(Harvest_quest), write(' harvest item'), nl,
             write('- '), write(Fish_quest), write(' fish'), nl,
             write('- '), write(Ranch_quest), write(' ranch item'), nl,
-            mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, GoldX, Time, Harvest_quest, Fish_quest, Ranch_quest)
+            mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, GoldX, Day, Hour, Harvest_quest, Fish_quest, Ranch_quest, Alc)
         )
     ;write('Ongoing quest\n'),
     write('You need to collect:'), nl,
