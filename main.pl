@@ -11,4 +11,4 @@
 :- include('quest.pl').
 
 /* Start Game */
-:- initialization(start).
+:- initialization(startGame).
