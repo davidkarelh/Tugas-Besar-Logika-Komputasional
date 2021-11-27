@@ -16,6 +16,7 @@ start :-
     write('kampung halamannya. Oleh karena itu, Ia memutuskan'), nl,
     write('untuk balik ke kampung halamannya untuk bekerja'), nl,
     chooseJob(Job, Lvfarming, Lvfishing, Lvranching), nl,
+    initiate_true_map,
     /* mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc), */
     /*Count:  1       2          3           4          5           6           7            8        9      10    11   12    13        14     15      15   16   */
     mainLoop(Job,     1, Lvfarming,          0, Lvfishing,          0, Lvranching,           0,       0,    100,  500,   1,    0,        1,     1,      1,   3), !.
@@ -35,6 +36,26 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
 
                     Input == 'alc',
                         alc_intro(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc);
+
+                    Input == 'map',
+                        true_map,
+                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc);
+
+                    Input == 'w',
+                        w,
+                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc);
+
+                    Input == 'a',
+                        a,
+                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc);
+
+                    Input == 's',
+                        s,
+                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc);
+
+                    Input == 'd',
+                        d,
+                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc);
 
                     /* Bagian bawah cuman testing add aspek aja */
                     Input == 'addlv',

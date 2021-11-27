@@ -1,7 +1,7 @@
 :- include('map.pl').
 :- dynamic(diary/1).
 
-house(Hour, Day, NewHour, NewDay, diary):-
+house(Hour, Day, NewHour, NewDay):-
     (
         scan_player(_, X, Y),
         X == 6,
