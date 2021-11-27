@@ -1,7 +1,10 @@
+/* Deklarasi Fakta */
 :- dynamic(diary/1).
 
+/* Deklarasi Rules */
 house(Hour, Day, NewHour, NewDay):-
     (
+        /* Mengecek apakah player ada di house */
         scan_player(_, X, Y),
         X == 7,
         Y == 6,
@@ -17,9 +20,7 @@ house(Hour, Day, NewHour, NewDay):-
                 write('You went to sleep\n\n'),
                 write('Day '), write(NewDay), write('\n');
             INPUT == 'writeDiary',
-                write('Write your diary for Day '), write(Day), write('\n'),
                 writeDiary(Day),
-                write('Day '), write(Day), write(' entry saved'),
                 NewDay is Day, NewHour is Hour;
             INPUT == 'readDiary',
                 write('Which entry do you want to read?\n'),
@@ -34,10 +35,20 @@ house(Hour, Day, NewHour, NewDay):-
     write('Kamu tidak di rumah'),
     NewDay is Day, NewHour is Hour.
 
+/* Menuliskan diary menjadi fakta */
 writeDiary(Day):-
-    read(InputDiary),
-    assertz(diary(Day, InputDiary)).
+    (diary(Entry, X) ->
+        write('Kamu sudah menulis diary pada hari ini');
+        /* Kalau tidak ada barulah akan menulis */
+        write('Write your diary for Day '), write(Day), write('\n'),
+        read(InputDiary),
+        assertz(diary(Day, InputDiary)),
+        write('Day '), write(Day), write(' entry saved')
+    ).
 
+/* Membaca diary pada hari tertentu */
 readDiary(Entry):-
-    diary(Entry, X),
-    write(X).
+    (diary(Entry, X) ->
+        write(X);
+        write('Kamu tidak menulis apapun pada hari itu')
+    ).
