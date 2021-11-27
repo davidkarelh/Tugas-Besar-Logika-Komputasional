@@ -32,20 +32,20 @@ map_init([
 
 /* Check Player Location */
 checkPosition :-
-    /* Global Variables */
-    player_position(XPlayer, YPlayer),
-    quest_position(XQuest, YQuest),
-    ranch_position(XRanch, YRanch),
-    house_position(XHouse, YHouse),
-    market_position(XMarket, YMarket).
+   /* Global Variables */
+   player_position(XPlayer, YPlayer),
+   quest_position(XQuest, YQuest),
+   ranch_position(XRanch, YRanch),
+   house_position(XHouse, YHouse),
+   market_position(XMarket, YMarket).
 
 encounterInMap :-
-    /* Global Variables */
-    player_position(XPlayer, YPlayer),
-    quest_position(XQuest, YQuest),
-    ranch_position(XRanch, YRanch),
-    house_position(XHouse, YHouse),
-    market_position(XMarket, YMarket).
+   /* Global Variables */
+   player_position(XPlayer, YPlayer),
+   quest_position(XQuest, YQuest),
+   ranch_position(XRanch, YRanch),
+   house_position(XHouse, YHouse),
+   market_position(XMarket, YMarket).
 
 initiate_true_map :-
    map_init(M),

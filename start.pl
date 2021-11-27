@@ -1,7 +1,3 @@
-/* To Do: */
-/* Untuk alc (legendary alchemist) harus melakukan pengecekan lokasi */
-/* Harus lokasi (1,1) */
-
 start :-
     write('Setelah mendapat berita Bitkowin auto cuan'), nl,
     write('Brianaldo pun langsung gaskan menjual semua asetnya'), nl,
@@ -35,7 +31,13 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                         mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc);
 
                     Input == 'alc',
-                        alc_intro(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc);
+                        player_position(XAlc, YAlc),
+                        (
+                            (XAlc =:= 1, YAlc =:= 1) ->
+                                alc_intro(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc);
+                            write('???'), nl,
+                            mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
+                        );
 
                     Input == 'map',
                         true_map,
