@@ -91,24 +91,24 @@ fish(Lvfishing) :-
 tier1(N, LvRod) :-
     (
         (LvRod > 20)
-        -> NN is (LvRod - (mod(LvRod, 20))), !
+        -> NN is ((LvRod - (mod(LvRod, 20))) / 4), !
         ; NN is 0, !
     ),
     (
         (N < (50 - NN))
-        -> write('Yah, kamu gak kurang beruntung sekarang, kamu gak dapet ikan!\n')
-        ; insertItem(15, 1), write('Wah, kamu dapet 1 ikan lele!\n')
+        -> write('Yah, kamu kurang beruntung sekarang, kamu gak dapet ikan!\n'), !
+        ; insertItem(15, 1), write('Wah, kamu dapet 1 ikan lele!\n'), !
     ).
 
 tier2(N, LvRod) :-
     (
         (LvRod > 20)
-        -> NN is (LvRod - (mod(LvRod, 20))), !
+        -> NN is ((LvRod - (mod(LvRod, 20))) / 4), !
         ; NN is 0, !
     ),
     (
         (N < (33 - NN))
-        -> write('Yah, kamu gak kurang beruntung sekarang, kamu gak dapet ikan!\n'), !
+        -> write('Yah, kamu kurang beruntung sekarang, kamu gak dapet ikan!\n'), !
         ; (N < 67 - NN)
         -> insertItem(15, 1), write('Wah, kamu dapet 1 ikan lele!\n'), !
         ; insertItem(16, 1), write('Wah, kamu dapet 1 ikan mujair!\n'), !
@@ -117,12 +117,12 @@ tier2(N, LvRod) :-
 tier3(N, LvRod) :-
     (
         (LvRod > 20)
-        -> NN is (LvRod - (mod(LvRod, 20))), !
+        -> NN is ((LvRod - (mod(LvRod, 20))) / 4), !
         ; NN is 0, !
     ),
     (
         (N < (25 - NN))
-        -> write('Yah, kamu gak kurang beruntung sekarang, kamu gak dapet ikan!\n'), !
+        -> write('Yah, kamu kurang beruntung sekarang, kamu gak dapet ikan!\n'), !
         ; (N < 50)
         -> insertItem(15, 1), write('Wah, kamu dapet 1 ikan lele!\n'), !
         ; (N < (75 - NN))
@@ -134,12 +134,12 @@ tier3(N, LvRod) :-
 tier4(N, LvRod) :-
     (
         (LvRod > 20)
-        -> NN is (LvRod - (mod(LvRod, 20))), !
+        -> NN is ((LvRod - (mod(LvRod, 20))) / 4), !
         ; NN is 0, !
     ),
     (
         (N < (20 - NN))
-        -> write('Yah, kamu gak kurang beruntung sekarang, kamu gak dapet ikan!\n'), !
+        -> write('Yah, kamu kurang beruntung sekarang, kamu gak dapet ikan!\n'), !
         ; (N < 40)
         -> insertItem(15, 1), write('Wah, kamu dapet 1 ikan lele!\n'), !
         ; (N < 60)
@@ -152,12 +152,12 @@ tier4(N, LvRod) :-
 tier5(N, LvRod) :-
     (
         (LvRod > 20)
-        -> NN is (LvRod - (mod(LvRod, 20))), !
+        -> NN is ((LvRod - (mod(LvRod, 20))) / 4), !
         ; NN is 0, !
     ),
     (
         (N < (17 - NN))
-        -> write('Yah, kamu gak kurang beruntung sekarang, kamu gak dapet ikan!\n'), !
+        -> write('Yah, kamu kurang beruntung sekarang, kamu gak dapet ikan!\n'), !
         ; (N < 34)
         -> insertItem(15, 1), write('Wah, kamu dapet 1 ikan lele!\n'), !
         ; (N < 51)
@@ -173,7 +173,7 @@ tier5(N, LvRod) :-
 tier6(N, LvRod) :-
     (
         (LvRod > 20)
-        -> NN is (LvRod - (mod(LvRod, 20))), !
+        -> NN is ((LvRod - (mod(LvRod, 20))) / 4), !
         ; NN is 0, !
     ),
     (
@@ -194,7 +194,7 @@ tier6(N, LvRod) :-
 tier7(N, LvRod) :-
     (
         (LvRod > 20)
-        -> NN is (LvRod - (mod(LvRod, 20))), !
+        -> NN is ((LvRod - (mod(LvRod, 20))) / 4), !
         ; NN is 0, !
     ),
     (
