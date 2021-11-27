@@ -1,4 +1,6 @@
 %Bentuk map awal, beserta isinya
+:- dynamic((trueMap/1)).
+
 map_init([
 [#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#],
 [#,-,-,-,-,-,-,-,-,-,-,'P',-,-,-,#],
@@ -20,7 +22,20 @@ map_init([
 [#,-,-,-,-,-,-,-,-,-,-,-,-,-,-,#],
 [#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#]
 ]).
- 
+
+initiate_true_map :-
+   map_init(M),
+   asserta(trueMap(M)), !. 
+
+updateMap(New) :-
+    trueMap(M),
+    retract(trueMap(M)),
+    asserta(trueMap(New)).
+
+true_map :-
+   trueMap(M),
+   print_matrix(M).
+
 %Melakukan print matrix
 print_row([]).
 print_row([X|Y]) :- write(X),print_row(Y).
@@ -48,7 +63,7 @@ find_matrix([Row|_],N1,0,Out) :-
 %X, Y koordinat
 %L Hasil
 elmt_in_matrix(X,Y,L) :-    
-   map_init(M),
+   trueMap(M),
    find_matrix(M,X,Y,L).
 
 %Mencari elemen tertentu pada list (hanya bisa jika elemen nya unik(hanya ada satu))
@@ -79,7 +94,7 @@ scan_matrix([Head|List],X,N,Out1,Out2) :-
 %input dummy(tidak dipakai)
 %X, Y hasil koordinat
 scan_player(_,X,Y) :-
-   map_init(M),
+   trueMap(M),
    scan_matrix(M,'P',0,Out1,Out2),
    X is Out1, Y is Out2.
 
@@ -160,6 +175,11 @@ moveS(M, X, Y,Mout2) :-
    replace(Mout,X,Y1,'P',Mout2),
    write('You moved south.'),nl.
 
+%Memanggil fungsi map untuk langsung mengeprint matrix map
+map :-    
+   trueMap(M),
+   print_matrix(M).
+
 %Melakukan move dan mengecek validitas
 a :- 
    scan_player(_,X,Y),
@@ -167,13 +187,8 @@ a :-
    (
       Out =\= 1
       -> write('Move invalid')
-      ; map_init(M),moveW(M, X, Y, Mout), print_matrix(Mout)
+      ; trueMap(M),moveW(M, X, Y, MOut), updateMap(MOut), !
    ).
-
-%Memanggil fungsi map untuk langsung mengeprint matrix map
-map :-    
-   map_init(M),
-   print_matrix(M).
 
 %Melakukan move dan mengecek validitas
 d :- 
@@ -182,7 +197,7 @@ d :-
    (
       Out =\= 1
       -> write('Move invalid')
-      ; map_init(M),moveE(M, X, Y, Mout), print_matrix(Mout)
+      ; trueMap(M),moveE(M, X, Y, MOut), updateMap(MOut), !
    ).
 
 %Melakukan move dan mengecek validitas
@@ -192,7 +207,7 @@ w :-
    (
       Out =\= 1
       -> write('Move invalid')
-      ; map_init(M),moveN(M, X, Y, Mout), print_matrix(Mout)
+      ; trueMap(M),moveN(M, X, Y, MOut), updateMap(MOut), !
    ).
 
 %Melakukan move dan mengecek validitas
@@ -202,14 +217,5 @@ s :-
    (
       Out =\= 1
       -> write('Move invalid')
-      ; map_init(M),moveS(M, X, Y, Mout), print_matrix(Mout)
+      ; trueMap(M),moveS(M, X, Y, MOut), updateMap(MOut), !
    ). 
-   
-tes :- 
-   map_init(M),
-   scan_player(_, X, Y),
-   find_matrix(M,X,Y,L),
-   write(L),nl,
-   scan_matrix(M,'P',0,Out1,Out2),
-   write(Out1),nl,
-   write(Out2),nl.
