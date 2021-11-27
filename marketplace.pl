@@ -1,7 +1,3 @@
-:- include('map.pl').
-:- include('Inventory.pl').
-:- include('ranching.pl').
-
 /* Deklarasi Fakta */
 
 
@@ -10,8 +6,8 @@
 market(Gold, GoldOut) :-
     % TO DO : Validasi posisi
     write('\nWhat do you want to do?'),
-    write('\n1. Buy'),
-    write('\n2. Sell\n> '),
+    write('\nBuy'),
+    write('\nSell\n> '),
     read(_X),
     (_X == buy ->
         buy(Gold, GoldOut);

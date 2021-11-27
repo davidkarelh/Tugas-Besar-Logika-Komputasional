@@ -1,11 +1,10 @@
-:- include('map.pl').
 :- dynamic(diary/1).
 
 house(Hour, Day, NewHour, NewDay):-
     (
         scan_player(_, X, Y),
-        X == 6,
-        Y == 7,
+        X == 7,
+        Y == 6,
         write('What do you want to do?\n'),
         write('-  sleep\n'),
         write('-  writeDiary\n'),

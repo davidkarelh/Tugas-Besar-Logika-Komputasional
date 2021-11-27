@@ -45,8 +45,31 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                             mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
                         );
 
+                    Input == 'market',
+                        player_position(XMarket, YMarket),
+                        (
+                            (XMarket =:= 10, YMarket =:= 12) ->
+                                market(Gold, GoldOut),
+                                mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, GoldOut, Day, Hour, Qharvest, Qfish, Qranch, Alc);
+                            write('Anda sedang tidak berada pada M'), nl,
+                            mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
+                        );
+
+                    Input  == 'house',
+                        house(Hour, Day, NewHour, NewDay),
+                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, NewDay, NewHour, Qharvest, Qfish, Qranch, Alc);
+
                     Input == 'map',
                         true_map,
+                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc);
+
+                    Input == 'inventory',
+                        inventory,
+                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc);
+
+                    Input == 'fishing',
+                        fish(Lvfishing),
+                        %fungsi naikin lv Lvfishing
                         mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc);
 
                     Input == 'w',
@@ -164,7 +187,6 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                         redQranch(Qranch, QranchX),
                         mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, QranchX, Alc);
 
-                    write('Input invalid\n'),
                     mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
                 )
             ;write('Penagih hutang tiba di kebun anda dan anda langsung melunasi hutang anda \nCONGRATULATION YOU WIN!\n')
