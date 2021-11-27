@@ -2,9 +2,10 @@
 
 
 /* Deklarasi Rules */
-
+% market (input Gold : integer, output GoldOut : integer)
+% I.S. Gold terdefinisi
+% F.S. menghasilkan GoldOut sesuai dengan buy atau sell
 market(Gold, GoldOut) :-
-    % TO DO : Validasi posisi
     write('\nWhat do you want to do?'),
     write('\nBuy'),
     write('\nSell\n> '),
@@ -15,6 +16,9 @@ market(Gold, GoldOut) :-
         sell(Gold, GoldOut)
     ).
 
+% buy (input Gold : integer, output GoldOut : integer)
+% I.S. Gold terdefinisi
+% F.S. Jika Gold mencukupi, Item akan terbeli
 buy(Gold, GoldOut) :-
     write('\nHere are the list of items and equipments available to buy\n'),
     write(' 1. Carrot seed         |    50 golds\n'),
@@ -51,7 +55,7 @@ buy(Gold, GoldOut) :-
             !, _LevelSamurai is 1
         ), _HargaSamurai is _LevelSamurai * 1500,
         write(_LevelSamurai), write(' samurai     |  '), (_LevelSamurai > 5 -> write('   -'); write(_HargaSamurai)), write(' golds\n'),
-    write('\nWhat do you want to buy?\n> '),
+    write('\nWhat do you want to buy? (exitShop to cancel)\n> '),
     read(_Buy),
     (_Buy == 'exitShop' ->
         GoldOut is Gold,
@@ -63,13 +67,13 @@ buy(Gold, GoldOut) :-
             item(_ID, _Name, _Price),
             _Pay is _Price * _Quantity,
             (_Pay > Gold ->
-                GoldOut is Gold,
+                NGoldOut is Gold,
                 write('\nYou don\'t have enough money. Cancelling...\n');
                 (insertItem(_ID, _Quantity) ->
                     write('\nYou have bought '), write(_Quantity), write(' '), write(_Name), write('.\n'),
-                    GoldOut is Gold - _Pay,
+                    NGoldOut is Gold - _Pay,
                     write('You are charged '), write(_Pay), write(' golds.\n');
-                    GoldOut is Gold,
+                    NGoldOut is Gold,
                     write('\nYou don\'t have enough inventory capacity. Cancelling...\n')
                 )
             );
@@ -80,7 +84,7 @@ buy(Gold, GoldOut) :-
              item(_ID, _Name, _Price),
              _Pay is _Price * _Quantity,
                 (_Pay > Gold ->
-                    GoldOut is Gold,
+                    NGoldOut is Gold,
                     write('\nYou don\'t have enough money. Cancelling...\n');
                     (_ID == 22 ->
                         chicken(_PrevQuantity),
@@ -114,7 +118,7 @@ buy(Gold, GoldOut) :-
                         asserta(tiger(_NewQuantity))
                     ),
                     write('\nYou have bought '), write(_Quantity), write(' '), write(_Name), write('.\n'),
-                    GoldOut is Gold - _Pay,
+                    NGoldOut is Gold - _Pay,
                     write('You are charged '), write(_Pay), write(' golds.\n')
                 )
             );
@@ -123,77 +127,85 @@ buy(Gold, GoldOut) :-
             _ID is _Buy + 22,
             (_ID == 36 ->
                 (_LevelShovel > 5 ->
-                    GoldOut is Gold,
+                    NGoldOut is Gold,
                     write('\nYou can\'t upgrade this anymore\n');
                     _Pay is _HargaShovel,
                     (_Pay > Gold ->
-                        GoldOut is Gold,
+                        NGoldOut is Gold,
                         write('\nYou don\'t have enough money. Cancelling...\n');
                         insertEquipment(36, 1),
                         write('\nYou have bought Level '), write(_LevelShovel), write(' shovel.\n'),
-                        GoldOut is Gold - _Pay,
+                        NGoldOut is Gold - _Pay,
                         write('You are charged '), write(_Pay), write(' golds.\n')
                     )
                 );
             ID == 37 ->
                 (_LevelFishingRod > 5 ->
-                    GoldOut is Gold,
+                    NGoldOut is Gold,
                     write('\nYou can\'t upgrade this anymore\n');
                     _Pay is _HargaFishingRod,
                     (_Pay > Gold ->
-                        GoldOut is Gold,
+                        NGoldOut is Gold,
                         write('\nYou don\'t have enough money. Cancelling...\n');
                         insertEquipment(37, 1),
                         write('\nYou have bought Level '), write(_LevelFishingRod), write(' fishing rod.\n'),
-                        GoldOut is Gold - _Pay,
+                        NGoldOut is Gold - _Pay,
                         write('You are charged '), write(_Pay), write(' golds.\n')
                     )
                 );
             ID == 38 ->
                 (_LevelSamurai > 5 ->
-                    GoldOut is Gold,
+                    NGoldOut is Gold,
                     write('\nYou can\'t upgrade this anymore\n');
                     _Pay is _HargaSamurai,
                     (_Pay > Gold ->
-                        GoldOut is Gold,
+                        NGoldOut is Gold,
                         write('\nYou don\'t have enough money. Cancelling...\n');
                         insertEquipment(36, 1),
                         write('\nYou have bought Level '), write(_LevelSamurai), write(' samurai.\n'),
-                        GoldOut is Gold - _Pay,
+                        NGoldOut is Gold - _Pay,
                         write('You are charged '), write(_Pay), write(' golds.\n')
                     )
                 )
             );
-        GoldOut is Gold,
+        NGoldOut is Gold,
         write('\nInvalid purchase. Cancelling...\n')
-        )
+        ),
+        buy(NGoldOut, NNGoldOut),
+        GoldOut is NNGoldOut
     ).
 
 sell(Gold, GoldOut) :-
     write('\nHere are the items in your inventory\n'),
     displaySell,
-    write('\nWhat do you want to sell?\n> '),
+    write('\nWhat do you want to sell? (exitShop to cancel)\n> '),
     read(_Sell),
-    (item(_ID, _Sell, _Price) ->
-        (searchItem(_ID, _Element, _) ->
-            write('\nHow many do you want to sell?\n> '),
-            read(_Quantity),
-            _Element = [_, _, _InventoryQuantity],
-            (_InventoryQuantity < _Quantity ->
-                GoldOut is Gold,
-                write('\nYou don\'t have enough item. Cancelling...');
-                decreaseItem(_ID, _Quantity),
-                _GetGold is _Quantity * _Price,
-                GoldOut is Gold + _GetGold,
-                write('\nYou sold '), write(_Quantity), write(' '), write(_Sell), write('.\n'),
-                write('You received '), write(_GetGold), write(' golds.')
-            )
-            ;
-            GoldOut is Gold,
-            write('\nYou don\'t have that item. Cancelling...')
-        );
+    (_Sell == 'exitShop' -> 
         GoldOut is Gold,
-        write('\nItem is not registered. Cancelling...\n')
+        write('\nThanks for coming.\n');
+        (item(_ID, _Sell, _Price) ->
+            (searchItem(_ID, _Element, _) ->
+                write('\nHow many do you want to sell?\n> '),
+                read(_Quantity),
+                _Element = [_, _, _InventoryQuantity],
+                (_InventoryQuantity < _Quantity ->
+                    NGoldOut is Gold,
+                    write('\nYou don\'t have enough item. Cancelling...');
+                    decreaseItem(_ID, _Quantity),
+                    _GetGold is _Quantity * _Price,
+                    NGoldOut is Gold + _GetGold,
+                    write('\nYou sold '), write(_Quantity), write(' '), write(_Sell), write('.\n'),
+                    write('You received '), write(_GetGold), write(' golds.')
+                )
+                ;
+                NGoldOut is Gold,
+                write('\nYou don\'t have that item. Cancelling...')
+            );
+            NGoldOut is Gold,
+            write('\nItem is not registered. Cancelling...\n')
+        ),
+        sell(NGoldOut, NNGoldOut),
+        GoldOut is NNGoldOut
     ).
 
 % displaySell.
