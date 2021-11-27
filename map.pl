@@ -1,15 +1,22 @@
 %Bentuk map awal, beserta isinya
 :- dynamic((trueMap/1)).
 
+/* Map Info */
+:- dynamic(player_position/2).
+:- dynamic(quest_position/2).
+:- dynamic(ranch_position/2).
+:- dynamic(house_position/2).
+:- dynamic(market_position/2).
+
 map_init([
 [#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#],
-[#,-,-,-,-,-,-,-,-,-,-,'P',-,-,-,#],
+[#,-,-,-,-,-,-,-,-,-,-,-,-,-,-,#],
 [#,-,-,-,-,-,-,-,-,-,-,-,-,-,-,#],
 [#,-,-,-,-,-,-,'Q',-,-,-,-,-,-,-,#],
-[#,-,-,-,-,-,-,-,-,-,-,'F',-,-,-,#],
+[#,-,-,-,-,-,-,-,-,-,-,-,-,-,-,#],
 [#,-,-,-,-,-,-,-,-,-,'R',-,-,-,-,#],
 [#,-,-,-,-,-,-,'H',-,-,-,-,-,-,-,#],
-[#,-,-,-,-,-,-,-,-,-,-,-,-,-,-,#],
+[#,-,-,-,-,-,-,-,'P',-,-,-,-,-,-,#],
 [#,-,-,-,-,'o','o','o',-,-,-,-,-,-,-,#],
 [#,-,-,-,'o','o','o','o','o',-,-,-,-,-,-,#],
 [#,-,-,-,-,'o','o','o',-,-,-,-,-,-,-,#],
@@ -23,14 +30,67 @@ map_init([
 [#,#,#,#,#,#,#,#,#,#,#,#,#,#,#,#]
 ]).
 
+/* Check Player Location */
+checkPosition :-
+    /* Global Variables */
+    player_position(XPlayer, YPlayer),
+    quest_position(XQuest, YQuest),
+    ranch_position(XRanch, YRanch),
+    house_position(XHouse, YHouse),
+    market_position(XMarket, YMarket).
+
+encounterInMap :-
+    /* Global Variables */
+    player_position(XPlayer, YPlayer),
+    quest_position(XQuest, YQuest),
+    ranch_position(XRanch, YRanch),
+    house_position(XHouse, YHouse),
+    market_position(XMarket, YMarket).
+
 initiate_true_map :-
    map_init(M),
+   asserta(player_position(8, 7) ),
+   asserta(quest_position(7, 3) ),
+   asserta(ranch_position(10,5) ),
+   asserta(house_position(7, 6) ),
+   asserta(market_position(10, 12) ), 
    asserta(trueMap(M)), !. 
 
-updateMap(New) :-
-    trueMap(M),
-    retract(trueMap(M)),
-    asserta(trueMap(New)).
+/* Update Map */
+updateMap :-
+   /* Getting the global variables */
+   trueMap(MapNow),
+   player_position(XPlayer, YPlayer),
+   quest_position(XQuest, YQuest),
+   ranch_position(XRanch, YRanch),
+   house_position(XHouse, YHouse),
+   market_position(XMarket, YMarket),
+    
+   checkPosition,
+
+   matrix(MapNow, I, J, 'P'),
+   replaceMatrix(MapNow, I, J, '-', MapChanged),
+   replaceMatrix(MapChanged, YQuest, XQuest, 'Q', Matrix1),
+   replaceMatrix(Matrix1, YRanch, XRanch, 'R', Matrix2),
+   replaceMatrix(Matrix2, YHouse, XHouse, 'H', Matrix3),
+   replaceMatrix(Matrix3, YMarket, XMarket, 'M', Matrix4),
+   replaceMatrix(Matrix4, YPlayer, XPlayer, 'P', NewerMatrix),
+    
+   retract(trueMap(_) ),
+   asserta(trueMap(NewerMatrix) ).
+
+replaceList( [_ | Tail], 0, X, [X | Tail] ).
+replaceList( [Head | Tail], J, X, [Head | Replaced] ):- J > -1, NewJ is J-1, replaceList(Tail, NewJ, X, Replaced), !.
+replaceList(Row, _, _, Row).
+
+replaceMatrix(Matrix, I, J, NewValue, Result) :-
+   findall(Value, matrix(Matrix, I, _, Value), Row),
+   replaceList(Row, J, NewValue, ResRow),
+   replaceList(Matrix, I, ResRow, Result), !.
+
+matrix(Matrix, I, J, Value) :-
+   nth0(I, Matrix, Row),
+   nth0(J, Row, Value).
 
 true_map :-
    trueMap(M),
@@ -150,31 +210,35 @@ validS(X,Y,Out2) :-
    Out2 is Out.
 
 %Melakukan perpindahan P(player) dengan arah yang ditentukan(West)
-moveW(M, X, Y,Mout2) :-
-   replace(M,X,Y,'-',Mout),
+moveW(M, X, Y) :-
    X1 is X - 1,
-   replace(Mout,X1,Y,'P',Mout2),
+   retract(player_position(_, _) ),
+   asserta(player_position(X1, Y) ),
+   updateMap,
    write('Anda bergerak ke arah barat.'),nl.
 
 %Melakukan perpindahan P(player) dengan arah yang ditentukan(East)
-moveE(M, X, Y,Mout2) :-
-   replace(M,X,Y,'-',Mout),
+moveE(M, X, Y) :-
    X1 is X + 1,
-   replace(Mout,X1,Y,'P',Mout2),
+   retract(player_position(_, _) ),
+   asserta(player_position(X1, Y) ),
+   updateMap,
    write('Anda bergerak ke arah timur.'),nl.
 
 %Melakukan perpindahan P(player) dengan arah yang ditentukan(North)
-moveN(M, X, Y,Mout2) :-
-   replace(M,X,Y,'-',Mout),
+moveN(M, X, Y) :-
    Y1 is Y - 1,
-   replace(Mout,X,Y1,'P',Mout2),
+   retract(player_position(_, _) ),
+   asserta(player_position(X, Y1) ),
+   updateMap,
    write('Anda bergerak ke arah utara.'),nl.
 
 %Melakukan perpindahan P(player) dengan arah yang ditentukan(South)
-moveS(M, X, Y,Mout2) :-
-   replace(M,X,Y,'-',Mout),
+moveS(M, X, Y) :-
    Y1 is Y + 1,
-   replace(Mout,X,Y1,'P',Mout2),
+   retract(player_position(_, _) ),
+   asserta(player_position(X, Y1) ),
+   updateMap,
    write('Anda bergerak ke arah selatan.'),nl.
 
 %Memanggil fungsi map untuk langsung mengeprint matrix map
@@ -191,7 +255,7 @@ a :-
       -> write('Tidak bisa keluar dari batas!'),nl
       ; (Out == 1)
       -> write('Tidak bisa masuk ke air!'),nl
-      ; trueMap(M),moveW(M, X, Y, MOut), updateMap(MOut), map, !
+      ; trueMap(M),moveW(M, X, Y), updateMap, map, !
    ).
 
 %Melakukan move dan mengecek validitas
@@ -203,7 +267,7 @@ d :-
       -> write('Tidak bisa keluar dari batas!'),nl
       ; (Out == 1)
       -> write('Tidak bisa masuk ke air!'),nl
-      ; trueMap(M),moveE(M, X, Y, MOut), updateMap(MOut), map, !
+      ; trueMap(M),moveE(M, X, Y), updateMap, map, !
    ).
 
 %Melakukan move dan mengecek validitas
@@ -215,7 +279,7 @@ w :-
       -> write('Tidak bisa keluar dari batas!'),nl
       ; (Out == 1)
       -> write('Tidak bisa masuk ke air!'),nl
-      ; trueMap(M),moveN(M, X, Y, MOut), updateMap(MOut), map, !
+      ; trueMap(M),moveN(M, X, Y), updateMap, map, !
    ).
 
 %Melakukan move dan mengecek validitas
@@ -227,5 +291,5 @@ s :-
       -> write('Tidak bisa keluar dari batas!'),nl
       ; (Out == 1)
       -> write('Tidak bisa masuk ke air!'),nl
-      ; trueMap(M),moveS(M, X, Y, MOut), updateMap(MOut), map, !
+      ; trueMap(M),moveS(M, X, Y), updateMap, map, !
    ). 
