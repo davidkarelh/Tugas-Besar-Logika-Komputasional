@@ -114,9 +114,11 @@ replace(L, X, Y, Z, R) :-
 %mengecek apakah karakter sama dengan border atau air
 valid(Char,Out) :-
    (
-      (Char == '#';Char == 'o')
-      -> Out is 0
-      ;Out is 1
+      (Char == '#')
+      -> Out is 2
+      ; (Char == 'o')
+      -> Out is 1
+      ;Out is 0
    ).
 
 %Mengecek apakah jika kita bergerak, valid atau tidak(West)
@@ -152,28 +154,28 @@ moveW(M, X, Y,Mout2) :-
    replace(M,X,Y,'-',Mout),
    X1 is X - 1,
    replace(Mout,X1,Y,'P',Mout2),
-   write('You moved west.'),nl.
+   write('Anda bergerak ke arah barat.'),nl.
 
 %Melakukan perpindahan P(player) dengan arah yang ditentukan(East)
 moveE(M, X, Y,Mout2) :-
    replace(M,X,Y,'-',Mout),
    X1 is X + 1,
    replace(Mout,X1,Y,'P',Mout2),
-   write('You moved east.'),nl.
+   write('Anda bergerak ke arah timur.'),nl.
 
 %Melakukan perpindahan P(player) dengan arah yang ditentukan(North)
 moveN(M, X, Y,Mout2) :-
    replace(M,X,Y,'-',Mout),
    Y1 is Y - 1,
    replace(Mout,X,Y1,'P',Mout2),
-   write('You moved north.'),nl.
+   write('Anda bergerak ke arah utara.'),nl.
 
 %Melakukan perpindahan P(player) dengan arah yang ditentukan(South)
 moveS(M, X, Y,Mout2) :-
    replace(M,X,Y,'-',Mout),
    Y1 is Y + 1,
    replace(Mout,X,Y1,'P',Mout2),
-   write('You moved south.'),nl.
+   write('Anda bergerak ke arah selatan.'),nl.
 
 %Memanggil fungsi map untuk langsung mengeprint matrix map
 map :-    
@@ -185,9 +187,11 @@ a :-
    scan_player(_,X,Y),
    validW(X,Y,Out),
    (
-      Out =\= 1
-      -> write('Move invalid')
-      ; trueMap(M),moveW(M, X, Y, MOut), updateMap(MOut), !
+      (Out == 2)
+      -> write('Tidak bisa keluar dari batas!'),nl
+      ; (Out == 1)
+      -> write('Tidak bisa masuk ke air!'),nl
+      ; trueMap(M),moveW(M, X, Y, MOut), updateMap(MOut), map, !
    ).
 
 %Melakukan move dan mengecek validitas
@@ -195,9 +199,11 @@ d :-
    scan_player(_,X,Y),
    validE(X,Y,Out),
    (
-      Out =\= 1
-      -> write('Move invalid')
-      ; trueMap(M),moveE(M, X, Y, MOut), updateMap(MOut), !
+      (Out == 2)
+      -> write('Tidak bisa keluar dari batas!'),nl
+      ; (Out == 1)
+      -> write('Tidak bisa masuk ke air!'),nl
+      ; trueMap(M),moveE(M, X, Y, MOut), updateMap(MOut), map, !
    ).
 
 %Melakukan move dan mengecek validitas
@@ -205,9 +211,11 @@ w :-
    scan_player(_,X,Y),
    validN(X,Y,Out),
    (
-      Out =\= 1
-      -> write('Move invalid')
-      ; trueMap(M),moveN(M, X, Y, MOut), updateMap(MOut), !
+      (Out == 2)
+      -> write('Tidak bisa keluar dari batas!'),nl
+      ; (Out == 1)
+      -> write('Tidak bisa masuk ke air!'),nl
+      ; trueMap(M),moveN(M, X, Y, MOut), updateMap(MOut), map, !
    ).
 
 %Melakukan move dan mengecek validitas
@@ -215,7 +223,9 @@ s :-
    scan_player(_,X,Y),
    validS(X,Y,Out),
    (
-      Out =\= 1
-      -> write('Move invalid')
-      ; trueMap(M),moveS(M, X, Y, MOut), updateMap(MOut), !
+      (Out == 2)
+      -> write('Tidak bisa keluar dari batas!'),nl
+      ; (Out == 1)
+      -> write('Tidak bisa masuk ke air!'),nl
+      ; trueMap(M),moveS(M, X, Y, MOut), updateMap(MOut), map, !
    ). 
