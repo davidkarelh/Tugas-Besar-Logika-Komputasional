@@ -55,6 +55,8 @@ writeDiary(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Ex
 
 readDiary(Day) :-
     diary(Day, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, AA, AB, AC),
+    write('Ini diary untuk hari ke-'), write(Day), write(': '), nl,
+    write(B), nl,
     retractall(inventory_item_list(_)),
     asserta(inventory_item_list(T)),
     retractall(inventory_equipment_list(_)),
