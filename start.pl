@@ -60,7 +60,7 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                         (
                             (XMarket =:= 10, YMarket =:= 12) ->
                                 seasonAndWeather(Day, _Season, _),
-                                market(_Season, _Gold, GoldOut),
+                                market(spring, Gold, GoldOut),
                                 mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, GoldOut, Day, Hour, Qharvest, Qfish, Qranch, Alc);
                             write('Anda sedang tidak berada pada M'), nl,
                             mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
