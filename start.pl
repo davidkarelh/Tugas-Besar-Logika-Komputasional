@@ -117,7 +117,8 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                                     NHour is mod(NHour, 24)
                                 ; DayX is Day
                             ),
-                            mainLoop(Job, Lv, Lvfarming, Expfarming, LvfishingX, ExpfishingX, Lvranching, Expranching, ExpcurrX, ExpcapX, Gold, DayX, NHour, Qharvest, Qfish, Qranch, Alc)
+                        redQfish(Qfish, QfishX),
+                        mainLoop(Job, Lv, Lvfarming, Expfarming, LvfishingX, ExpfishingX, Lvranching, Expranching, ExpcurrX, ExpcapX, Gold, DayX, NHour, Qharvest, QfishX, Qranch, Alc)
                             ;
                
                     Input == 'ranch',
@@ -150,7 +151,8 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                                     NHour is mod(NHour, 24)
                                 ; DayX is Day
                             ),
-                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, LvranchingX, ExpranchingX, ExpcurrX, ExpcapX, Gold, DayX, NHour, Qharvest, Qfish, Qranch, Alc)
+                        redQranch(Qranch, QranchX),
+                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, LvranchingX, ExpranchingX, ExpcurrX, ExpcapX, Gold, DayX, NHour, Qharvest, Qfish, QranchX, Alc)
                         ;
 
                     Input == 'dig',
@@ -207,7 +209,8 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                                 NHour is mod(NHour, 24)
                             ; DayX is Day
                         ),
-                    mainLoop(Job, Lv, LvfarmingX, ExpfarmingX, Lvfishing, Expfishing, Lvranching, Expranching, ExpcurrX, Expcap, Gold, DayX, NHour, Qharvest, Qfish, Qranch, Alc);
+                    redQharvest(Qharvest, QharvestX),
+                    mainLoop(Job, Lv, LvfarmingX, ExpfarmingX, Lvfishing, Expfishing, Lvranching, Expranching, ExpcurrX, Expcap, Gold, DayX, NHour, QharvestX, Qfish, Qranch, Alc);
 
                     Input == 'w',
                         % Asumsi bergerak 1 tile memakan waktu 1 hour
