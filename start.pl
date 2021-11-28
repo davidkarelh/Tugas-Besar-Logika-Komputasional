@@ -298,23 +298,29 @@ chooseJob(Job, Lvfarming, Lvfishing, Lvranching) :-
     (
         (JobX =:= 1) ->
             Job is JobX,
+            % Advantage Role
             Lvfarming is 0,
             Lvfishing is 5,
             Lvranching is 0,
+            insertEquipment(37, 1),
             write('You choose Fisherman, let\'s go');
 
         (JobX =:= 2) ->
             Job is JobX,
+            % Advantage Role
             Lvfarming is 5,
             Lvfishing is 0,
             Lvranching is 0,
+            insertEquipment(36, 1),
             write('You choose Farmer, let\'s go');
 
         (JobX =:= 3) ->
             Job is JobX,
+            % Advantage Role
             Lvfarming is 0,
             Lvfishing is 0,
             Lvranching is 5,
+            insertEquipment(38, 1),
             write('You choose Rancher, let\'s go');
 
         write('Invalid Input'),
