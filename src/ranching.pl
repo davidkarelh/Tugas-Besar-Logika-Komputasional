@@ -15,38 +15,45 @@ duckLastTaken(0).
 
 showChicken :-
     chicken(Chick),
-    Chick > 0,
-    write(Chick), write(' chicken\n').
+    Chick > 0
+    -> write(Chick), write(' chicken\n')
+    ; !.
 
-showCow(Cow) :-
+showCow :-
     cow(Cow),
-    Cow > 0,
-    write(Cow), write(' cow\n').
+    Cow > 0 
+    -> write(Cow), write(' cow\n')
+    ; !. 
 
 showSheep :-
     sheep(Sheep),
-    Sheep > 0,
-    write(Sheep), write(' sheep\n').
+    Sheep > 0
+    -> write(Sheep), write(' sheep\n')
+    ; !. 
 
 showPig :-
     pig(Pig),
-    Pig > 0,
-    write(Pig), write(' pig\n').
+    Pig > 0 
+    -> write(Pig), write(' pig\n')
+    ; !.
 
 showOstrich :-
     ostrich(Ostrich),
-    Ostrich > 0,
-    write(Ostrich), write(' ostrich\n').
+    Ostrich > 0
+    -> write(Ostrich), write(' ostrich\n')
+    ; !.
 
 showTiger :-
     tiger(Tiger),
-    Tiger > 0,
-    write(Tiger), write(' tiger\n').
+    Tiger > 0
+    -> write(Tiger), write(' tiger\n')
+    ; !.
 
 showMythicalDuck :-
     mythical_duck(MythicalDuck),
-    MythicalDuck > 0,
-    write(MythicalDuck), write(' mythical duck\n').
+    MythicalDuck > 0
+    -> write(MythicalDuck), write(' mythical duck\n')
+    ; !.
 
 validasi_ranching :-
     scan_player(_, X, Y),
@@ -146,46 +153,46 @@ chooseRanch(Day, Lvranching, ExpOut) :-
 
 chickenEgg(Day, Lvranching, ExpOut) :-
     chickenLastTaken(D),
+    chicken(Chick),
     (
         (Day > D)
         ->
-            chicken(Chick),
             generateRandom(N),
             (
                 (Lvranching < 10)
                 -> 
                     (
                         (N =< 33)
-                        -> write('Ayam kamu belum menghasilkan telur\n'), ExpOut is 15 * Chick, write('Kamu mendapat '), write(ExpOut), write(' exp ranchig!\n'), !
+                        -> write('Ayam kamu belum menghasilkan telur\n'), ExpOut is 15 * Chick, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
                         ; (N =< 67)
-                        -> insertItem(30, Chick * 1), write('Ayam kamu menghasilkan '), write(Chick * 1), write(' telur.\n'), retract(chickenLastTaken(D)), asserta(chickenLastTaken(Day)), ExpOut is 20 * Chick, write(ExpOut), write(' exp ranching!\n'), !
-                        ; insertItem(30, Chick * 2), write('Ayam kamu menghasilkan '), write(Chick * 2), write(' telur.\n'), retract(chickenLastTaken(D)), asserta(chickenLastTaken(Day)), ExpOut is 20 * Chick, write(ExpOut), write(' exp ranching!\n'), !
+                        -> insertItem(30, Chick), write('Ayam kamu menghasilkan '), write(Chick), write(' telur.\n'), retract(chickenLastTaken(D)), asserta(chickenLastTaken(Day)), ExpOut is 20 * Chick, write(ExpOut), write(' exp ranching!\n'), !
+                        ; NChick is Chick * 2, insertItem(30, NChick), write('Ayam kamu menghasilkan '), write(NChick), write(' telur.\n'), retract(chickenLastTaken(D)), asserta(chickenLastTaken(Day)), ExpOut is 20 * Chick, write(ExpOut), write(' exp ranching!\n'), !
                     )
                 ; (Lvranching < 20)
                 ->
                     (
                         (N =< 33)
-                        -> insertItem(30, Chick * 1), write('Ayam kamu menghasilkan '), write(Chick * 1), write(' telur.\n'), retract(chickenLastTaken(D)), asserta(chickenLastTaken(Day)), ExpOut is 20 * Chick, write(ExpOut), write(' exp ranching!\n'), !
+                        -> insertItem(30, Chick), write('Ayam kamu menghasilkan '), write(Chick), write(' telur.\n'), retract(chickenLastTaken(D)), asserta(chickenLastTaken(Day)), ExpOut is 20 * Chick, write(ExpOut), write(' exp ranching!\n'), !
                         ; (N =< 67)
-                        -> insertItem(30, Chick * 2), write('Ayam kamu menghasilkan '), write(Chick * 2), write(' telur.\n'), retract(chickenLastTaken(D)), asserta(chickenLastTaken(Day)), ExpOut is 20 * Chick, write(ExpOut), write(' exp ranching!\n'), !
-                        ; insertItem(30, Chick * 3), write('Ayam kamu menghasilkan '), write(Chick * 3), write(' telur.\n'), retract(chickenLastTaken(D)), asserta(chickenLastTaken(Day)), ExpOut is 20 * Chick, write(ExpOut), write(' exp ranching!\n'), !
+                        -> NChick is Chick * 2, insertItem(30, NChick), write('Ayam kamu menghasilkan '), write(NChick), write(' telur.\n'), retract(chickenLastTaken(D)), asserta(chickenLastTaken(Day)), ExpOut is 20 * Chick, write(ExpOut), write(' exp ranching!\n'), !
+                        ; NChick is Chick * 3, insertItem(30, NChick), write('Ayam kamu menghasilkan '), write(NChick), write(' telur.\n'), retract(chickenLastTaken(D)), asserta(chickenLastTaken(Day)), ExpOut is 20 * Chick, write(ExpOut), write(' exp ranching!\n'), !
                     )
                 ; (Lvranching < 30)
                 -> 
                     (
                         (N =< 33)
-                        -> insertItem(30, Chick * 2), write('Ayam kamu menghasilkan '), write(Chick * 2), write(' telur.\n'), retract(chickenLastTaken(D)), asserta(chickenLastTaken(Day)), ExpOut is 20 * Chick, write(ExpOut), write(' exp ranching!\n'), !
+                        -> NChick is Chick * 2, insertItem(30, NChick), write('Ayam kamu menghasilkan '), write(NChick), write(' telur.\n'), retract(chickenLastTaken(D)), asserta(chickenLastTaken(Day)), ExpOut is 20 * Chick, write(ExpOut), write(' exp ranching!\n'), !
                         ; (N =< 67)
-                        -> insertItem(30, Chick * 3), write('Ayam kamu menghasilkan '), write(Chick * 3), write(' telur.\n'), retract(chickenLastTaken(D)), asserta(chickenLastTaken(Day)), ExpOut is 20 * Chick, write(ExpOut), write(' exp ranching!\n'), !
-                        ; insertItem(30, Chick * 4), write('Ayam kamu menghasilkan '), write(Chick * 4), write(' telur.\n'), retract(chickenLastTaken(D)), asserta(chickenLastTaken(Day)), ExpOut is 20 * Chick, write(ExpOut), write(' exp ranching!\n'), !
+                        -> NChick is Chick * 3, insertItem(30, NChick), write('Ayam kamu menghasilkan '), write(NChick), write(' telur.\n'), retract(chickenLastTaken(D)), asserta(chickenLastTaken(Day)), ExpOut is 20 * Chick, write(ExpOut), write(' exp ranching!\n'), !
+                        ; NChick is Chick * 4, insertItem(30, NChick), write('Ayam kamu menghasilkan '), write(NChick), write(' telur.\n'), retract(chickenLastTaken(D)), asserta(chickenLastTaken(Day)), ExpOut is 20 * Chick, write(ExpOut), write(' exp ranching!\n'), !
                     )
                 ;
                     (
                         (N =< 33)
-                        -> insertItem(30, Chick * 3), write('Ayam kamu menghasilkan '), write(Chick * 3), write(' telur.\n'), retract(chickenLastTaken(D)), asserta(chickenLastTaken(Day)), ExpOut is 20 * Chick, write(ExpOut), write(' exp ranching!\n'), !
+                        -> NChick is Chick * 3, insertItem(30, NChick), write('Ayam kamu menghasilkan '), write(NChick), write(' telur.\n'), retract(chickenLastTaken(D)), asserta(chickenLastTaken(Day)), ExpOut is 20 * Chick, write(ExpOut), write(' exp ranching!\n'), !
                         ; (N =< 67)
-                        -> insertItem(30, Chick * 4), write('Ayam kamu menghasilkan '), write(Chick * 4), write(' telur.\n'), retract(chickenLastTaken(D)), asserta(chickenLastTaken(Day)), ExpOut is 20 * Chick, write(ExpOut), write(' exp ranching!\n'), !
-                        ; insertItem(30, Chick * 5), write('Ayam kamu menghasilkan '), write(Chick * 5), write(' telur.\n'), retract(chickenLastTaken(D)), asserta(chickenLastTaken(Day)), ExpOut is 20 * Chick, write(ExpOut), write(' exp ranching!\n'), !
+                        -> NChick is Chick * 4, insertItem(30, NChick), write('Ayam kamu menghasilkan '), write(NChick), write(' telur.\n'), retract(chickenLastTaken(D)), asserta(chickenLastTaken(Day)), ExpOut is 20 * Chick, write(ExpOut), write(' exp ranching!\n'), !
+                        ; NChick is Chick * 5, insertItem(30, NChick), write('Ayam kamu menghasilkan '), write(NChick), write(' telur.\n'), retract(chickenLastTaken(D)), asserta(chickenLastTaken(Day)), ExpOut is 20 * Chick, write(ExpOut), write(' exp ranching!\n'), !
                     )
             )
         ; write('Ayam kamu belum menghasilkan telur\n'), ExpOut is 15 * Chick, write('Kamu mendapat '), write(ExpOut), write(' exp ranchig!\n'), !
@@ -193,10 +200,10 @@ chickenEgg(Day, Lvranching, ExpOut) :-
 
 cowMilk(Day, Lvranching, ExpOut) :-
     cowLastTaken(D),
+    cow(Cow),
     (
         (Day > D)
         ->
-            cow(Cow),
             generateRandom(N),
             (
                 (Lvranching < 10)
@@ -205,34 +212,34 @@ cowMilk(Day, Lvranching, ExpOut) :-
                         (N =< 33)
                         -> write('Sapi kamu belum menghasilkan susu\n'), ExpOut is 15 * Cow, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
                         ; (N =< 67)
-                        -> insertItem(31, Cow * 1), write('Sapi kamu menghasilkan '), write(Cow * 1), write(' botol susu.\n'), retract(cowLastTaken(D)), asserta(cowLastTaken(Day)), ExpOut is 25 * Cow, write(ExpOut), write(' exp ranching!\n'), !
-                        ; insertItem(31, Cow * 2), write('Sapi kamu menghasilkan '), write(Cow * 2), write(' botol susu.\n'), retract(cowLastTaken(D)), asserta(cowLastTaken(Day)), ExpOut is 25 * Cow, write(ExpOut), write(' exp ranching!\n'), !
+                        -> insertItem(31, Cow), write('Sapi kamu menghasilkan '), write(Cow), write(' botol susu.\n'), retract(cowLastTaken(D)), asserta(cowLastTaken(Day)), ExpOut is 25 * Cow, write(ExpOut), write(' exp ranching!\n'), !
+                        ; NCow is Cow * 2, insertItem(31, NCow), write('Sapi kamu menghasilkan '), write(NCow), write(' botol susu.\n'), retract(cowLastTaken(D)), asserta(cowLastTaken(Day)), ExpOut is 25 * Cow, write(ExpOut), write(' exp ranching!\n'), !
                     )
                 ; (Lvranching < 20)
                 ->
                     (
                         (N =< 33)
-                        -> insertItem(31, Cow * 1), write('Sapi kamu menghasilkan '), write(Cow * 1), write(' botol susu.\n'), retract(cowLastTaken(D)), asserta(cowLastTaken(Day)), ExpOut is 25 * Cow, write(ExpOut), write(' exp ranching!\n'), !
+                        -> insertItem(31, Cow), write('Sapi kamu menghasilkan '), write(Cow), write(' botol susu.\n'), retract(cowLastTaken(D)), asserta(cowLastTaken(Day)), ExpOut is 25 * Cow, write(ExpOut), write(' exp ranching!\n'), !
                         ; (N =< 67)
-                        -> insertItem(31, Cow * 2), write('Sapi kamu menghasilkan '), write(Cow * 2), write(' botol susu.\n'), retract(cowLastTaken(D)), asserta(cowLastTaken(Day)), ExpOut is 25 * Cow, write(ExpOut), write(' exp ranching!\n'), !
-                        ; insertItem(31, Cow * 3), write('Sapi kamu menghasilkan '), write(Cow * 3), write(' botol susu.\n'), retract(cowLastTaken(D)), asserta(cowLastTaken(Day)), ExpOut is 25 * Cow, write(ExpOut), write(' exp ranching!\n'), !
+                        -> NCow is Cow * 2, insertItem(31, NCow), write('Sapi kamu menghasilkan '), write(NCow), write(' botol susu.\n'), retract(cowLastTaken(D)), asserta(cowLastTaken(Day)), ExpOut is 25 * Cow, write(ExpOut), write(' exp ranching!\n'), !
+                        ; NCow is Cow * 3, insertItem(31, NCow), write('Sapi kamu menghasilkan '), write(NCow), write(' botol susu.\n'), retract(cowLastTaken(D)), asserta(cowLastTaken(Day)), ExpOut is 25 * Cow, write(ExpOut), write(' exp ranching!\n'), !
                     )
                 ; (Lvranching < 30)
                 -> 
                     (
                         (N =< 33)
-                        -> insertItem(31, Cow * 2), write('Sapi kamu menghasilkan '), write(Cow * 2), write(' botol susu.\n'), retract(cowLastTaken(D)), asserta(cowLastTaken(Day)), ExpOut is 25 * Cow, write(ExpOut), write(' exp ranching!\n'), !
+                        -> NCow is Cow * 2, insertItem(31, NCow), write('Sapi kamu menghasilkan '), write(NCow), write(' botol susu.\n'), retract(cowLastTaken(D)), asserta(cowLastTaken(Day)), ExpOut is 25 * Cow, write(ExpOut), write(' exp ranching!\n'), !
                         ; (N =< 67)
-                        -> insertItem(31, Cow * 3), write('Sapi kamu menghasilkan '), write(Cow * 3), write(' botol susu.\n'), retract(cowLastTaken(D)), asserta(cowLastTaken(Day)), ExpOut is 25 * Cow, write(ExpOut), write(' exp ranching!\n'), !
-                        ; insertItem(31, Cow * 4), write('Sapi kamu menghasilkan '), write(Cow * 4), write(' botol susu.\n'), retract(cowLastTaken(D)), asserta(cowLastTaken(Day)), ExpOut is 25 * Cow, write(ExpOut), write(' exp ranching!\n'), !
+                        -> NCow is Cow * 3, insertItem(31, NCow), write('Sapi kamu menghasilkan '), write(NCow), write(' botol susu.\n'), retract(cowLastTaken(D)), asserta(cowLastTaken(Day)), ExpOut is 25 * Cow, write(ExpOut), write(' exp ranching!\n'), !
+                        ; NCow is Cow * 4, insertItem(31, NCow), write('Sapi kamu menghasilkan '), write(NCow), write(' botol susu.\n'), retract(cowLastTaken(D)), asserta(cowLastTaken(Day)), ExpOut is 25 * Cow, write(ExpOut), write(' exp ranching!\n'), !
                     )
                 ;
                     (
                         (N =< 33)
-                        -> insertItem(31, Cow * 3), write('Sapi kamu menghasilkan '), write(Cow * 3), write(' botol susu.\n'), retract(cowLastTaken(D)), asserta(cowLastTaken(Day)), ExpOut is 25 * Cow, write(ExpOut), write(' exp ranching!\n'), !
+                        -> NCow is Cow * 3, insertItem(31, NCow), write('Sapi kamu menghasilkan '), write(NCow), write(' botol susu.\n'), retract(cowLastTaken(D)), asserta(cowLastTaken(Day)), ExpOut is 25 * Cow, write(ExpOut), write(' exp ranching!\n'), !
                         ; (N =< 67)
-                        -> insertItem(31, Cow * 4), write('Sapi kamu menghasilkan '), write(Cow * 4), write(' botol susu.\n'), retract(cowLastTaken(D)), asserta(cowLastTaken(Day)), ExpOut is 25 * Cow, write(ExpOut), write(' exp ranching!\n'), !
-                        ; insertItem(31, Cow * 5), write('Sapi kamu menghasilkan '), write(Cow * 5), write(' botol susu.\n'), retract(cowLastTaken(D)), asserta(cowLastTaken(Day)), ExpOut is 25 * Cow, write(ExpOut), write(' exp ranching!\n'), !
+                        -> NCow is Cow * 4, insertItem(31, NCow), write('Sapi kamu menghasilkan '), write(NCow), write(' botol susu.\n'), retract(cowLastTaken(D)), asserta(cowLastTaken(Day)), ExpOut is 25 * Cow, write(ExpOut), write(' exp ranching!\n'), !
+                        ; NCow is Cow * 5, insertItem(31, NCow), write('Sapi kamu menghasilkan '), write(NCow), write(' botol susu.\n'), retract(cowLastTaken(D)), asserta(cowLastTaken(Day)), ExpOut is 25 * Cow, write(ExpOut), write(' exp ranching!\n'), !
                     )
             )
         ; write('Sapi kamu belum menghasilkan susu\n'), ExpOut is 15 * Cow, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
@@ -240,10 +247,10 @@ cowMilk(Day, Lvranching, ExpOut) :-
 
 woolSheep(Day, Lvranching, ExpOut) :-
     sheepLastTaken(D),
+    sheep(Sheep),
     (
         (Day > D)
         ->
-            sheep(Sheep),
             generateRandom(N),
             (
                 (Lvranching < 10)
@@ -252,34 +259,34 @@ woolSheep(Day, Lvranching, ExpOut) :-
                         (N =< 33)
                         -> write('Domba kamu belum menghasilkan wool\n'), ExpOut is 15 * Sheep, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
                         ; (N =< 67)
-                        -> insertItem(32, Sheep * 1), write('Domba kamu menghasilkan '), write(Sheep * 1), write(' helai wool.\n'), retract(sheepLastTaken(D)), asserta(sheepLastTaken(Day)), ExpOut is 30 * Sheep, write(ExpOut), write(' exp ranching!\n'), !
-                        ; insertItem(32, Sheep * 2), write('Domba kamu menghasilkan '), write(Sheep * 2), write(' helai wool.\n'), retract(sheepLastTaken(D)), asserta(sheepLastTaken(Day)), ExpOut is 30 * Sheep, write(ExpOut), write(' exp ranching!\n'), !
+                        -> NSheep is Sheep, insertItem(32, NSheep), write('Domba kamu menghasilkan '), write(NSheep), write(' helai wool.\n'), retract(sheepLastTaken(D)), asserta(sheepLastTaken(Day)), ExpOut is 30 * Sheep, write(ExpOut), write(' exp ranching!\n'), !
+                        ; NSheep is Sheep * 2, insertItem(32, NSheep), write('Domba kamu menghasilkan '), write(NSheep), write(' helai wool.\n'), retract(sheepLastTaken(D)), asserta(sheepLastTaken(Day)), ExpOut is 30 * Sheep, write(ExpOut), write(' exp ranching!\n'), !
                     )
                 ; (Lvranching < 20)
                 ->
                     (
                         (N =< 33)
-                        -> insertItem(32, Sheep * 1), write('Domba kamu menghasilkan '), write(Sheep * 1), write(' helai wool.\n'), retract(sheepLastTaken(D)), asserta(sheepLastTaken(Day)), ExpOut is 30 * Sheep, write(ExpOut), write(' exp ranching!\n'), !
+                        -> NSheep is Sheep, insertItem(32, NSheep), write('Domba kamu menghasilkan '), write(NSheep), write(' helai wool.\n'), retract(sheepLastTaken(D)), asserta(sheepLastTaken(Day)), ExpOut is 30 * Sheep, write(ExpOut), write(' exp ranching!\n'), !
                         ; (N =< 67)
-                        -> insertItem(32, Sheep * 2), write('Domba kamu menghasilkan '), write(Sheep * 2), write(' helai wool.\n'), retract(sheepLastTaken(D)), asserta(sheepLastTaken(Day)), ExpOut is 30 * Sheep, write(ExpOut), write(' exp ranching!\n'), !
-                        ; insertItem(32, Sheep * 3), write('Domba kamu menghasilkan '), write(Sheep * 3), write(' helai wool.\n'), retract(sheepLastTaken(D)), asserta(sheepLastTaken(Day)), ExpOut is 30 * Sheep, write(ExpOut), write(' exp ranching!\n'), !
+                        -> NSheep is Sheep*2, insertItem(32, NSheep), write('Domba kamu menghasilkan '), write(NSheep), write(' helai wool.\n'), retract(sheepLastTaken(D)), asserta(sheepLastTaken(Day)), ExpOut is 30 * Sheep, write(ExpOut), write(' exp ranching!\n'), !
+                        ; NSheep is Sheep*3, insertItem(32, NSheep), write('Domba kamu menghasilkan '), write(NSheep), write(' helai wool.\n'), retract(sheepLastTaken(D)), asserta(sheepLastTaken(Day)), ExpOut is 30 * Sheep, write(ExpOut), write(' exp ranching!\n'), !
                     )
                 ; (Lvranching < 30)
                 -> 
                     (
                         (N =< 33)
-                        -> insertItem(32, Sheep * 2), write('Domba kamu menghasilkan '), write(Sheep * 2), write(' helai wool.\n'), retract(sheepLastTaken(D)), asserta(sheepLastTaken(Day)), ExpOut is 30 * Sheep, write(ExpOut), write(' exp ranching!\n'), !
+                        -> NSheep is Sheep*2, insertItem(32, NSheep), write('Domba kamu menghasilkan '), write(NSheep), write(' helai wool.\n'), retract(sheepLastTaken(D)), asserta(sheepLastTaken(Day)), ExpOut is 30 * Sheep, write(ExpOut), write(' exp ranching!\n'), !
                         ; (N =< 67)
-                        -> insertItem(32, Sheep * 3), write('Domba kamu menghasilkan '), write(Sheep * 3), write(' helai wool.\n'), retract(sheepLastTaken(D)), asserta(sheepLastTaken(Day)), ExpOut is 30 * Sheep, write(ExpOut), write(' exp ranching!\n'), !
-                        ; insertItem(32, Sheep * 4), write('Domba kamu menghasilkan '), write(Sheep * 4), write(' helai wool.\n'), retract(sheepLastTaken(D)), asserta(sheepLastTaken(Day)), ExpOut is 30 * Sheep, write(ExpOut), write(' exp ranching!\n'), !
+                        -> NSheep is Sheep*3, insertItem(32, NSheep), write('Domba kamu menghasilkan '), write(NSheep), write(' helai wool.\n'), retract(sheepLastTaken(D)), asserta(sheepLastTaken(Day)), ExpOut is 30 * Sheep, write(ExpOut), write(' exp ranching!\n'), !
+                        ; NSheep is Sheep*4, insertItem(32, NSheep), write('Domba kamu menghasilkan '), write(NSheep), write(' helai wool.\n'), retract(sheepLastTaken(D)), asserta(sheepLastTaken(Day)), ExpOut is 30 * Sheep, write(ExpOut), write(' exp ranching!\n'), !
                     )
                 ;
                     (
                         (N =< 33)
-                        -> insertItem(32, Sheep * 3), write('Domba kamu menghasilkan '), write(Sheep * 3), write(' helai wool.\n'), retract(sheepLastTaken(D)), asserta(sheepLastTaken(Day)), ExpOut is 30 * Sheep, write(ExpOut), write(' exp ranching!\n'), !
+                        -> NSheep is Sheep*3, insertItem(32, NSheep), write('Domba kamu menghasilkan '), write(NSheep), write(' helai wool.\n'), retract(sheepLastTaken(D)), asserta(sheepLastTaken(Day)), ExpOut is 30 * Sheep, write(ExpOut), write(' exp ranching!\n'), !
                         ; (N =< 67)
-                        -> insertItem(32, Sheep * 4), write('Domba kamu menghasilkan '), write(Sheep * 4), write(' helai wool.\n'), retract(sheepLastTaken(D)), asserta(sheepLastTaken(Day)), ExpOut is 30 * Sheep, write(ExpOut), write(' exp ranching!\n'), !
-                        ; insertItem(32, Sheep * 5), write('Domba kamu menghasilkan '), write(Sheep * 5), write(' helai wool.\n'), retract(sheepLastTaken(D)), asserta(sheepLastTaken(Day)), ExpOut is 30 * Sheep, write(ExpOut), write(' exp ranching!\n'), !
+                        -> NSheep is Sheep*4, insertItem(32, NSheep), write('Domba kamu menghasilkan '), write(NSheep), write(' helai wool.\n'), retract(sheepLastTaken(D)), asserta(sheepLastTaken(Day)), ExpOut is 30 * Sheep, write(ExpOut), write(' exp ranching!\n'), !
+                        ; NSheep is Sheep*5,insertItem(32, NSheep), write('Domba kamu menghasilkan '), write(NSheep), write(' helai wool.\n'), retract(sheepLastTaken(D)), asserta(sheepLastTaken(Day)), ExpOut is 30 * Sheep, write(ExpOut), write(' exp ranching!\n'), !
                     )
             )
         ; write('Domba kamu belum menghasilkan wool.\n'), ExpOut is 15 * Sheep, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
@@ -321,10 +328,10 @@ tier1PigKill(LvSamurai, Jumlah, ExpOut) :-
         (N < (25 - NN))
         -> write('Yah, sepertinya babi-babi Anda tidak menghasilkan daging.\n'), ExpOut is 15 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
         ; (N < 50)
-        -> insertItem(29, Jumlah * 1), write('Wah, Anda mendapat '), write(Jumlah * 1), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+        -> Hasil is Jumlah, insertItem(29, Hasil), write('Wah, Anda mendapat '),  write(Hasil), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
         ; (N < (75 - NN))
-        -> insertItem(29, Jumlah * 2), write('Wah, Anda mendapat '), write(Jumlah * 2), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
-        ; insertItem(29, Jumlah * 3), write('Wah, Anda mendapat '), write(Jumlah * 3), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+        -> Hasil is Jumlah*2, insertItem(29, Hasil), write('Wah, Anda mendapat '), write(Hasil), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+        ; Hasil is Jumlah*3, insertItem(29, Hasil), write('Wah, Anda mendapat '), write(Hasil), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
     ).
 
 tier2PigKill(LvSamurai, Jumlah, ExpOut) :-
@@ -336,12 +343,12 @@ tier2PigKill(LvSamurai, Jumlah, ExpOut) :-
     ),
     (
         (N < (25 - NN))
-        -> insertItem(29, Jumlah * 1), write('Wah, Anda mendapat '), write(Jumlah * 1), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+        -> Hasil is Jumlah*1, insertItem(29, Hasil), write('Wah, Anda mendapat '), write(Hasil), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
         ; (N < 50)
-        -> insertItem(29, Jumlah * 2), write('Wah, Anda mendapat '), write(Jumlah * 2), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+        -> Hasil is Jumlah*2, insertItem(29, Hasil), write('Wah, Anda mendapat '), write(Hasil), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
         ; (N < (75 - NN))
-        -> insertItem(29, Jumlah * 3), write('Wah, Anda mendapat '), write(Jumlah * 3), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
-        ; insertItem(29, Jumlah * 4), write('Wah, Anda mendapat '), write(Jumlah * 4), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+        -> Hasil is Jumlah*3, insertItem(29, Hasil), write('Wah, Anda mendapat '), write(Hasil), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+        ; Hasil is Jumlah*4, insertItem(29, Hasil), write('Wah, Anda mendapat '), write(Hasil), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
     ).
 
 tier3PigKill(LvSamurai, Jumlah, ExpOut) :-
@@ -353,12 +360,12 @@ tier3PigKill(LvSamurai, Jumlah, ExpOut) :-
     ),
     (
         (N < (25 - NN))
-        -> insertItem(29, Jumlah * 2), write('Wah, Anda mendapat '), write(Jumlah * 2), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+        -> Hasil is Jumlah*2, insertItem(29, Hasil), write('Wah, Anda mendapat '), write(Hasil), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
         ; (N < 50)
-        -> insertItem(29, Jumlah * 3), write('Wah, Anda mendapat '), write(Jumlah * 3), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+        -> Hasil is Jumlah*3, insertItem(29, Hasil), write('Wah, Anda mendapat '), write(Hasil), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
         ; (N < (75 - NN))
-        -> insertItem(29, Jumlah * 4), write('Wah, Anda mendapat '), write(Jumlah * 4), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
-        ; insertItem(29, Jumlah * 5), write('Wah, Anda mendapat '), write(Jumlah * 5), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+        -> Hasil is Jumlah*4, insertItem(29, Hasil), write('Wah, Anda mendapat '), write(Hasil), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+        ; Hasil is Jumlah*5, insertItem(29, Hasil), write('Wah, Anda mendapat '), write(Hasil), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
     ).
 
 % Tier4 bisa mendapatkan 5 daging secara terus menerus jika level Samurai cukup tinggi dan ada chance 5% mendapat 6 daging
@@ -371,22 +378,22 @@ tier4PigKill(LvSamurai, Jumlah, ExpOut) :-
     ),
     (
         (N < (25 - NN))
-        -> insertItem(29, Jumlah * 2), write('Wah, Anda mendapat '), write(Jumlah * 2), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+        -> Hasil is Jumlah*2, insertItem(29, Hasil), write('Wah, Anda mendapat '), write(Hasil), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
         ; (N < (50 - NN))
-        -> insertItem(29, Jumlah * 3), write('Wah, Anda mendapat '), write(Jumlah * 3), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+        -> Hasil is Jumlah*3, insertItem(29, Hasil), write('Wah, Anda mendapat '), write(Hasil), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
         ; (N < (75 - NN))
-        -> insertItem(29, Jumlah * 4), write('Wah, Anda mendapat '), write(Jumlah * 4), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+        -> Hasil is Jumlah*4, insertItem(29, Hasil), write('Wah, Anda mendapat '), write(Hasil), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
         ; (N < 95)
-        -> insertItem(29, Jumlah * 5), write('Wah, Anda mendapat '), write(Jumlah * 5), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
-        ; insertItem(29, Jumlah * 6), write('Wah, Anda mendapat '), write(Jumlah * 6), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+        -> Hasil is Jumlah*5, insertItem(29, Hasil), write('Wah, Anda mendapat '), write(Hasil), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+        ; Hasil is Jumlah*6, insertItem(29, Hasil), write('Wah, Anda mendapat '), write(Hasil), write(' daging!\n'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
     ).
 
 % Maksimal 4 feather per ostrich
 ostrichFeather(Day, Lvranching, ExpOut) :-
+    ostrich(Ostrich),
     ostrichLastTaken(D),
     (Day > D + 2)
     -> (
-            ostrich(Ostrich),
             generateRandom(N),
             (Lvranching < 10)
             -> (
@@ -395,29 +402,29 @@ ostrichFeather(Day, Lvranching, ExpOut) :-
                     ; (N < 50)
                     -> insertItem(33, Ostrich), write('Wah, Anda mendapat '), write(Ostrich), write(' ostrich feather!\n'), retract(ostrichLastTaken(D)), asserta(ostrichLastTaken(Day)), ExpOut is 50 * Ostrich, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
                     ; (N < 50)
-                    -> insertItem(33, Ostrich * 2), write('Wah, Anda mendapat '), write(Ostrich * 2), write(' ostrich feather!\n'), retract(ostrichLastTaken(D)), asserta(ostrichLastTaken(Day)), ExpOut is 50 * Ostrich, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
-                    ; insertItem(33, Ostrich * 3), write('Wah, Anda mendapat '), write(Ostrich * 3), write(' ostrich feather!\n'), retract(ostrichLastTaken(D)), asserta(ostrichLastTaken(Day)), ExpOut is 50 * Ostrich, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+                    -> NOstrich is Ostrich * 2, insertItem(33, NOstrich), write('Wah, Anda mendapat '), write(NOstrich), write(' ostrich feather!\n'), retract(ostrichLastTaken(D)), asserta(ostrichLastTaken(Day)), ExpOut is 50 * Ostrich, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+                    ; NOstrich is Ostrich * 3, insertItem(33, NOstrich), write('Wah, Anda mendapat '), write(NOstrich), write(' ostrich feather!\n'), retract(ostrichLastTaken(D)), asserta(ostrichLastTaken(Day)), ExpOut is 50 * Ostrich, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
                 )
             ; (Lvranching < 20)
             -> (
                     (N < 33)
                     -> insertItem(33, Ostrich), write('Wah, Anda mendapat '), write(Ostrich), write(' ostrich feather!\n'), retract(ostrichLastTaken(D)), asserta(ostrichLastTaken(Day)), ExpOut is 50 * Ostrich, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
                     ; (N < 67)
-                    -> insertItem(33, Ostrich * 2), write('Wah, Anda mendapat '), write(Ostrich * 2), write(' ostrich feather!\n'), retract(ostrichLastTaken(D)), asserta(ostrichLastTaken(Day)), ExpOut is 50 * Ostrich, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
-                    ; insertItem(33, Ostrich * 3), write('Wah, Anda mendapat '), write(Ostrich * 3), write(' ostrich feather!\n'), retract(ostrichLastTaken(D)), asserta(ostrichLastTaken(Day)), ExpOut is 50 * Ostrich, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+                    -> NOstrich is Ostrich * 2, insertItem(33, NOstrich), write('Wah, Anda mendapat '), write(NOstrich), write(' ostrich feather!\n'), retract(ostrichLastTaken(D)), asserta(ostrichLastTaken(Day)), ExpOut is 50 * Ostrich, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+                    ; NOstrich is Ostrich * 3, insertItem(33, NOstrich), write('Wah, Anda mendapat '), write(NOstrich), write(' ostrich feather!\n'), retract(ostrichLastTaken(D)), asserta(ostrichLastTaken(Day)), ExpOut is 50 * Ostrich, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
                 )
             ; (Lvranching < 30)
             -> (
                     (N < 33)
-                    -> insertItem(33, Ostrich * 2), write('Wah, Anda mendapat '), write(Ostrich * 2), write(' ostrich feather!\n'), retract(ostrichLastTaken(D)), asserta(ostrichLastTaken(Day)), ExpOut is 50 * Ostrich, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+                    -> NOstrich is Ostrich * 2, insertItem(33, NOstrich), write('Wah, Anda mendapat '), write(NOstrich), write(' ostrich feather!\n'), retract(ostrichLastTaken(D)), asserta(ostrichLastTaken(Day)), ExpOut is 50 * Ostrich, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
                     ; (N < 67)
-                    -> insertItem(33, Ostrich * 3), write('Wah, Anda mendapat '), write(Ostrich * 3), write(' ostrich feather!\n'), retract(ostrichLastTaken(D)), asserta(ostrichLastTaken(Day)), ExpOut is 50 * Ostrich, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
-                    ; insertItem(33, Ostrich * 4), write('Wah, Anda mendapat '), write(Ostrich * 4), write(' ostrich feather!\n'), retract(ostrichLastTaken(D)), asserta(ostrichLastTaken(Day)), ExpOut is 50 * Ostrich, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+                    -> NOstrich is Ostrich * 3, insertItem(33, NOstrich), write('Wah, Anda mendapat '), write(NOstrich), write(' ostrich feather!\n'), retract(ostrichLastTaken(D)), asserta(ostrichLastTaken(Day)), ExpOut is 50 * Ostrich, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+                    ; NOstrich is Ostrich * 4, insertItem(33, NOstrich), write('Wah, Anda mendapat '), write(NOstrich), write(' ostrich feather!\n'), retract(ostrichLastTaken(D)), asserta(ostrichLastTaken(Day)), ExpOut is 50 * Ostrich, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
                 )
             ;   (
                     (N < 50)
-                    -> insertItem(33, Ostrich * 3), write('Wah, Anda mendapat '), write(Ostrich * 3), write(' ostrich feather!\n'), retract(ostrichLastTaken(D)), asserta(ostrichLastTaken(Day)), ExpOut is 50 * Ostrich, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
-                    ; insertItem(33, Ostrich * 4), write('Wah, Anda mendapat '), write(Ostrich * 4), write(' ostrich feather!\n'), retract(ostrichLastTaken(D)), asserta(ostrichLastTaken(Day)), ExpOut is 50 * Ostrich, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+                    -> NOstrich is Ostrich * 3, insertItem(33, NOstrich), write('Wah, Anda mendapat '), write(NOstrich), write(' ostrich feather!\n'), retract(ostrichLastTaken(D)), asserta(ostrichLastTaken(Day)), ExpOut is 50 * Ostrich, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+                    ; NOstrich is Ostrich * 4, insertItem(33, NOstrich), write('Wah, Anda mendapat '), write(NOstrich), write(' ostrich feather!\n'), retract(ostrichLastTaken(D)), asserta(ostrichLastTaken(Day)), ExpOut is 50 * Ostrich, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
                 )
         )
     ; write('Maaf, bulu ostrich Anda belum ada yang rontok'), ExpOut is 40 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !, fail.
@@ -446,13 +453,13 @@ tier1TigerKill(LvSamurai, Jumlah, ExpOut) :-
     generateRandom(N),
     (
         (LvSamurai > 20)
-        -> NN is ((LvSamurai - (mod(LvSamurai, 20))) / 2), !
+        -> NN is ((LvSamurai - (mod(LvSamurai, 20))) / 2), write(NN),!
         ; NN is 0, !
     ),
     (
         (N < (50 - NN))
-        -> insertItem(34, Jumlah * 1), write('Wah, Anda mendapat '), write(Jumlah * 1), write(' tiger skin!\n'), ExpOut is 65 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
-        ; insertItem(34, Jumlah * 2), write('Wah, Anda mendapat '), write(Jumlah * 2), write(' tiger skin!\n'), ExpOut is 65 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+        -> insertItem(34, Jumlah), write('Wah, Anda mendapat '), write(Jumlah), write(' tiger skin!\n'), ExpOut is 65 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+        ; NJumlah is Jumlah * 2, insertItem(34, NJumlah), write('Wah, Anda mendapat '), write(NJumlah), write(' tiger skin!\n'), ExpOut is 65 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
     ),
     generateRandom(N2),
     (
@@ -460,7 +467,7 @@ tier1TigerKill(LvSamurai, Jumlah, ExpOut) :-
         -> !
         ; (N2 < 67)
         -> insertItem(29, Jumlah), write('Anda juga mendapat '), write(Jumlah), write(' daging.\n')
-        ; insertItem(29, Jumlah * 2), write('Anda juga mendapat '), write(Jumlah * 2), write(' daging.\n')
+        ; NJumlah is Jumlah * 2, insertItem(29, NJumlah), write('Anda juga mendapat '), write(NJumlah), write(' daging.\n')
     ).
 
 tier2TigerKill(LvSamurai, Jumlah, ExpOut) :-
@@ -472,16 +479,16 @@ tier2TigerKill(LvSamurai, Jumlah, ExpOut) :-
     ),
     (
         (N < (50 - NN))
-        -> insertItem(34, Jumlah * 2), write('Wah, Anda mendapat '), write(Jumlah * 2), write(' tiger skin!\n'), ExpOut is 65 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
-        ; insertItem(34, Jumlah * 3), write('Wah, Anda mendapat '), write(Jumlah * 3), write(' tiger skin!\n'), ExpOut is 65 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+        -> NJumlah is Jumlah * 2, insertItem(34, NJumlah), write('Wah, Anda mendapat '), write(NJumlah), write(' tiger skin!\n'), ExpOut is 65 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
+        ; NJumlah is Jumlah * 3, insertItem(34, NJumlah), write('Wah, Anda mendapat '), write(NJumlah), write(' tiger skin!\n'), ExpOut is 65 * Jumlah, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
     ),
     generateRandom(N2),
     (
         (N2 < 33)
         -> insertItem(29, Jumlah), write('Anda juga mendapat '), write(Jumlah), write(' daging.\n')
         ; (N2 < 67)
-        -> insertItem(29, Jumlah * 2), write('Anda juga mendapat '), write(Jumlah * 2), write(' daging.\n')
-        ; insertItem(29, Jumlah * 3), write('Anda juga mendapat '), write(Jumlah * 3), write(' daging.\n')
+        -> NJumlah is Jumlah * 2, insertItem(29, NJumlah), write('Anda juga mendapat '), write(NJumlah), write(' daging.\n')
+        ; NJumlah is Jumlah * 3, insertItem(29, NJumlah), write('Anda juga mendapat '), write(NJumlah), write(' daging.\n')
     ).
 
 duckGoldenEgg(Day, Lvranching, ExpOut) :-

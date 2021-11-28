@@ -106,8 +106,8 @@ house(_NewHour, _NewDay, EXIT, Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfis
                 EXIT = false,
                 write('Kamu tidur\n\n'),
                 random(1, 10, Chance),
-                (Chance > 0 ->
-                    periTidur),
+                (Chance > 8 ->
+                    periTidur;true),
                 _NewHour is 7, _NewDay is Day + 1,
                 seasonAndWeather(Day, _Season, _Weather),
                 write('Hari : '), write(_NewDay), write('\n'),
@@ -144,27 +144,8 @@ house(_NewHour, _NewDay, EXIT, Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfis
         )
     ).
 
-/* Menuliskan diary menjadi fakta */
-% writeDiary(Day):-
-%     (diary(Day, X) ->
-%         write('Kamu sudah menulis diary pada hari ini\n'),
-%         write(X);
-%         /* Kalau tidak ada barulah akan menulis */
-%         write('Write your diary for Day '), write(Day), write('\n'),
-%         read(InputDiary),
-%         assertz(diary(Day, InputDiary)),
-%         write('Day '), write(Day), write(' entry saved')
-%     ).
-
-/* Membaca diary pada hari tertentu */
-readDiary(Entry):-
-    (diary(Entry, X) ->
-        write(X);
-        write('Tidak ada tulisan apapun hari itu')
-    ).
-
 periTidur:-
-    write('Hai, kali ini aku mau memberi kamu kesempatan untuk pergi kemanapun\n'),
+    write('\n\nHai, kali ini aku mau memberi kamu kesempatan untuk pergi kemanapun\n'),
     write('Kemanakah kamu mau pergi?\n'),
     write('-> market\n'),
     write('-> ranch\n'),
@@ -194,9 +175,3 @@ periTidur:-
             moveBrute(X, Y);
         write('Yasudahlah kalau kamu tidak ingin pergi\n')
     ).
-
-% mother(wanita)
-% asserta(mother(hode))
-% mother(hode)
-% diary(1,2,10,...)
-% diary(2,3,4,...)

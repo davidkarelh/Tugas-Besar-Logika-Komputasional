@@ -74,7 +74,7 @@ buy(Season, Gold, GoldOut) :-
         ), _HargaFishingRod is _LevelFishingRod * 1500,
         write(_LevelFishingRod), write(' fishing rod |  '), (_LevelFishingRod > 5 -> write('   -'); write(_HargaFishingRod)), write(' golds\n'),
     write('16. Level '), 
-        (searchEquipment(37, _ElementSamurai, _) ->
+        (searchEquipment(38, _ElementSamurai, _) ->
             !, _ElementSamurai = [_, _, _CurrLevelSamurai],
             _LevelSamurai is _CurrLevelSamurai + 1;
             !, _LevelSamurai is 1
@@ -200,7 +200,7 @@ buy(Season, Gold, GoldOut) :-
                         write('You are charged '), write(_Pay), write(' golds.\n')
                     )
                 );
-            ID == 37 ->
+            _ID == 37 ->
                 (_LevelFishingRod > 5 ->
                     NGoldOut is Gold,
                     write('\nYou can\'t upgrade this anymore\n');
@@ -214,7 +214,7 @@ buy(Season, Gold, GoldOut) :-
                         write('You are charged '), write(_Pay), write(' golds.\n')
                     )
                 );
-            ID == 38 ->
+            _ID == 38 ->
                 (_LevelSamurai > 5 ->
                     NGoldOut is Gold,
                     write('\nYou can\'t upgrade this anymore\n');
@@ -222,7 +222,7 @@ buy(Season, Gold, GoldOut) :-
                     (_Pay > Gold ->
                         NGoldOut is Gold,
                         write('\nYou don\'t have enough money. Cancelling...\n');
-                        insertEquipment(36, 1),
+                        insertEquipment(38, 1),
                         write('\nYou have bought Level '), write(_LevelSamurai), write(' samurai.\n'),
                         NGoldOut is Gold - _Pay,
                         write('You are charged '), write(_Pay), write(' golds.\n')

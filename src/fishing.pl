@@ -94,7 +94,7 @@ tier1(N, LvRod, ExpOut) :-
         ; insertItem(15, 1), write('Wah, kamu dapet 1 ikan lele!\n'), ExpOut is 20, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
     ).
 
-tier2(N, LvRod) :-
+tier2(N, LvRod, ExpOut) :-
     (
         (LvRod > 20)
         -> NN is ((LvRod - (mod(LvRod, 20))) / 4), !
@@ -108,7 +108,7 @@ tier2(N, LvRod) :-
         ; insertItem(16, 1), write('Wah, kamu dapet 1 ikan mujair!\n'), ExpOut is 25, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
     ).
 
-tier3(N, LvRod) :-
+tier3(N, LvRod, ExpOut) :-
     (
         (LvRod > 20)
         -> NN is ((LvRod - (mod(LvRod, 20))) / 4), !
@@ -125,7 +125,7 @@ tier3(N, LvRod) :-
     ).
 
 
-tier4(N, LvRod) :-
+tier4(N, LvRod, ExpOut) :-
     (
         (LvRod > 20)
         -> NN is ((LvRod - (mod(LvRod, 20))) / 4), !
@@ -143,7 +143,7 @@ tier4(N, LvRod) :-
         ; insertItem(18, 1), write('Wah, kamu dapet 1 lumba-lumba!\n'), ExpOut is 40, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
     ).
 
-tier5(N, LvRod) :-
+tier5(N, LvRod, ExpOut) :-
     (
         (LvRod > 20)
         -> NN is ((LvRod - (mod(LvRod, 20))) / 4), !
@@ -164,7 +164,7 @@ tier5(N, LvRod) :-
     ).
 
 % Setelah pemain mencapai Tier6, tidak mungkin untuk tidak mendapat ikan lagi
-tier6(N, LvRod) :-
+tier6(N, LvRod, ExpOut) :-
     (
         (LvRod > 20)
         -> NN is ((LvRod - (mod(LvRod, 20))) / 4), !
@@ -185,7 +185,7 @@ tier6(N, LvRod) :-
     ).
 
 % Tier tertinggi, kemampuan spesialnya jika level fishing rodnya cukup tinggi ada kemungkinan dia dapet megalodon terus
-tier7(N, LvRod) :-
+tier7(N, LvRod, ExpOut) :-
     (
         (LvRod > 20)
         -> NN is ((LvRod - (mod(LvRod, 20))) / 4), !
