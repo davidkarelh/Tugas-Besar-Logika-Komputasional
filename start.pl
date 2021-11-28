@@ -90,8 +90,8 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                     Input == 'fish',
                         fish(Lvfishing, ExpOut),
                         ExpfishingX is Expfishing + ExpOut,
-                        (
-                            (ExpfishingX >= fishingCap) ->
+                            (
+                                (ExpfishingX >= fishingCap) ->
                                 write('Level Up Fishing!\n'),
                                 addlvfishingv(Lvfishing, LvfishingX),
                                 fishingCap(Cap),
@@ -99,17 +99,26 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                                 retract(fishingCap(_)),
                                 asserta(fishingCap(NCap))
                             ; (LvfishingX is Lvfishing)
-                        ),
-                        addexpcurrv(Expcurr, ExpcurrX),
-                        write('Kamu mendapat 30 exp!\n'),
-                        (
-                            (ExpcurrX >= Expcap) ->
-                                write('Level Up!\n'),
-                                addlv(Lv, LvX),
-                                addexpcapv(Expcap, ExpcapX),
-                                mainLoop(Job, LvX, Lvfarming, Expfarming, LvfishingX, ExpfishingX, Lvranching, Expranching, ExpcurrX, ExpcapX, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
-                            ; mainLoop(Job, Lv, Lvfarming, Expfarming, LvfishingX, ExpfishingX, Lvranching, Expranching, ExpcurrX, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
-                        );     
+                            ),
+                            addexpcurrv(Expcurr, ExpcurrX),
+                            write('Kamu mendapat 30 exp!\n'),
+                            (
+                                (ExpcurrX >= Expcap) ->
+                                    write('Level Up!\n'),
+                                    addlv(Lv, LvX),
+                                    addexpcapv(Expcap, ExpcapX)
+                                ; ExpcapX is Expcap
+                            ),  
+                            NHour is Hour + 2,
+                            (
+                                (NHour >= 24) ->
+                                    write('Its a New Day!\n'),
+                                    add_dayv(Day, DayX),
+                                    NHour is mod(NHour, 24)
+                                ; DayX is Day
+                            ),
+                            mainLoop(Job, Lv, Lvfarming, Expfarming, LvfishingX, ExpfishingX, Lvranching, Expranching, ExpcurrX, ExpcapX, Gold, DayX, NHour, Qharvest, Qfish, Qranch, Alc)
+                            ;
                
                     Input == 'ranch',
                         ranch(Day, Lvranching, ExpOut),
