@@ -179,11 +179,7 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                     Input == 'w',
                         % Asumsi bergerak 1 tile memakan waktu 1 hour
                         % Asumsi pergerakan tidak valid tetap memakan waktu 1 hour
-                        w,
-                        random(1, 10, Msg),
-                        (
-                            (Msg =:= 1) -> write('chirp chirp chirp\n')
-                        ),
+                        w_move,
                         add_hourv(Hour, HourX),
                         (
                             (HourX >= 24) ->
@@ -197,11 +193,7 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                     Input == 'a',
                         % Asumsi bergerak 1 tile memakan waktu 1 hour
                         % Asumsi pergerakan tidak valid tetap memakan waktu 1 hour
-                        a,
-                        random(1, 10, Msg),
-                        (
-                            (Msg =:= 1) -> write('chirp chirp chirp\n')
-                        ),
+                        a_move,
                         add_hourv(Hour, HourX),
                         (
                             (HourX >= 24) ->
@@ -215,11 +207,7 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                     Input == 's',
                         % Asumsi bergerak 1 tile memakan waktu 1 hour
                         % Asumsi pergerakan tidak valid tetap memakan waktu 1 hour
-                        s,
-                        random(1, 10, Msg),
-                        (
-                            (Msg =:= 1) -> write('chirp chirp chirp\n')
-                        ),
+                        s_move,
                         add_hourv(Hour, HourX),
                         (
                             (HourX >= 24) ->
@@ -233,11 +221,7 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                     Input == 'd',
                         % Asumsi bergerak 1 tile memakan waktu 1 hour
                         % Asumsi pergerakan tidak valid tetap memakan waktu 1 hour
-                        d,
-                        random(1, 10, Msg),
-                        (
-                            (Msg =:= 1) -> write('chirp chirp chirp\n')
-                        ),
+                        d_move,
                         add_hourv(Hour, HourX),
                         (
                             (HourX >= 24) ->

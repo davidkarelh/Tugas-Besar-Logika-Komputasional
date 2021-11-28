@@ -248,7 +248,7 @@ map :-
    print_matrix(M).
 
 %Melakukan move dan mengecek validitas
-a :- 
+a_move :- 
    scan_player(_,X,Y),
    validW(X,Y,Out),
    (
@@ -260,7 +260,7 @@ a :-
    ).
 
 %Melakukan move dan mengecek validitas
-d :- 
+d_move :- 
    scan_player(_,X,Y),
    validE(X,Y,Out),
    (
@@ -272,7 +272,7 @@ d :-
    ).
 
 %Melakukan move dan mengecek validitas
-w :- 
+w_move :- 
    scan_player(_,X,Y),
    validN(X,Y,Out),
    (
@@ -284,7 +284,7 @@ w :-
    ).
 
 %Melakukan move dan mengecek validitas
-s :- 
+s_move :- 
    scan_player(_,X,Y),
    validS(X,Y,Out),
    (
