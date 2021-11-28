@@ -46,6 +46,7 @@ writeDiary(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Ex
     saveHarvest,
     crop(DataCrop),
     loadCrop(DataCrop),
+    updateMap,
     assertz(diary(Day, InputDiary, Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc, ItemList, EquipmentList, Chicken, Cow, Sheep, Pig, Ostrich, Tiger, MythicalDuck, DataCrop)),
     write('Day '), write(Day), write(' entry saved').
 
@@ -81,7 +82,12 @@ loadCrop([]).
 loadCrop([Head | Tail]) :- 
     retractall(dataHarvest(_, _, _, _, _)),
     Head = [A, B, C, D, E],
-    asserta(dataHarvest(A, B, C, D, E)),
+    An is A,
+    Bn is B,
+    Cn is C,
+    Dn is D,
+    En is E,
+    asserta(dataHarvest(An, Bn, Cn, Dn, En)),
     loadCrop(Tail).
 
 /* Deklarasi Rules */
@@ -96,9 +102,12 @@ house(_NewHour, _NewDay, EXIT, Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfis
         (
             INPUT == 'tidur',
                 EXIT = false,
+                write('Kamu tidur\n\n'),
+                random(1, 10, Chance),
+                (Chance > 0 ->
+                    periTidur),
                 _NewHour is 7, _NewDay is Day + 1,
                 seasonAndWeather(Day, _Season, _Weather),
-                write('Kamu tidur\n\n'),
                 write('Hari : '), write(_NewDay), write('\n'),
                 write('Musim: '), write(_Season), write('\n'),
                 write('Cuaca: '), write(_Weather), write('\n');
@@ -152,7 +161,37 @@ readDiary(Entry):-
         write('Tidak ada tulisan apapun hari itu')
     ).
 
-% periTidur:-
+periTidur:-
+    write('Hai, kali ini aku mau memberi kamu kesempatan untuk pergi kemanapun\n'),
+    write('Kemanakah kamu mau pergi?\n'),
+    write('-> market\n'),
+    write('-> ranch\n'),
+    write('-> quest\n'),
+    write('-> ?????\n'),
+    read(Input),
+    (
+        Input == 'market',
+            X is 10,
+            Y is 12,
+            write('Kamu ada di market\n'),
+            moveBrute(X, Y);
+        Input == 'ranch',
+            X is 10,
+            Y is 5,
+            write('Kamu ada di ranch\n'),
+            moveBrute(X, Y);
+        Input == 'quest',
+            X is 7,
+            Y is 3,
+            write('Kamu ada di quest\n'),
+            moveBrute(X, Y);
+        Input == '?????',
+            X is 1,
+            Y is 1,
+            write('Kamu ada di bzZZzzBZzZZzzBzzZ\n'),
+            moveBrute(X, Y);
+        write('Yasudahlah kalau kamu tidak ingin pergi\n')
+    ).
 
 % mother(wanita)
 % asserta(mother(hode))

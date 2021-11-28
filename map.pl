@@ -294,3 +294,10 @@ s_move :-
       -> write('Tidak bisa masuk ke air!'),nl, !
       ; trueMap(M),moveS(M, X, Y), updateMap, map, !
    ).
+
+moveBrute(DestX, DestY) :-
+   X1 is DestX,
+   Y1 is DestY,
+   retract(player_position(_, _) ),
+   asserta(player_position(X1, Y1) ),
+   updateMap.

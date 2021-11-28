@@ -38,10 +38,15 @@ alc_shop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
 			            	(
 				            	write('Pembelian telah berhasil dilakukan'), nl,
 
-				            	insertItem(39, 1),
+				            	write("*Tiba-tiba potionnya jatuh dan pecah*"), nl,
+								write("Brianaldo : Apa yang terjadi, aku tiba tiba merasa berbeda"), nl,
+
+								BoostLv is Lv+1,
+								ExpcurrNew is Expcap,
+								ExpcapNew is Expcap*2,
 
 				            	AlcX is 4,
-				            	mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, GoldX, Day, Hour, Qharvest, Qfish, Qranch, AlcX)
+				            	mainLoop(Job, BoostLv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, ExpcurrNew, ExpcapNew, GoldX, Day, Hour, Qharvest, Qfish, Qranch, AlcX)
 			            	);
 			            (GoldX < 0) ->
 			            	(
@@ -121,10 +126,15 @@ alc_shop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
 					            	(
 						            	write('Pembelian telah berhasil dilakukan'), nl,
 
-						            	insertItem(39, 1),
+						            	write('*Tiba-tiba potionnya jatuh dan pecah*'), nl,
+										write('Brianaldo : Apa yang terjadi, aku tiba tiba merasa berbeda'), nl,
+
+										BoostLv is Lv+1,
+										ExpcurrNew is Expcap,
+										ExpcapNew is Expcap*2,
 
 						            	AlcX is 2,
-						            	mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, GoldX, Day, Hour, Qharvest, Qfish, Qranch, AlcX)
+						            	mainLoop(Job, BoostLv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, ExpcurrNew, ExpcapNew, GoldX, Day, Hour, Qharvest, Qfish, Qranch, AlcX)
 					            	);
 					            (GoldX < 0) ->
 					            	(

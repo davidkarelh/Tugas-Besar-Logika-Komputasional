@@ -275,6 +275,8 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                                 mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, DayX, HourY, Qharvest, Qfish, Qranch, Alc)
                             ;mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, HourX, Qharvest, Qfish, Qranch, Alc)
                         );
+                    Input == 'help',
+                        help;
 
                     /* Bagian bawah cuman testing add aspek aja */
                     Input == 'addlv',
@@ -428,6 +430,7 @@ chooseJob(Job, Lvfarming, Lvfishing, Lvranching) :-
             Lvfishing is 0,
             Lvranching is 0,
             insertEquipment(36, 1),
+            insertItem(9, 10),
             write('You choose Farmer, let\'s go');
 
         (JobX =:= 3) ->

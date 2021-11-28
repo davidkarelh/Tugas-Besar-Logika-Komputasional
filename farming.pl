@@ -141,19 +141,19 @@ plant(Day, Hour) :-
     read(Seed),
     (
         Seed == 'carrot',
-            decreaseItem(8, 1), retract(dataHarvest(X, Y, _, _, _)), assertz(dataHarvest(X, Y, 8, Day + 1, Hour)), write('Kamu menanam sebuah carrot seed!\n');
+            decreaseItem(8, 1), retract(dataHarvest(X, Y, _, _, _)), NDay is Day + 1, assertz(dataHarvest(X, Y, 8, NDay, Hour)), write('Kamu menanam sebuah carrot seed!\n');
         Seed == 'potato',
-            decreaseItem(9, 1), retract(dataHarvest(X, Y, _, _, _)), assertz(dataHarvest(X, Y, 9, Day + 2, Hour)), write('Kamu menanam sebuah potato seed!\n');
+            decreaseItem(9, 1), retract(dataHarvest(X, Y, _, _, _)), NDay is Day + 2, assertz(dataHarvest(X, Y, 9, NDay, Hour)), write('Kamu menanam sebuah potato seed!\n');
         Seed == 'wheat',
-            decreaseItem(10, 1), retract(dataHarvest(X, Y, _, _, _)), assertz(dataHarvest(X, Y, 10, Day + 3, Hour)), write('Kamu menanam sebuah wheat seed!\n');
+            decreaseItem(10, 1), retract(dataHarvest(X, Y, _, _, _)), NDay is Day + 3, assertz(dataHarvest(X, Y, 10, NDay, Hour)), write('Kamu menanam sebuah wheat seed!\n');
         Seed == 'melon',
-            decreaseItem(11, 1), retract(dataHarvest(X, Y, _, _, _)), assertz(dataHarvest(X, Y, 11, Day + 4, Hour)), write('Kamu menanam sebuah melon seed!\n');
+            decreaseItem(11, 1), retract(dataHarvest(X, Y, _, _, _)), NDay is Day + 4, assertz(dataHarvest(X, Y, 11, NDay, Hour)), write('Kamu menanam sebuah melon seed!\n');
         Seed == 'pumpkin',
-            decreaseItem(12, 1), retract(dataHarvest(X, Y, _, _, _)), assertz(dataHarvest(X, Y, 12, Day + 5, Hour)), write('Kamu menanam sebuah pumpkin seed!\n');
+            decreaseItem(12, 1), retract(dataHarvest(X, Y, _, _, _)), NDay is Day + 5, assertz(dataHarvest(X, Y, 12, NDay, Hour)), write('Kamu menanam sebuah pumpkin seed!\n');
         Seed == 'beet_root',
-            decreaseItem(13, 1), retract(dataHarvest(X, Y, _, _, _)), assertz(dataHarvest(X, Y, 13, Day + 6, Hour)), write('Kamu menanam sebuah beet root seed seed!\n');
+            decreaseItem(13, 1), retract(dataHarvest(X, Y, _, _, _)), NDay is Day + 6, assertz(dataHarvest(X, Y, 13, NDay, Hour)), write('Kamu menanam sebuah beet root seed seed!\n');
         Seed == 'golden_apple',
-            decreaseItem(14, 1), retract(dataHarvest(X, Y, _, _, _)), assertz(dataHarvest(X, Y, 14, Day + 7, Hour)), write('Kamu menanam sebuah golden apple seed seed!\n')
+            decreaseItem(14, 1), retract(dataHarvest(X, Y, _, _, _)), NDay is Day + 7, assertz(dataHarvest(X, Y, 14, NDay, Hour)), write('Kamu menanam sebuah golden apple seed seed!\n')
     ). 
 
 validasi_harvest :-
@@ -168,8 +168,8 @@ validasi_harvest :-
 validasi_kesiapan_panen(Day, Hour, ID) :-
     scan_player(_, X, Y),
     searchDataHarvest(X, Y, ID, NDay, NHour),
-    (NDay >= Day),
-    (NHour >= Hour)
+    (NDay =< Day),
+    (NHour =< Hour)
     .
 
 harvest(Day, Hour, Lvfarming, ExpOut) :-
@@ -238,7 +238,7 @@ harvest(Day, Hour, Lvfarming, ExpOut) :-
                                     ; (Lvfarming < 20)
                                     -> tier2BeetRootPlant(N, ExpOut)
                                     ; (Lvfarming < 30)
-                                    -> tier3BeetRootplant
+                                    -> tier3BeetRootplant(ExpOut)
                                     ; tier4BeetRootPlant(N, ExpOut)
                             )
                         ; (
@@ -247,14 +247,14 @@ harvest(Day, Hour, Lvfarming, ExpOut) :-
                                     ; tier2GoldenApplePlant(N, ExpOut)
                             )
                     )
-                ; write('Tanaman ini belum siap panen, datang lagi jika sudah siap yaa!\n'), !, fail
+                ; write('Tanaman ini belum siap panen, datang lagi jika sudah siap yaa!\n'), scan_player(_, X, Y), !, searchDataHarvest(X, Y, ID, NDay, NHour), !, write('Sisa hari : '), SisaHari is NDay-Day, write(SisaHari), write('\n'), !, fail
             )
         ; write('Tile ini tidak bisa dipanen.\n'), !, fail
     ).
 
 tier1CarrotPlant(N, ExpOut) :-
     (N < 33)
-    -> write('Wah, carrot crop kamu gak menghasilkan hasil panen!\n'), ExpOut is 15, write('Kamu mendapat '), write(ExpOut), write(' exp farming!\n'), !
+    -> retract(dataHarvest(X, Y, _, _, _)), assertz(dataHarvest(X, Y, 0, 1, 1)), write('Wah, carrot crop kamu gak menghasilkan hasil panen!\n'), ExpOut is 15, write('Kamu mendapat '), write(ExpOut), write(' exp farming!\n'), !
     ; (N < 67)
     -> insertItem(1, 1), retract(dataHarvest(X, Y, _, _, _)), assertz(dataHarvest(X, Y, 0, 1, 1)), write('Kamu mendapat 1 carrot\n'), ExpOut is 20, write('Kamu mendapat '), write(ExpOut), write(' exp farming!\n'), !
     ; insertItem(1, 2), retract(dataHarvest(X, Y, _, _, _)), assertz(dataHarvest(X, Y, 0, 1, 1)), write('Kamu mendapat 2 carrot\n'), ExpOut is 20, write('Kamu mendapat '), write(ExpOut), write(' exp farming!\n'), !.
@@ -282,7 +282,7 @@ tier4CarrotPlant(N, ExpOut) :-
 
 tier1PotatoPlant(N, ExpOut) :-
     (N < 33)
-    -> write('Wah, potato crop kamu gak menghasilkan hasil panen!\n'), ExpOut is 15, write('Kamu mendapat '), write(ExpOut), write(' exp farming!\n'), !
+    -> retract(dataHarvest(X, Y, _, _, _)), assertz(dataHarvest(X, Y, 0, 1, 1)), write('Wah, potato crop kamu gak menghasilkan hasil panen!\n'), ExpOut is 15, write('Kamu mendapat '), write(ExpOut), write(' exp farming!\n'), !
     ; (N < 67)
     -> insertItem(2, 1), retract(dataHarvest(X, Y, _, _, _)), assertz(dataHarvest(X, Y, 0, 1, 1)), write('Kamu mendapat 1 potato\n'), ExpOut is 25, write('Kamu mendapat '), write(ExpOut), write(' exp farming!\n'), !
     ; insertItem(2, 2), retract(dataHarvest(X, Y, _, _, _)), assertz(dataHarvest(X, Y, 0, 1, 1)), write('Kamu mendapat 2 potato\n'), ExpOut is 25, write('Kamu mendapat '), write(ExpOut), write(' exp farming!\n'), !.
@@ -310,7 +310,7 @@ tier4PotatoPlant(N, ExpOut) :-
 
 tier1WheatPlant(N, ExpOut) :-
     (N < 33)
-    -> write('Wah, wheat crop kamu gak menghasilkan hasil panen!\n'), ExpOut is 15, write('Kamu mendapat '), write(ExpOut), write(' exp farming!\n'), !
+    -> retract(dataHarvest(X, Y, _, _, _)), assertz(dataHarvest(X, Y, 0, 1, 1)), write('Wah, wheat crop kamu gak menghasilkan hasil panen!\n'), ExpOut is 15, write('Kamu mendapat '), write(ExpOut), write(' exp farming!\n'), !
     ; (N < 67)
     -> insertItem(3, 1), retract(dataHarvest(X, Y, _, _, _)), assertz(dataHarvest(X, Y, 0, 1, 1)), write('Kamu mendapat 1 wheat\n'), ExpOut is 30, write('Kamu mendapat '), write(ExpOut), write(' exp farming!\n'), !
     ; insertItem(3, 2), retract(dataHarvest(X, Y, _, _, _)), assertz(dataHarvest(X, Y, 0, 1, 1)), write('Kamu mendapat 2 wheat\n'), ExpOut is 30, write('Kamu mendapat '), write(ExpOut), write(' exp farming!\n'), !.
@@ -338,7 +338,7 @@ tier4WheatPlant(N, ExpOut) :-
 
 tier1MelonPlant(N, ExpOut) :-
     (N < 33)
-    -> write('Wah, melon crop kamu gak menghasilkan hasil panen!\n'), ExpOut is 15, write('Kamu mendapat '), write(ExpOut), write(' exp farming!\n'), !
+    -> retract(dataHarvest(X, Y, _, _, _)), assertz(dataHarvest(X, Y, 0, 1, 1)), write('Wah, melon crop kamu gak menghasilkan hasil panen!\n'), ExpOut is 15, write('Kamu mendapat '), write(ExpOut), write(' exp farming!\n'), !
     ; (N < 67)
     -> insertItem(4, 1), retract(dataHarvest(X, Y, _, _, _)), assertz(dataHarvest(X, Y, 0, 1, 1)), write('Kamu mendapat 1 melon\n'), ExpOut is 40, write('Kamu mendapat '), write(ExpOut), write(' exp farming!\n'), !
     ; insertItem(4, 2), retract(dataHarvest(X, Y, _, _, _)), assertz(dataHarvest(X, Y, 0, 1, 1)), write('Kamu mendapat 2 melon\n'), ExpOut is 40, write('Kamu mendapat '), write(ExpOut), write(' exp farming!\n'), !.
@@ -360,7 +360,7 @@ tier4MelonPlant(N, ExpOut) :-
 
 tier1PumpkinPlant(N, ExpOut) :-
     (N < 33)
-    -> write('Wah, pumpkin crop kamu gak menghasilkan hasil panen!\n'), ExpOut is 15, write('Kamu mendapat '), write(ExpOut), write(' exp farming!\n'), !
+    -> retract(dataHarvest(X, Y, _, _, _)), assertz(dataHarvest(X, Y, 0, 1, 1)), write('Wah, pumpkin crop kamu gak menghasilkan hasil panen!\n'), ExpOut is 15, write('Kamu mendapat '), write(ExpOut), write(' exp farming!\n'), !
     ; (N < 67)
     -> insertItem(5, 1), retract(dataHarvest(X, Y, _, _, _)), assertz(dataHarvest(X, Y, 0, 1, 1)), write('Kamu mendapat 1 pumpkin\n'), ExpOut is 50, write('Kamu mendapat '), write(ExpOut), write(' exp farming!\n'), !
     ; insertItem(5, 2), retract(dataHarvest(X, Y, _, _, _)), assertz(dataHarvest(X, Y, 0, 1, 1)), write('Kamu mendapat 2 pumpkin\n'), ExpOut is 50, write('Kamu mendapat '), write(ExpOut), write(' exp farming!\n'), !.
@@ -382,7 +382,7 @@ tier4PumpkinPlant(N, ExpOut) :-
 
 tier1BeetRootPlant(N, ExpOut) :-
     (N < 33)
-    -> write('Wah, beet root crop kamu gak menghasilkan hasil panen!\n'), ExpOut is 15, write('Kamu mendapat '), write(ExpOut), write(' exp farming!\n'), !
+    -> retract(dataHarvest(X, Y, _, _, _)), assertz(dataHarvest(X, Y, 0, 1, 1)), write('Wah, beet root crop kamu gak menghasilkan hasil panen!\n'), ExpOut is 15, write('Kamu mendapat '), write(ExpOut), write(' exp farming!\n'), !
     ; (N < 67)
     -> insertItem(6, 1), retract(dataHarvest(X, Y, _, _, _)), assertz(dataHarvest(X, Y, 0, 1, 1)), write('Kamu mendapat 1 beet root\n'), ExpOut is 65, write('Kamu mendapat '), write(ExpOut), write(' exp farming!\n'), !
     ; insertItem(6, 2), retract(dataHarvest(X, Y, _, _, _)), assertz(dataHarvest(X, Y, 0, 1, 1)), write('Kamu mendapat 2 beet root\n'), ExpOut is 65, write('Kamu mendapat '), write(ExpOut), write(' exp farming!\n'), !.
@@ -392,7 +392,7 @@ tier2BeetRootPlant(N, ExpOut) :-
     -> insertItem(6, 1), retract(dataHarvest(X, Y, _, _, _)), assertz(dataHarvest(X, Y, 0, 1, 1)), write('Kamu mendapat 1 beet root\n'), ExpOut is 65, write('Kamu mendapat '), write(ExpOut), write(' exp farming!\n'), !
     ; insertItem(6, 2), retract(dataHarvest(X, Y, _, _, _)), assertz(dataHarvest(X, Y, 0, 1, 1)), write('Kamu mendapat 2 beet root\n'), ExpOut is 65, write('Kamu mendapat '), write(ExpOut), write(' exp farming!\n'), !.
 
-tier3BeetRootPlant :-
+tier3BeetRootPlant(ExpOut) :-
     insertItem(6, 2), retract(dataHarvest(X, Y, _, _, _)), assertz(dataHarvest(X, Y, 0, 1, 1)), write('Kamu mendapat 2 beet root\n'), ExpOut is 65, write('Kamu mendapat '), write(ExpOut), write(' exp farming!\n'), !.
 
 tier4BeetRootPlant(N, ExpOut) :-
