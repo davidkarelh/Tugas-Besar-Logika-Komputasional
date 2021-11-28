@@ -1,5 +1,5 @@
 /* Deklarasi Fakta */
-:- dynamic(diary/1).
+:- dynamic(diary/2).
 
 /* Deklarasi Rules */
 house(Hour, Day, NewHour, NewDay):-
@@ -50,5 +50,7 @@ writeDiary(Day):-
 readDiary(Entry):-
     (diary(Entry, X) ->
         write(X);
-        write('Kamu tidak menulis apapun pada hari itu')
+        write('Tidak ada tulisan apapun hari itu')
     ).
+
+% periTidur:-
