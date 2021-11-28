@@ -293,4 +293,4 @@ s :-
       ; (Out == 1)
       -> write('Tidak bisa masuk ke air!'),nl
       ; trueMap(M),moveS(M, X, Y), updateMap, map, !
-   ). 
+   ).
