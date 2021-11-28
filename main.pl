@@ -11,6 +11,7 @@
 :- include('reduce.pl').
 :- include('start.pl').
 :- include('quest.pl').
+:- include('season.pl').
 
 /* Start Game */
 :- initialization(startGame).
