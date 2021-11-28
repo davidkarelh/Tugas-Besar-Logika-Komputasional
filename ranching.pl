@@ -1,13 +1,5 @@
 :- dynamic((chicken/1, cow/1, sheep/1, pig/1, ostrich/1, tiger/1, mythical_duck/1, chickenLastTaken/1, cowLastTaken/1, sheepLastTaken/1, ostrichLastTaken/1, duckLastTaken/1)).
 
-% Asumsi hewan ternak hanya ada 3 jenis
-% trueMap sama seperti pada farming gunanya
-% Belum mengimplementasikan waktu dari hasil hewan ternak (perlu implementasi waktu)
-% Belum mengimplementasikan exp
-% Belum mengimplementasikan menyimpan hasil ternak ke inventori
-% Belum implementasi jika inventori penuh apa yang terjadi
-% Belum mengimplementasikan pembelian hewan ternak dari Marketplace
-
 chicken(0).
 cow(0).
 sheep(0).

@@ -1,11 +1,5 @@
 :- dynamic((rng/1)).
 
-% implementasi randomizer seperti ini bisa dimodifikasi sesuai exp dan rarity ikan
-% Belum implementasi jika inventori penuh apa yang terjadi
-% Belum mengimplementasikan exp
-% Belum mengimplementasikan menyimpan ikan ke inventori
-% Masih harus memmikirkan berbagai jenis ikan, rarity, dan harganya
-
 rng(50).
 
 generateRandom(A) :-
@@ -14,7 +8,6 @@ generateRandom(A) :-
     real_time(TimeStamp),
     A is (mod(TimeStamp, 99) + 1),
     asserta(rng(A)). 
-
 
 cek_air_sekeliling(M, X, Y, Out) :-
     find_matrix(M, X + 1, Y, L),
