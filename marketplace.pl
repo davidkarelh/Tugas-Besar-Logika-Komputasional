@@ -1,17 +1,16 @@
 /* Deklarasi Fakta */
 
-
 /* Deklarasi Rules */
-% market (input Gold : integer, output GoldOut : integer)
+% market (input Season : string, input Gold : integer, output GoldOut : integer)
 % I.S. Gold terdefinisi
 % F.S. menghasilkan GoldOut sesuai dengan buy atau sell
-market(Gold, GoldOut) :-
+market(Season, Gold, GoldOut) :-
     write('\nWhat do you want to do?'),
     write('\nBuy'),
     write('\nSell\n> '),
     read(_X),
     (_X == buy ->
-        buy(Gold, GoldOut);
+        buy(Season, Gold, GoldOut);
     _X == sell ->
         sell(Gold, GoldOut)
     ).
@@ -19,15 +18,41 @@ market(Gold, GoldOut) :-
 % buy (input Gold : integer, output GoldOut : integer)
 % I.S. Gold terdefinisi
 % F.S. Jika Gold mencukupi, Item akan terbeli
-buy(Gold, GoldOut) :-
+buy(Season, Gold, GoldOut) :-
     write('\nHere are the list of items and equipments available to buy\n'),
-    write(' 1. Carrot seed         |    50 golds\n'),
-    write(' 2. Potato seed         |    75 golds\n'),
-    write(' 3. Wheat seed          |   100 golds\n'),
-    write(' 4. Melon seed          |   150 golds\n'),
-    write(' 5. Pumpukin seed       |   250 golds\n'),
-    write(' 6. Beet root seed      |   500 golds\n'),
-    write(' 7. Golden apple seed   |  2500 golds\n'),
+    (Season == 'spring' ->
+        write(' 1. Carrot seed         |    50 golds\n'),
+        write(' 2. Potato seed         |    75 golds\n'),
+        write(' 3. Wheat seed          |   100 golds\n'),
+        write(' 4. Melon seed          |     - golds\n'),
+        write(' 5. Pumpukin seed       |     - golds\n'),
+        write(' 6. Beet root seed      |     - golds\n'),
+        write(' 7. Golden apple seed   |     - golds\n');
+    Season == 'summer' ->
+        write(' 1. Carrot seed         |     - golds\n'),
+        write(' 2. Potato seed         |     - golds\n'),
+        write(' 3. Wheat seed          |   100 golds\n'),
+        write(' 4. Melon seed          |   150 golds\n'),
+        write(' 5. Pumpukin seed       |   250 golds\n'),
+        write(' 6. Beet root seed      |     - golds\n'),
+        write(' 7. Golden apple seed   |     - golds\n');
+    Season == 'autumn' ->
+        write(' 1. Carrot seed         |     - golds\n'),
+        write(' 2. Potato seed         |     - golds\n'),
+        write(' 3. Wheat seed          |     - golds\n'),
+        write(' 4. Melon seed          |     - golds\n'),
+        write(' 5. Pumpukin seed       |   250 golds\n'),
+        write(' 6. Beet root seed      |   500 golds\n'),
+        write(' 7. Golden apple seed   |  2500 golds\n');
+    Season == 'winter' ->
+        write(' 1. Carrot seed         |     - golds\n'),
+        write(' 2. Potato seed         |     - golds\n'),
+        write(' 3. Wheat seed          |     - golds\n'),
+        write(' 4. Melon seed          |     - golds\n'),
+        write(' 5. Pumpukin seed       |     - golds\n'),
+        write(' 6. Beet root seed      |     - golds\n'),
+        write(' 7. Golden apple seed   |     - golds\n')
+    ),
     write(' 8. Chicken             |   500 golds\n'),
     write(' 9. Cow                 |  1000 golds\n'),
     write('10. Sheep               |  1000 golds\n'),
@@ -62,20 +87,56 @@ buy(Gold, GoldOut) :-
         write('\nThanks for coming.\n');
         (_Buy >= 1, _Buy =< 7 ->
             _ID is _Buy + 7,
-            write('\nHow many do you want to buy?\n> '),
-            read(_Quantity),
-            item(_ID, _Name, _Price),
-            _Pay is _Price * _Quantity,
-            (_Pay > Gold ->
-                NGoldOut is Gold,
-                write('\nYou don\'t have enough money. Cancelling...\n');
-                (insertItem(_ID, _Quantity) ->
-                    write('\nYou have bought '), write(_Quantity), write(' '), write(_Name), write('.\n'),
-                    NGoldOut is Gold - _Pay,
-                    write('You are charged '), write(_Pay), write(' golds.\n');
+            ((_ID >= 8, _ID =< 10, Season == 'spring') ->
+                write('\nHow many do you want to buy?\n> '),
+                read(_Quantity),
+                item(_ID, _Name, _Price),
+                _Pay is _Price * _Quantity,
+                (_Pay > Gold ->
                     NGoldOut is Gold,
-                    write('\nYou don\'t have enough inventory capacity. Cancelling...\n')
-                )
+                    write('\nYou don\'t have enough money. Cancelling...\n');
+                    (insertItem(_ID, _Quantity) ->
+                        write('\nYou have bought '), write(_Quantity), write(' '), write(_Name), write('.\n'),
+                        NGoldOut is Gold - _Pay,
+                        write('You are charged '), write(_Pay), write(' golds.\n');
+                        NGoldOut is Gold,
+                        write('\nYou don\'t have enough inventory capacity. Cancelling...\n')
+                    )
+                );
+            (_ID >= 10, _ID =< 12, Season == 'summer') ->
+                write('\nHow many do you want to buy?\n> '),
+                read(_Quantity),
+                item(_ID, _Name, _Price),
+                _Pay is _Price * _Quantity,
+                (_Pay > Gold ->
+                    NGoldOut is Gold,
+                    write('\nYou don\'t have enough money. Cancelling...\n');
+                    (insertItem(_ID, _Quantity) ->
+                        write('\nYou have bought '), write(_Quantity), write(' '), write(_Name), write('.\n'),
+                        NGoldOut is Gold - _Pay,
+                        write('You are charged '), write(_Pay), write(' golds.\n');
+                        NGoldOut is Gold,
+                        write('\nYou don\'t have enough inventory capacity. Cancelling...\n')
+                    )
+                );
+            (_ID >= 12, _ID =< 14, Season == 'autumn') ->
+                write('\nHow many do you want to buy?\n> '),
+                read(_Quantity),
+                item(_ID, _Name, _Price),
+                _Pay is _Price * _Quantity,
+                (_Pay > Gold ->
+                    NGoldOut is Gold,
+                    write('\nYou don\'t have enough money. Cancelling...\n');
+                    (insertItem(_ID, _Quantity) ->
+                        write('\nYou have bought '), write(_Quantity), write(' '), write(_Name), write('.\n'),
+                        NGoldOut is Gold - _Pay,
+                        write('You are charged '), write(_Pay), write(' golds.\n');
+                        NGoldOut is Gold,
+                        write('\nYou don\'t have enough inventory capacity. Cancelling...\n')
+                    )
+                );
+            NGoldOut is Gold,
+            write('\nYou can\'t buy this seed on this season. Cancelling...\n')
             );
         _Buy >= 8, _Buy =< 13 ->
             (_ID is _Buy + 14,
@@ -171,7 +232,7 @@ buy(Gold, GoldOut) :-
         NGoldOut is Gold,
         write('\nInvalid purchase. Cancelling...\n')
         ),
-        buy(NGoldOut, NNGoldOut),
+        buy(Season, NGoldOut, NNGoldOut),
         GoldOut is NNGoldOut
     ).
 
