@@ -1,39 +1,42 @@
 /* Deklarasi Fakta */
 :- dynamic(diary/2).
-
+:- include('season.pl').
 /* Deklarasi Rules */
-house(Hour, Day, NewHour, NewDay):-
+house(Hour, Day, NewHour, NewDay, EXIT):-
     (
-        /* Mengecek apakah player ada di house */
-        scan_player(_, X, Y),
-        X == 7,
-        Y == 6,
-        write('What do you want to do?\n'),
-        write('-  sleep\n'),
-        write('-  writeDiary\n'),
-        write('-  readDiary\n'),
+        write('Apa yang mau kamu lakukan?\n'),
+        write('-  tidur\n'),
+        write('-  tulisDiary\n'),
+        write('-  bacaDiary\n'),
         write('-  exit\n'),
         read(INPUT),
         (
-            INPUT == 'sleep',
+            INPUT == 'tidur',
                 NewHour is 7, NewDay is Day + 1,
-                write('You went to sleep\n\n'),
-                write('Day '), write(NewDay), write('\n');
-            INPUT == 'writeDiary',
+                write('Kamu tidur\n\n'),
+                write('Hari: '), write(NewDay), write('\n');
+            INPUT == 'tulisDiary',
                 writeDiary(Day),
                 NewDay is Day, NewHour is Hour;
-            INPUT == 'readDiary',
-                write('Which entry do you want to read?\n'),
+            INPUT == 'bacaDiary',
+                write('Diary pada hari apa yang ingin kamu baca?\n'),
                 read(Entry),
                 readDiary(Entry),
                 NewDay is Day, NewHour is Hour;
             INPUT == 'exit',
-                true,
-                NewDay is Day, NewHour is Hour
+                write('Apakah anda ingin keluar dari game? Apabila iya, akan otomatis dianggap kalah'), nl,
+                write('1. Iya, saya sudah lelah'), nl,
+                write('0. Tidak, tadi hanya salah tekan saja'), nl,
+                read(Confirm),
+                (
+                    (Confirm =:= 1) ->
+                        EXIT is true;
+                    (Confirm =:= 0) ->
+                        write('Silahkan melanjutkan permainan'), nl;
+                    write('Input invalid'), nl
+                );
         )
-    );
-    write('Kamu tidak di rumah'),
-    NewDay is Day, NewHour is Hour.
+    ).
 
 /* Menuliskan diary menjadi fakta */
 writeDiary(Day):-
