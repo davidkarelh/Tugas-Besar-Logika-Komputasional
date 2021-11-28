@@ -1,8 +1,91 @@
 /* Deklarasi Fakta */
-:- dynamic(diary/2).
+:- dynamic(diary/29).
+% :- dynamic(diary/1).
 :- include('season.pl').
+% diary(DAY, IsiDiary, Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc, inventory_item_list, inventory_equipment_list, chicken, cow, sheep, pig, ostrich, tiger, mythical_duck, crop)
+% diary(DAY, ISIDIARY, JOB, LV, LVFARMING, EXPFARMING, LVFARMING, EXPFARMING, LVRANCHING, EXPRANCHING, EXPCURR, EXPCAP, GOLD, DAY1, HOUR, QHARVEST, QFISH, QRANCH, ALC, INVENTORY_ITEM_LIST, INVENTORY_EQUIPMENT_LIST, CHICKEN, COW, SHEEP, PIG, OSTRICH, TIGER, MYTHICAL_DUCK, CROP)
+% diary(  A,        B,   C,  D,         E,          F,         G,          H,          I,           J,       K,      L,    M,   N,    O,        P,     Q,      R,   S,                   T,                        U,       V,   W,     X,   Y,       Z,    AA,            AB,   AC)
+%        [1,   asdasd,   1,  1,         0,          0,          5,         0,          0,           0,       0,    100,  500,   1,    2,        1,     1,       1,  3,                  [],     [[37,fishing_rod,1]],       0,   0,     0,    0,      0,     0,             0,   []]
+%        1      2       3    4     5        6             7          8            9           10         11       12      13   14    15    16        17     18    19      20                        21                    22    23    24    25    26       27    28             29  
+% mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
+
+:-dynamic(crop/1).
+crop([]).
+
+saveHarvest :-
+    (dataHarvest(X, Y, IDSeed, DayHarvest, HourHavest) ->
+        !,
+        retract(dataHarvest(X, Y, IDSeed, DayHarvest, HourHavest)),
+        crop(_B),
+        append(_B, [[X, Y, IDSeed, DayHarvest, HourHavest]], A),
+        retractall(crop(_)),
+        asserta(crop(A)),
+        saveHarvest;
+        true
+    ).
+
+
+writeDiary(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc) :-
+    /* Mengecek apabila ada save data di hari tersebut */
+    (diary(Day, X, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _) ->
+        write('Diary pada hari ini telah kamu overwrite: '), write(X), nl,
+        retract(diary(Day, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _));
+        true
+    ),
+    write('Write your diary for Day '), write(Day), write('\n'),
+    read(InputDiary),
+    inventory_item_list(ItemList),
+    inventory_equipment_list(EquipmentList),
+    chicken(Chicken),
+    cow(Cow),
+    sheep(Sheep),
+    pig(Pig),
+    ostrich(Ostrich),
+    tiger(Tiger),
+    mythical_duck(MythicalDuck),
+    saveHarvest,
+    crop(DataCrop),
+    loadCrop(DataCrop),
+    assertz(diary(Day, InputDiary, Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc, ItemList, EquipmentList, Chicken, Cow, Sheep, Pig, Ostrich, Tiger, MythicalDuck, DataCrop)),
+    write('Day '), write(Day), write(' entry saved').
+
+% diary(DAY, ISIDIARY, JOB, LV, LVFARMING, EXPFARMING, LVFARMING, EXPFARMING, LVRANCHING, EXPRANCHING, EXPCURR, EXPCAP, GOLD, DAY, HOUR, QHARVEST, QFISH, QRANCH, ALC, INVENTORY_ITEM_LIST, INVENTORY_EQUIPMENT_LIST, CHICKEN, COW, SHEEP, PIG, OSTRICH, TIGER, MYTHICAL_DUCK, CROP)
+% diary(  A,        B,   C,  D,         E,          F,         G,          H,          I,           J,       K,      L,    M,   N,    O,        P,     Q,      R,   S,                   T,                        U,       V,   W,     X,   Y,       Z,    AA,            AB,   AC)
+
+readDiary(Day) :-
+    diary(Day, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, AA, AB, AC),
+    retractall(inventory_item_list(_)),
+    asserta(inventory_item_list(T)),
+    retractall(inventory_equipment_list(_)),
+    asserta(inventory_equipment_listinventory_item_list(U)),
+    retractall(chicken(_)),
+    asserta(chichken(V)),
+    retractall(cow(_)),
+    asserta(cow(W)),
+    retractall(sheep(_)),
+    asserta(sheep(X)),
+    retractall(pig(_)),
+    asserta(pig(Y)),
+    retractall(ostrich(_)),
+    asserta(ostrich(Z)),
+    retractall(tiger(_)),
+    asserta(tiger(AA)),
+    retractall(mythical_duck(_)),
+    asserta(mythical_duck(AB)),
+    loadCrop(AC),
+    % chicken, cow, sheep, pig, ostrich, tiger, mythical_duck, crop
+    updateMap,
+    mainLoop(C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S).
+
+loadCrop([]).
+loadCrop([Head | Tail]) :- 
+    retractall(dataHarvest(_, _, _, _, _)),
+    Head = [A, B, C, D, E],
+    asserta(dataHarvest(A, B, C, D, E)),
+    loadCrop(Tail).
+
 /* Deklarasi Rules */
-house(Hour, Day, _NewHour, _NewDay, EXIT):-
+house(_NewHour, _NewDay, EXIT, Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc):-
     (
         write('Apa yang mau kamu lakukan?\n'),
         write('-  tidur\n'),
@@ -21,7 +104,7 @@ house(Hour, Day, _NewHour, _NewDay, EXIT):-
                 write('Cuaca: '), write(_Weather), write('\n');
             INPUT == 'tulisDiary',
                 EXIT = false,
-                writeDiary(Day),
+                writeDiary(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc),
                 _NewDay is Day, _NewHour is Hour;
             INPUT == 'bacaDiary',
                 EXIT = false,
@@ -51,16 +134,16 @@ house(Hour, Day, _NewHour, _NewDay, EXIT):-
     ).
 
 /* Menuliskan diary menjadi fakta */
-writeDiary(Day):-
-    (diary(Day, X) ->
-        write('Kamu sudah menulis diary pada hari ini\n'),
-        write(X);
-        /* Kalau tidak ada barulah akan menulis */
-        write('Write your diary for Day '), write(Day), write('\n'),
-        read(InputDiary),
-        assertz(diary(Day, InputDiary)),
-        write('Day '), write(Day), write(' entry saved')
-    ).
+% writeDiary(Day):-
+%     (diary(Day, X) ->
+%         write('Kamu sudah menulis diary pada hari ini\n'),
+%         write(X);
+%         /* Kalau tidak ada barulah akan menulis */
+%         write('Write your diary for Day '), write(Day), write('\n'),
+%         read(InputDiary),
+%         assertz(diary(Day, InputDiary)),
+%         write('Day '), write(Day), write(' entry saved')
+%     ).
 
 /* Membaca diary pada hari tertentu */
 readDiary(Entry):-
@@ -70,3 +153,9 @@ readDiary(Entry):-
     ).
 
 % periTidur:-
+
+% mother(wanita)
+% asserta(mother(hode))
+% mother(hode)
+% diary(1,2,10,...)
+% diary(2,3,4,...)

@@ -75,7 +75,7 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                         player_position(XRumah, YRumah),
                         (
                             (XRumah =:= 7, YRumah =:= 6) ->
-                                house(Hour, Day, NewHour, NewDay, EXIT),
+                                house(NewHour, NewDay, EXIT, Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc),
                                 (
                                     EXIT == true ->
                                         exitGame;
@@ -274,21 +274,6 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                                 HourY is 0,
                                 mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, DayX, HourY, Qharvest, Qfish, Qranch, Alc)
                             ;mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, HourX, Qharvest, Qfish, Qranch, Alc)
-                        );
-
-                    Input == 'exit',
-                        write('Apakah anda ingin keluar dari game? Apabila iya, akan otomatis dianggap kalah'), nl,
-                        write('1. Iya, saya sudah lelah'), nl,
-                        write('0. Tidak, tadi hanya salah tekan saja'), nl,
-                        read(Confirm),
-                        (
-                            (Confirm =:= 1) ->
-                                exitGame;
-                            (Confirm =:= 0) ->
-                                write('Silahkan melanjutkan permainan'), nl,
-                                mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc);
-                            write('Input invalid'), nl,
-                            mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
                         );
 
                     /* Bagian bawah cuman testing add aspek aja */

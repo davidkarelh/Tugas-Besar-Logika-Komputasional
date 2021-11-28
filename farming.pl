@@ -410,36 +410,20 @@ tier2GoldenApplePlant(N, ExpOut) :-
 
 
 kalibrasiMap :-
+    forall(dataHarvest(X, Y, ID, _, _), kalibrasi(X, Y, ID)).
+
+kalibrasi(X, Y, ID) :-
     scan_player(_, XP, YP),
-    
-    dataHarvest(X, Y, ID, _, _) ->
     (
-        X \== XP,
-        Y \== YP,
-        trueMap(Matrix),
+        (X \== XP; Y \== YP) ->
         (
-            (ID == 0)
-            -> replace(Matrix, X, Y, '=', NMatrix), retract(trueMap(_)), asserta(trueMap(NMatrix))
-            ;
-            (ID == 8)
-            -> replace(Matrix, X, Y, 'c', NMatrix), retract(trueMap(_)), asserta(trueMap(NMatrix))
-            ;
-            (ID == 9)
-            -> replace(Matrix, X, Y, 'p', NMatrix), retract(trueMap(_)), asserta(trueMap(NMatrix))
-            ;
-            (ID == 10)
-            -> replace(Matrix, X, Y, 'w', NMatrix), retract(trueMap(_)), asserta(trueMap(NMatrix))
-            ;
-            (ID == 11)
-            -> replace(Matrix, X, Y, 'm', NMatrix), retract(trueMap(_)), asserta(trueMap(NMatrix))
-            ;
-            (ID == 12)
-            -> replace(Matrix, X, Y, 'u', NMatrix), retract(trueMap(_)), asserta(trueMap(NMatrix))
-            ;
-            (ID == 13)
-            -> replace(Matrix, X, Y, 'b', NMatrix), retract(trueMap(_)), asserta(trueMap(NMatrix))
-            ;
-            (ID == 14)
-            -> replace(Matrix, X, Y, 'g', NMatrix), retract(trueMap(_)), asserta(trueMap(NMatrix))
-        )
-    ); !.
+            ID == 0 -> trueMap(Matrix), replace(Matrix, X, Y, '=', NMatrix), retract(trueMap(_)), asserta(trueMap(NMatrix));
+            ID == 8 -> trueMap(Matrix), replace(Matrix, X, Y, 'c', NMatrix), retract(trueMap(_)), asserta(trueMap(NMatrix));
+            ID == 9 -> trueMap(Matrix), replace(Matrix, X, Y, 'p', NMatrix), retract(trueMap(_)), asserta(trueMap(NMatrix));
+            ID == 10 -> trueMap(Matrix), replace(Matrix, X, Y, 'w', NMatrix), retract(trueMap(_)), asserta(trueMap(NMatrix));
+            ID == 11 -> trueMap(Matrix), replace(Matrix, X, Y, 'm', NMatrix), retract(trueMap(_)), asserta(trueMap(NMatrix));
+            ID == 12 -> trueMap(Matrix), replace(Matrix, X, Y, 'u', NMatrix), retract(trueMap(_)), asserta(trueMap(NMatrix));
+            ID == 13 ->trueMap(Matrix), replace(Matrix, X, Y, 'b', NMatrix), retract(trueMap(_)), asserta(trueMap(NMatrix));
+            ID == 14 -> trueMap(Matrix), replace(Matrix, X, Y, 'g', NMatrix), retract(trueMap(_)), asserta(trueMap(NMatrix))
+        ); trueMap(Matrix), retract(trueMap(_)), asserta(trueMap(Matrix))
+    ). 
