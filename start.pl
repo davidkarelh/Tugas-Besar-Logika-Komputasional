@@ -1,5 +1,6 @@
-:- dynamic((fishingCap/1)).
+:- dynamic((fishingCap/1, ranchingCap/1)).
 fishingCap(100).
+ranchingCap(200).
 
 start :-
     nl, nl, nl, nl, nl,
@@ -110,9 +111,28 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                         );     
                
                     Input == 'ranch',
-                        ranch(Day, Lvranching),
-                        %fungsi naikin lv Lvfishing
-                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc);
+                        ranch(Day, Lvranching, ExpOut),
+                        ExpranchingX is Expranching + ExpOut,
+                        (
+                            (ExpranchingX >= ranchingCap) ->
+                                write('Level Up ranching!\n'),
+                                addlvranchingv(Lvranching, LvranchingX),
+                                ranchingCap(Cap),
+                                NCap is Cap * 1.1,
+                                retract(ranchingCap(_)),
+                                asserta(ranchingCap(NCap))
+                            ; (LvranchingX is Lvranching)
+                        ),
+                        addexpcurrv(Expcurr, ExpcurrX),
+                        write('Kamu mendapat 30 exp!\n'),
+                        (
+                            (ExpcurrX >= Expcap) ->
+                                write('Level Up!\n'),
+                                addlv(Lv, LvX),
+                                addexpcapv(Expcap, ExpcapX),
+                                mainLoop(Job, LvX, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranchingx, Expranchingx, ExpcurrX, ExpcapX, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
+                            ; mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranchingx, Expranchingx, ExpcurrX, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
+                        );
 
                     Input == 'dig',
                         dig,
