@@ -4,12 +4,12 @@ summer([sunny, sunny, sunny, sunny, sunny, sunny, sunny, rain, rain, typhoon]). 
 autumn([sunny, sunny, sunny, sunny, sunny, sunny, sunny, sunny, rain, rain]).   % Day 184 - 275
 winter([sunny, sunny, sunny, sunny, sunny, snow, snow, snow, snow, heavy_snow]).% Day 276 - 365
 
-season(DAY, SEASON):-
-    (
-        DAY < 331,
-            SEASON is 'kemarau';
-        SEASON is 'hujan'
-    ).
+% season(DAY, SEASON):-
+%     (
+%         DAY < 331,
+%             SEASON is 'kemarau';
+%         SEASON is 'hujan'
+%     ).
 
 % seasonAndWeather (input _Day : integer, output _Season : string, output _Weather : string)
 % I.S. _Day terdefinisi dan valid
