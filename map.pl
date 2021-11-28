@@ -77,7 +77,8 @@ updateMap :-
    replaceMatrix(Matrix4, YPlayer, XPlayer, 'P', NewerMatrix),
     
    retract(trueMap(_) ),
-   asserta(trueMap(NewerMatrix) ).
+   asserta(trueMap(NewerMatrix) ),
+   kalibrasiMap.
 
 replaceList( [_ | Tail], 0, X, [X | Tail] ).
 replaceList( [Head | Tail], J, X, [Head | Replaced] ):- J > -1, NewJ is J-1, replaceList(Tail, NewJ, X, Replaced), !.

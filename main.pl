@@ -3,6 +3,7 @@
 :- include('alchemist.pl').
 :- include('fishing.pl').
 :- include('ranching.pl').
+:- include('farming.pl').
 :- include('house.pl').
 :- include('Inventory.pl').
 :- include('map.pl').
