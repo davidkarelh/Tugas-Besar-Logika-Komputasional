@@ -153,6 +153,10 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                         % Asumsi bergerak 1 tile memakan waktu 1 hour
                         % Asumsi pergerakan tidak valid tetap memakan waktu 1 hour
                         w,
+                        random(1, 10, Msg),
+                        (
+                            (Msg =:= 1) -> write('chirp chirp chirp\n')
+                        ),
                         add_hourv(Hour, HourX),
                         (
                             (HourX >= 24) ->
@@ -167,6 +171,10 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                         % Asumsi bergerak 1 tile memakan waktu 1 hour
                         % Asumsi pergerakan tidak valid tetap memakan waktu 1 hour
                         a,
+                        random(1, 10, Msg),
+                        (
+                            (Msg =:= 1) -> write('chirp chirp chirp\n')
+                        ),
                         add_hourv(Hour, HourX),
                         (
                             (HourX >= 24) ->
@@ -181,6 +189,10 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                         % Asumsi bergerak 1 tile memakan waktu 1 hour
                         % Asumsi pergerakan tidak valid tetap memakan waktu 1 hour
                         s,
+                        random(1, 10, Msg),
+                        (
+                            (Msg =:= 1) -> write('chirp chirp chirp\n')
+                        ),
                         add_hourv(Hour, HourX),
                         (
                             (HourX >= 24) ->
@@ -195,6 +207,10 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                         % Asumsi bergerak 1 tile memakan waktu 1 hour
                         % Asumsi pergerakan tidak valid tetap memakan waktu 1 hour
                         d,
+                        random(1, 10, Msg),
+                        (
+                            (Msg =:= 1) -> write('chirp chirp chirp\n')
+                        ),
                         add_hourv(Hour, HourX),
                         (
                             (HourX >= 24) ->
@@ -285,7 +301,7 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                         add_dayv(Day, DayX),
                         mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, DayX, Hour, Qharvest, Qfish, Qranch, Alc);
 
-                    /* Testing Debug Chear */
+                    /* Game Debug Cheat */
                     Input == 'rich',
                         add_goldcheatv(Gold, GoldX),
                         mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, GoldX, Day, Hour, Qharvest, Qfish, Qranch, Alc);
@@ -411,7 +427,7 @@ status(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expran
     write('Hour: '), write(Hour), nl,
     (
         (Qharvest=:=0, Qfish=:=0, Qranch=:=0) ->
-            write('You have done your quest, you can now clam the reward');
+            write('You have done your quest, you can now claim the reward');
         write('You have ongoing quest')
     ),
     nl,
