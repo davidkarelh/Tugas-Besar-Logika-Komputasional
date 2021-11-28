@@ -130,20 +130,60 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                         mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc);
 
                     Input == 'w',
+                        % Asumsi bergerak 1 tile memakan waktu 1 hour
+                        % Asumsi pergerakan tidak valid tetap memakan waktu 1 hour
                         w,
-                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc);
+                        add_hourv(Hour, HourX),
+                        (
+                            (HourX >= 24) ->
+                                write('Its a New Day!\n'),
+                                add_dayv(Day, DayX),
+                                HourY is 0,
+                                mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, DayX, HourY, Qharvest, Qfish, Qranch, Alc)
+                            ;mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, HourX, Qharvest, Qfish, Qranch, Alc)
+                        );
 
                     Input == 'a',
+                        % Asumsi bergerak 1 tile memakan waktu 1 hour
+                        % Asumsi pergerakan tidak valid tetap memakan waktu 1 hour
                         a,
-                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc);
+                        add_hourv(Hour, HourX),
+                        (
+                            (HourX >= 24) ->
+                                write('Its a New Day!\n'),
+                                add_dayv(Day, DayX),
+                                HourY is 0,
+                                mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, DayX, HourY, Qharvest, Qfish, Qranch, Alc)
+                            ;mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, HourX, Qharvest, Qfish, Qranch, Alc)
+                        );
 
                     Input == 's',
+                        % Asumsi bergerak 1 tile memakan waktu 1 hour
+                        % Asumsi pergerakan tidak valid tetap memakan waktu 1 hour
                         s,
-                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc);
+                        add_hourv(Hour, HourX),
+                        (
+                            (HourX >= 24) ->
+                                write('Its a New Day!\n'),
+                                add_dayv(Day, DayX),
+                                HourY is 0,
+                                mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, DayX, HourY, Qharvest, Qfish, Qranch, Alc)
+                            ;mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, HourX, Qharvest, Qfish, Qranch, Alc)
+                        );
 
                     Input == 'd',
+                        % Asumsi bergerak 1 tile memakan waktu 1 hour
+                        % Asumsi pergerakan tidak valid tetap memakan waktu 1 hour
                         d,
-                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc);
+                        add_hourv(Hour, HourX),
+                        (
+                            (HourX >= 24) ->
+                                write('Its a New Day!\n'),
+                                add_dayv(Day, DayX),
+                                HourY is 0,
+                                mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, DayX, HourY, Qharvest, Qfish, Qranch, Alc)
+                            ;mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, HourX, Qharvest, Qfish, Qranch, Alc)
+                        );
 
                     Input == 'exit',
                         write('Apakah anda ingin keluar dari game? Apabila iya, akan otomatis dianggap kalah'), nl,
