@@ -1,4 +1,9 @@
 start :-
+    nl, nl, nl, nl, nl,
+    nl, nl, nl, nl, nl,
+    nl, nl, nl, nl, nl,
+    nl, nl, nl, nl, nl,
+    nl, nl, nl, nl, nl,
     write('Setelah mendapat berita Bitkowin auto cuan'), nl,
     write('Brianaldo pun langsung gaskan menjual semua asetnya'), nl,
     write('untuk membeli Bitkowin. Ia bahkan juga meminjam uang'), nl,
@@ -27,6 +32,7 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                     Input == 'status',
                         status(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc),
                         mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc);
+
                     Input == 'quest',
                         player_position(XQuest, YQuest),
                         (
@@ -108,6 +114,21 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                     Input == 'd',
                         d,
                         mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc);
+
+                    Input == 'exit',
+                        write('Apakah anda ingin keluar dari game? Apabila iya, akan otomatis dianggap kalah'), nl,
+                        write('1. Iya, saya sudah lelah'), nl,
+                        write('0. Tidak, tadi hanya salah tekan saja'), nl,
+                        read(Confirm),
+                        (
+                            (Confirm =:= 1) ->
+                                exitGame;
+                            (Confirm =:= 0) ->
+                                write('Silahkan melanjutkan permainan'), nl,
+                                mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc);
+                            write('Input invalid'), nl,
+                            mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
+                        );
 
                     /* Bagian bawah cuman testing add aspek aja */
                     Input == 'addlv',
@@ -215,7 +236,11 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
     ;write('Penagih hutang tiba di kebun dan mengambil alih kebun \nGAME OVER\n').
 
 startGame :-
-    nl,nl,
+    nl, nl, nl, nl, nl,
+    nl, nl, nl, nl, nl,
+    nl, nl, nl, nl, nl,
+    nl, nl, nl, nl, nl,
+    nl, nl, nl, nl, nl,
     write('Welcome To Harvest Star'), nl,
     nl, nl, 
     write('>>> HARVEST STAR <<<'), nl,
@@ -228,6 +253,10 @@ startGame :-
     write('7. a         : bergerak 1 langkah ke barat'), nl,
     write('8. help      : menampilkan segala bantuan'), nl,
     nl, !.
+
+exitGame :-
+    nl,nl,
+    write('>> GAME OVER <<'), nl.
 
 chooseJob(Job, Lvfarming, Lvfishing, Lvranching) :-
     nl,
