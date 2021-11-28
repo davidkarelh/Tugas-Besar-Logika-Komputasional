@@ -2,7 +2,7 @@
 :- dynamic(diary/2).
 :- include('season.pl').
 /* Deklarasi Rules */
-house(Hour, Day, NewHour, NewDay, EXIT):-
+house(Hour, Day, _NewHour, _NewDay, EXIT):-
     (
         write('Apa yang mau kamu lakukan?\n'),
         write('-  tidur\n'),
@@ -12,17 +12,20 @@ house(Hour, Day, NewHour, NewDay, EXIT):-
         read(INPUT),
         (
             INPUT == 'tidur',
-                NewHour is 7, NewDay is Day + 1,
+                _NewHour is 7, _NewDay is Day + 1,
+                seasonAndWeather(Day, _Season, _Weather)
                 write('Kamu tidur\n\n'),
-                write('Hari: '), write(NewDay), write('\n');
+                write('Hari : '), write(_NewDay), write('\n'),
+                write('Musim: '), write(_Season), write('\n'),
+                write('Cuaca: '), write(_Weather), write('\n');
             INPUT == 'tulisDiary',
                 writeDiary(Day),
-                NewDay is Day, NewHour is Hour;
+                _NewDay is Day, _NewHour is Hour;
             INPUT == 'bacaDiary',
                 write('Diary pada hari apa yang ingin kamu baca?\n'),
                 read(Entry),
                 readDiary(Entry),
-                NewDay is Day, NewHour is Hour;
+                _NewDay is Day, _NewHour is Hour;
             INPUT == 'exit',
                 write('Apakah anda ingin keluar dari game? Apabila iya, akan otomatis dianggap kalah'), nl,
                 write('1. Iya, saya sudah lelah'), nl,
