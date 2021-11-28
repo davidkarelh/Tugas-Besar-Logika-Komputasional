@@ -32,6 +32,9 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
     (Day < 365) ->
         (
             (Gold < 200000) ->
+                write('\n'),
+                write('Enter Command:\n'),
+                write('| ?- '),
                 read(Input),
                 (
                     Input == 'status',
@@ -73,9 +76,12 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                         (
                             (XRumah =:= 7, YRumah =:= 6) ->
                                 house(Hour, Day, NewHour, NewDay, EXIT),
-                                (EXIT == true ->
-                                    exitGame;
-                                mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, NewDay, NewHour, Qharvest, Qfish, Qranch, Alc));
+                                (
+                                    EXIT == true ->
+                                        exitGame;
+                                    EXIT == false ->
+                                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, NewDay, NewHour, Qharvest, Qfish, Qranch, Alc)
+                                );
                             write('Anda sedang tidak berada pada H'), nl,
                             mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
                         );
@@ -92,12 +98,12 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                     Input == 'fish',
                         fish(Lvfishing, ExpOut),
                         ExpfishingX is Expfishing + ExpOut,
+                        fishingCap(Cap),
                             (
-                                (ExpfishingX >= fishingCap) ->
+                                (ExpfishingX >= Cap) ->
                                 write('Level Up Fishing!\n'),
                                 addlvfishingv(Lvfishing, LvfishingX),
-                                fishingCap(Cap),
-                                NCap is Cap * 1.1,
+                                NCap is Cap + Cap * 1.1,
                                 retract(fishingCap(_)),
                                 asserta(fishingCap(NCap))
                             ; (LvfishingX is Lvfishing)
@@ -126,12 +132,12 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                     Input == 'ranch',
                         ranch(Day, Lvranching, ExpOut),
                         ExpranchingX is Expranching + ExpOut,
+                        ranchingCap(Cap),
                         (
-                            (ExpranchingX >= ranchingCap) ->
+                            (ExpranchingX >= Cap) ->
                                 write('Level Up ranching!\n'),
                                 addlvranchingv(Lvranching, LvranchingX),
-                                ranchingCap(Cap),
-                                NCap is Cap * 1.1,
+                                NCap is Cap + Cap * 1.1,
                                 retract(ranchingCap(_)),
                                 asserta(ranchingCap(NCap))
                             ; (LvranchingX is Lvranching)
@@ -184,12 +190,12 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                     Input == 'harvest',
                         harvest(Day, Hour, Lvfarming, ExpOut),
                         ExpfarmingX is Expfarming + ExpOut,
+                        farmingCap(Cap),
                         (
-                            (ExpfarmingX >= farmingCap) ->
+                            (ExpfarmingX >= Cap) ->
                                 write('Level Up farming!\n'),
                                 addlvfarmingv(Lvfarming, LvfarmingX),
-                                farmingCap(Cap),
-                                NCap is Cap * 1.1,
+                                NCap is Cap + Cap * 1.1,
                                 retract(farmingCap(_)),
                                 asserta(farmingCap(NCap))
                             ; (LvfarmingX is Lvfarming)

@@ -26,7 +26,7 @@ throwItem :-
     inventory,
     totalInventory(_Z),
     (_Z == 0 -> 
-        write('\nNothing to throw. Cancelling...'), fail;
+        write('\nNothing to throw. Cancelling...\n'), fail;
         true),
     write('\nWhat do you want to throw?\n> '),
     read(_Throw),
@@ -36,14 +36,14 @@ throwItem :-
             !, _Element = [_, _Throw, _Level],
             deleteEquipment(_ID),
             write('\nYou threw away 1 Level '), write(_Level), write(' '), write(_Throw), write('.\n');
-            write('\nYou don\'t have '), write(_Throw), write('. Cancelling...')
+            write('\nYou don\'t have '), write(_Throw), write('. Cancelling...\n')
         );
         searchItem(_ID, _Element, _), !,
         _Element = [_, _, _N],
         write('\nYou have '), write(_N), write(' '), write(_Throw), write('. How many do you want to throw?\n> '),
         read(_ThrowN),
         (_ThrowN > _N ->
-            write('\nYou don\'t have enough'), write(_Throw), write('. Cancelling...');
+            write('\nYou don\'t have enough'), write(_Throw), write('. Cancelling...\n');
             decreaseItem(_ID, _ThrowN),
             write('\nYou threw away '), write(_ThrowN), write(' '), write(_Throw), write('.\n')
         )

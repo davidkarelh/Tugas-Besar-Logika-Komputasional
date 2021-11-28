@@ -75,7 +75,8 @@ alc_shop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
 			            	(
 				            	write('Pembelian telah berhasil dilakukan'), nl,
 
-				            	/* ADD DUCK KE RANCH */
+								retractall(mythical_duck(_)),
+								asserta(mythical_duck(1)),
 
 				            	AlcX is 4,
 				            	mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, GoldX, Day, Hour, Qharvest, Qfish, Qranch, AlcX)
@@ -154,7 +155,8 @@ alc_shop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
 					            	(
 						            	write('Pembelian telah berhasil dilakukan'), nl,
 
-						            	/* ADD DUCK KE RANCH */
+						            	retractall(mythical_duck(_)),
+										asserta(mythical_duck(1)),
 
 						            	AlcX is 1,
 						            	mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, GoldX, Day, Hour, Qharvest, Qfish, Qranch, AlcX)

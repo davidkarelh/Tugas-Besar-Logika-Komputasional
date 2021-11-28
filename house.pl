@@ -12,6 +12,7 @@ house(Hour, Day, _NewHour, _NewDay, EXIT):-
         read(INPUT),
         (
             INPUT == 'tidur',
+                EXIT = false,
                 _NewHour is 7, _NewDay is Day + 1,
                 seasonAndWeather(Day, _Season, _Weather),
                 write('Kamu tidur\n\n'),
@@ -19,9 +20,11 @@ house(Hour, Day, _NewHour, _NewDay, EXIT):-
                 write('Musim: '), write(_Season), write('\n'),
                 write('Cuaca: '), write(_Weather), write('\n');
             INPUT == 'tulisDiary',
+                EXIT = false,
                 writeDiary(Day),
                 _NewDay is Day, _NewHour is Hour;
             INPUT == 'bacaDiary',
+                EXIT = false,
                 write('Diary pada hari apa yang ingin kamu baca?\n'),
                 read(Entry),
                 readDiary(Entry),
@@ -35,8 +38,14 @@ house(Hour, Day, _NewHour, _NewDay, EXIT):-
                     (Confirm =:= 1) ->
                         EXIT = true;
                     (Confirm =:= 0) ->
+                        EXIT = false,
+                        _NewDay is Day,
+                        _NewHour is Hour,
                         write('Silahkan melanjutkan permainan'), nl;
-                    write('Input invalid'), nl
+                    write('Input invalid'), 
+                    EXIT = false,
+                    _NewDay is Day,
+                    _NewHour is Hour,nl
                 )
         )
     ).
