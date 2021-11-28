@@ -33,7 +33,7 @@ house(Hour, Day, _NewHour, _NewDay, EXIT):-
                 read(Confirm),
                 (
                     (Confirm =:= 1) ->
-                        EXIT is true;
+                        EXIT = true;
                     (Confirm =:= 0) ->
                         write('Silahkan melanjutkan permainan'), nl;
                     write('Input invalid'), nl
