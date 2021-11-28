@@ -72,8 +72,10 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                         player_position(XRumah, YRumah),
                         (
                             (XRumah =:= 7, YRumah =:= 6) ->
-                                house(Hour, Day, NewHour, NewDay),
-                                mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, NewDay, NewHour, Qharvest, Qfish, Qranch, Alc);
+                                house(Hour, Day, NewHour, NewDay, EXIT),
+                                (EXIT == true ->
+                                    exitGame;
+                                mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, NewDay, NewHour, Qharvest, Qfish, Qranch, Alc));
                             write('Anda sedang tidak berada pada H'), nl,
                             mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
                         );

@@ -34,14 +34,15 @@ house(Hour, Day, NewHour, NewDay, EXIT):-
                     (Confirm =:= 0) ->
                         write('Silahkan melanjutkan permainan'), nl;
                     write('Input invalid'), nl
-                );
+                )
         )
     ).
 
 /* Menuliskan diary menjadi fakta */
 writeDiary(Day):-
-    (diary(Entry, X) ->
-        write('Kamu sudah menulis diary pada hari ini');
+    (diary(Day, X) ->
+        write('Kamu sudah menulis diary pada hari ini\n'),
+        write(X);
         /* Kalau tidak ada barulah akan menulis */
         write('Write your diary for Day '), write(Day), write('\n'),
         read(InputDiary),
