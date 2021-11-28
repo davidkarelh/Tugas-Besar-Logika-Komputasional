@@ -60,28 +60,29 @@ validasi_fish :-
         ; write('Anda tidak bisa memancing di tile ini!'), !, fail
     ).
 
-fish(Lvfishing) :-
+fish(Lvfishing, ExpOut) :-
     validasi_fish,
     validasi_fishing_rod,
     searchEquipment(37, _, LvRod),
     generateRandom(N),
     (
         Lvfishing < 5
-        ->  tier1(N, LvRod), !
+        ->  tier1(N, LvRod, Exp), !
         ; Lvfishing < 10
-        -> tier2(N, LvRod), !
+        -> tier2(N, LvRod, Exp), !
         ; Lvfishing < 15
-        -> tier3(N, LvRod), !
+        -> tier3(N, LvRod, Exp), !
         ; Lvfishing < 20
-        -> tier4(N, LvRod), !
+        -> tier4(N, LvRod, Exp), !
         ; Lvfishing < 25
-        -> tier5(N, LvRod), !
+        -> tier5(N, LvRod, Exp), !
         ; Lvfishing < 30
-        -> tier6(N, LvRod), !
-        ; tier7(N, LvRod), !
-    ).
+        -> tier6(N, LvRod, Exp), !
+        ; tier7(N, LvRod, Exp), !
+    ),
+    ExpOut is Exp.
 
-tier1(N, LvRod) :-
+tier1(N, LvRod, ExpOut) :-
     (
         (LvRod > 20)
         -> NN is ((LvRod - (mod(LvRod, 20))) / 4), !
@@ -89,8 +90,8 @@ tier1(N, LvRod) :-
     ),
     (
         (N < (50 - NN))
-        -> write('Yah, kamu kurang beruntung sekarang, kamu gak dapet ikan!\n'), !
-        ; insertItem(15, 1), write('Wah, kamu dapet 1 ikan lele!\n'), !
+        -> write('Yah, kamu kurang beruntung sekarang, kamu gak dapet ikan!\n'), ExpOut is 15, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
+        ; insertItem(15, 1), write('Wah, kamu dapet 1 ikan lele!\n'), ExpOut is 20, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
     ).
 
 tier2(N, LvRod) :-
@@ -101,10 +102,10 @@ tier2(N, LvRod) :-
     ),
     (
         (N < (33 - NN))
-        -> write('Yah, kamu kurang beruntung sekarang, kamu gak dapet ikan!\n'), !
+        -> write('Yah, kamu kurang beruntung sekarang, kamu gak dapet ikan!\n'), ExpOut is 15, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
         ; (N < 67 - NN)
-        -> insertItem(15, 1), write('Wah, kamu dapet 1 ikan lele!\n'), !
-        ; insertItem(16, 1), write('Wah, kamu dapet 1 ikan mujair!\n'), !
+        -> insertItem(15, 1), write('Wah, kamu dapet 1 ikan lele!\n'), ExpOut is 20, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
+        ; insertItem(16, 1), write('Wah, kamu dapet 1 ikan mujair!\n'), ExpOut is 25, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
     ).
 
 tier3(N, LvRod) :-
@@ -115,12 +116,12 @@ tier3(N, LvRod) :-
     ),
     (
         (N < (25 - NN))
-        -> write('Yah, kamu kurang beruntung sekarang, kamu gak dapet ikan!\n'), !
+        -> write('Yah, kamu kurang beruntung sekarang, kamu gak dapet ikan!\n'), ExpOut is 15, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
         ; (N < 50)
-        -> insertItem(15, 1), write('Wah, kamu dapet 1 ikan lele!\n'), !
+        -> insertItem(15, 1), write('Wah, kamu dapet 1 ikan lele!\n'), ExpOut is 20, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
         ; (N < (75 - NN))
-        -> insertItem(16, 1), write('Wah, kamu dapet 1 ikan mujair!\n'), !
-        ; insertItem(17, 1), write('Wah, kamu dapet 1 ikan mas!\n'), !
+        -> insertItem(16, 1), write('Wah, kamu dapet 1 ikan mujair!\n'), ExpOut is 25, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
+        ; insertItem(17, 1), write('Wah, kamu dapet 1 ikan mas!\n'), ExpOut is 30, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
     ).
 
 
@@ -132,14 +133,14 @@ tier4(N, LvRod) :-
     ),
     (
         (N < (20 - NN))
-        -> write('Yah, kamu kurang beruntung sekarang, kamu gak dapet ikan!\n'), !
+        -> write('Yah, kamu kurang beruntung sekarang, kamu gak dapet ikan!\n'), ExpOut is 15, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
         ; (N < 40)
-        -> insertItem(15, 1), write('Wah, kamu dapet 1 ikan lele!\n'), !
+        -> insertItem(15, 1), write('Wah, kamu dapet 1 ikan lele!\n'), ExpOut is 20, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
         ; (N < 60)
-        -> insertItem(16, 1), write('Wah, kamu dapet 1 ikan mujair!\n'), !
+        -> insertItem(16, 1), write('Wah, kamu dapet 1 ikan mujair!\n'), ExpOut is 25, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
         ; (N < (80 - NN))
-        -> insertItem(17, 1), write('Wah, kamu dapet 1 ikan mas!\n'), !
-        ; insertItem(18, 1), write('Wah, kamu dapet 1 lumba-lumba!\n'), !
+        -> insertItem(17, 1), write('Wah, kamu dapet 1 ikan mas!\n'), ExpOut is 30, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
+        ; insertItem(18, 1), write('Wah, kamu dapet 1 lumba-lumba!\n'), ExpOut is 40, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
     ).
 
 tier5(N, LvRod) :-
@@ -150,16 +151,16 @@ tier5(N, LvRod) :-
     ),
     (
         (N < (17 - NN))
-        -> write('Yah, kamu kurang beruntung sekarang, kamu gak dapet ikan!\n'), !
+        -> write('Yah, kamu kurang beruntung sekarang, kamu gak dapet ikan!\n'), ExpOut is 15, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
         ; (N < 34)
-        -> insertItem(15, 1), write('Wah, kamu dapet 1 ikan lele!\n'), !
+        -> insertItem(15, 1), write('Wah, kamu dapet 1 ikan lele!\n'), ExpOut is 20, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
         ; (N < 51)
-        -> insertItem(16, 1), write('Wah, kamu dapet 1 ikan mujair!\n'), !
+        -> insertItem(16, 1), write('Wah, kamu dapet 1 ikan mujair!\n'), ExpOut is 25, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
         ; (N < 68)
-        -> insertItem(17, 1), write('Wah, kamu dapet 1 ikan mas!\n'), !
+        -> insertItem(17, 1), write('Wah, kamu dapet 1 ikan mas!\n'), ExpOut is 30, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
         ; (N < (85 - NN))
-        -> insertItem(18, 1), write('Wah, kamu dapet 1 lumba-lumba!\n'), !
-        ; insertItem(19, 1), write('Wah, kamu dapet 1 great white shark!\n'), !
+        -> insertItem(18, 1), write('Wah, kamu dapet 1 lumba-lumba!\n'), ExpOut is 40, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
+        ; insertItem(19, 1), write('Wah, kamu dapet 1 great white shark!\n'), ExpOut is 50, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
     ).
 
 % Setelah pemain mencapai Tier6, tidak mungkin untuk tidak mendapat ikan lagi
@@ -171,16 +172,16 @@ tier6(N, LvRod) :-
     ),
     (
         (N < (17 - NN))
-        -> insertItem(15, 1), write('Wah, kamu dapet 1 ikan lele!\n'), !
+        -> insertItem(15, 1), write('Wah, kamu dapet 1 ikan lele!\n'), ExpOut is 20, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
         ; (N < 34)
-        -> insertItem(16, 1), write('Wah, kamu dapet 1 ikan mujair!\n'), !
+        -> insertItem(16, 1), write('Wah, kamu dapet 1 ikan mujair!\n'), ExpOut is 25, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
         ; (N < 51)
-        -> insertItem(17, 1), write('Wah, kamu dapet 1 ikan mas!\n'), !
+        -> insertItem(17, 1), write('Wah, kamu dapet 1 ikan mas!\n'), ExpOut is 30, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
         ; (N < 68)
-        -> insertItem(18, 1), write('Wah, kamu dapet 1 lumba-lumba!\n'), !
+        -> insertItem(18, 1), write('Wah, kamu dapet 1 lumba-lumba!\n'), ExpOut is 40, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
         ; (N < (85 - NN))
-        -> insertItem(19, 1), write('Wah, kamu dapet 1 great white shark!\n'), !
-        ; insertItem(20, 1), write('Wah, kamu dapet 1 orca!\n'), !
+        -> insertItem(19, 1), write('Wah, kamu dapet 1 great white shark!\n'), ExpOut is 50, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
+        ; insertItem(20, 1), write('Wah, kamu dapet 1 orca!\n'), ExpOut is 65, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
     ).
 
 % Tier tertinggi, kemampuan spesialnya jika level fishing rodnya cukup tinggi ada kemungkinan dia dapet megalodon terus
@@ -192,15 +193,15 @@ tier7(N, LvRod) :-
     ),
     (
         (N < (17 - NN))
-        -> insertItem(16, 1), write('Wah, kamu dapet 1 ikan mujair!\n'), !
+        -> insertItem(16, 1), write('Wah, kamu dapet 1 ikan mujair!\n'), ExpOut is 25, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
         ; (N < (34 - NN))
-        -> insertItem(17, 1), write('Wah, kamu dapet 1 ikan mas!\n'), !
+        -> insertItem(17, 1), write('Wah, kamu dapet 1 ikan mas!\n'), ExpOut is 30, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
         ; (N < (51 - NN))
-        -> insertItem(18, 1), write('Wah, kamu dapet 1 lumba-lumba!\n'), !
+        -> insertItem(18, 1), write('Wah, kamu dapet 1 lumba-lumba!\n'), ExpOut is 40, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
         ; (N < (68 - NN))
-        -> insertItem(19, 1), write('Wah, kamu dapet 1 great white shark!\n'), !
+        -> insertItem(19, 1), write('Wah, kamu dapet 1 great white shark!\n'), ExpOut is 50, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
         ; (N < (85 - NN))
-        -> insertItem(20, 1), write('Wah, kamu dapet 1 orca!\n'), !
-        ; insertItem(21, 1), write('Wah, kamu dapet 1 megalodon!\n'), !
+        -> insertItem(20, 1), write('Wah, kamu dapet 1 orca!\n'), ExpOut is 65, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
+        ; insertItem(21, 1), write('Wah, kamu dapet 1 megalodon!\n'), ExpOut is 80, write('Kamu mendapat '), write(ExpOut), write(' exp fishing!\n'), !
     ).
 

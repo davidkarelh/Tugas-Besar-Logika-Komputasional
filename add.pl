@@ -17,7 +17,7 @@ addlvranchingv(Lvranching, LvranchingX) :-
     LvranchingX is Lvranching+1.
 
 addexpranchingv(Expranching, ExpranchingX) :-
-    ExpranchingX is Expranching+1.
+    ExpranchingX is Expranching+20.
 
 addexpcurrv(Expcurr, ExpcurrX) :-
     ExpcurrX is Expcurr+30.

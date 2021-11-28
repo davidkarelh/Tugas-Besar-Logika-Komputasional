@@ -1,3 +1,6 @@
+:- dynamic((fishingCap/1)).
+fishingCap(100).
+
 start :-
     nl, nl, nl, nl, nl,
     nl, nl, nl, nl, nl,
@@ -75,10 +78,29 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                         mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc);
 
                     Input == 'fish',
-                        fish(Lvfishing),
-                        %fungsi naikin lv Lvfishing
-                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc);
-                    
+                        fish(Lvfishing, ExpOut),
+                        ExpfishingX is Expfishing + ExpOut,
+                        (
+                            (ExpfishingX >= fishingCap) ->
+                                write('Level Up Fishing!\n'),
+                                addlvfishingv(Lvfishing, LvfishingX),
+                                fishingCap(Cap),
+                                NCap is Cap * 1.1,
+                                retract(fishingCap(_)),
+                                asserta(fishingCap(NCap))
+                            ; (LvfishingX is Lvfishing)
+                        ),
+                        addexpcurrv(Expcurr, ExpcurrX),
+                        write('Kamu mendapat 30 exp!\n'),
+                        (
+                            (ExpcurrX >= Expcap) ->
+                                write('Level Up!\n'),
+                                addlv(Lv, LvX),
+                                addexpcapv(Expcap, ExpcapX),
+                                mainLoop(Job, LvX, Lvfarming, Expfarming, Lvfishingx, ExpfishingX, Lvranching, Expranching, ExpcurrX, ExpcapX, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
+                            ; mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishingx, ExpfishingX, Lvranching, Expranching, ExpcurrX, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
+                        );     
+               
                     Input == 'ranch',
                         ranch(Day, Lvranching),
                         %fungsi naikin lv Lvfishing
