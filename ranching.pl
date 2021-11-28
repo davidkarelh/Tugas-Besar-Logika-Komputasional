@@ -426,7 +426,7 @@ tigerSkin(Lvranching, ExpOut) :-
     tiger(Tiger),
     (
         searchEquipment(38, _, LvSamurai)
-        ->  read(Jumlah),
+        ->  write('Masukkan jumlah tiger yang akan di-kill!\n'), read(Jumlah),
                 (
                     (Jumlah =< Tiger)
                     -> Ntiger is Tiger - Jumlah, retract(tiger(Tiger)), asserta(tiger(Ntiger)), killTiger(Lvranching, LvSamurai, Jumlah, ExpOut)
