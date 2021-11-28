@@ -61,8 +61,8 @@ alc_shop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
 
         (Alc =:= 2) ->
             write('Legendary Alchemist Shop'), nl,
-            write('========================'), nl,
-            write('1x Mythical Duck >> 5000'), nl,
+            write('========================='), nl,
+            write('1x Mythical Duck >> 20000'), nl,
             write('Apakah anda ingin membeli item ini?'), nl,
             write('1. Yes'), nl,
             write('0. No'), nl,
@@ -98,9 +98,9 @@ alc_shop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
 
         (Alc =:= 3) ->
             write('Legendary Alchemist Shop'), nl,
-            write('========================'), nl,
+            write('========================='), nl,
             write('1x Lv Up Potion  >> 5000'), nl,
-            write('1x Mythical Duck >> 5000'), nl,
+            write('1x Mythical Duck >> 20000'), nl,
             write('Item mana yang ingin dibeli?'), nl,
             write('1. Potion'), nl,
             write('2. Duck'), nl,
