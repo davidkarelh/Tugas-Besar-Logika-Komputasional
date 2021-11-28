@@ -253,9 +253,9 @@ a :-
    validW(X,Y,Out),
    (
       (Out == 2)
-      -> write('Tidak bisa keluar dari batas!'),nl
+      -> write('Tidak bisa keluar dari batas!'), nl, !
       ; (Out == 1)
-      -> write('Tidak bisa masuk ke air!'),nl
+      -> write('Tidak bisa masuk ke air!'), nl, !
       ; trueMap(M),moveW(M, X, Y), updateMap, map, !
    ).
 
@@ -265,9 +265,9 @@ d :-
    validE(X,Y,Out),
    (
       (Out == 2)
-      -> write('Tidak bisa keluar dari batas!'),nl
+      -> write('Tidak bisa keluar dari batas!'), nl, !
       ; (Out == 1)
-      -> write('Tidak bisa masuk ke air!'),nl
+      -> write('Tidak bisa masuk ke air!'), nl, !
       ; trueMap(M),moveE(M, X, Y), updateMap, map, !
    ).
 
@@ -277,9 +277,9 @@ w :-
    validN(X,Y,Out),
    (
       (Out == 2)
-      -> write('Tidak bisa keluar dari batas!'),nl
+      -> write('Tidak bisa keluar dari batas!'), nl, !
       ; (Out == 1)
-      -> write('Tidak bisa masuk ke air!'),nl
+      -> write('Tidak bisa masuk ke air!'), nl, !
       ; trueMap(M),moveN(M, X, Y), updateMap, map, !
    ).
 
@@ -289,8 +289,8 @@ s :-
    validS(X,Y,Out),
    (
       (Out == 2)
-      -> write('Tidak bisa keluar dari batas!'),nl
+      -> write('Tidak bisa keluar dari batas!'),nl, !
       ; (Out == 1)
-      -> write('Tidak bisa masuk ke air!'),nl
+      -> write('Tidak bisa masuk ke air!'),nl, !
       ; trueMap(M),moveS(M, X, Y), updateMap, map, !
    ).
