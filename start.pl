@@ -1,6 +1,7 @@
-:- dynamic((fishingCap/1, ranchingCap/1)).
+:- dynamic((fishingCap/1, ranchingCap/1, farmingCap/1)).
 fishingCap(100).
 ranchingCap(200).
+farmingCap(100).
 
 start :-
     nl, nl, nl, nl, nl,
@@ -106,8 +107,8 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                                 write('Level Up!\n'),
                                 addlv(Lv, LvX),
                                 addexpcapv(Expcap, ExpcapX),
-                                mainLoop(Job, LvX, Lvfarming, Expfarming, Lvfishingx, ExpfishingX, Lvranching, Expranching, ExpcurrX, ExpcapX, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
-                            ; mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishingx, ExpfishingX, Lvranching, Expranching, ExpcurrX, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
+                                mainLoop(Job, LvX, Lvfarming, Expfarming, LvfishingX, ExpfishingX, Lvranching, Expranching, ExpcurrX, ExpcapX, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
+                            ; mainLoop(Job, Lv, Lvfarming, Expfarming, LvfishingX, ExpfishingX, Lvranching, Expranching, ExpcurrX, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
                         );     
                
                     Input == 'ranch',
@@ -130,8 +131,8 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                                 write('Level Up!\n'),
                                 addlv(Lv, LvX),
                                 addexpcapv(Expcap, ExpcapX),
-                                mainLoop(Job, LvX, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranchingx, Expranchingx, ExpcurrX, ExpcapX, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
-                            ; mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranchingx, Expranchingx, ExpcurrX, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
+                                mainLoop(Job, LvX, Lvfarming, Expfarming, Lvfishing, Expfishing, LvranchingX, ExpranchingX, ExpcurrX, ExpcapX, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
+                            ; mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, LvranchingX, ExpranchingX, ExpcurrX, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
                         );
 
                     Input == 'dig',
@@ -145,9 +146,28 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                         mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc);
 
                     Input == 'harvest',
-                        harvest(Day, Hour),
-                        %fungsi naikin lv Lvfishing
-                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc);
+                        harvest(Day, Hour, Lvfarming, ExpOut),
+                        ExpfarmingX is Expfarming + ExpOut,
+                        (
+                            (ExpfarmingX >= farmingCap) ->
+                                write('Level Up farming!\n'),
+                                addlvfarmingv(Lvfarming, LvfarmingX),
+                                farmingCap(Cap),
+                                NCap is Cap * 1.1,
+                                retract(farmingCap(_)),
+                                asserta(farmingCap(NCap))
+                            ; (LvfarmingX is Lvfarming)
+                        ),
+                        addexpcurrv(Expcurr, ExpcurrX),
+                        write('Kamu mendapat 30 exp!\n'),
+                        (
+                            (ExpcurrX >= Expcap) ->
+                                write('Level Up!\n'),
+                                addlv(Lv, LvX),
+                                addexpcapv(Expcap, ExpcapX),
+                                mainLoop(Job, LvX, LvfarmingX, ExpfarmingX, Lvfishing, Expfishing, Lvranching, Expranching, ExpcurrX, ExpcapX, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
+                            ; mainLoop(Job, Lv, LvfarmingX, ExpfarmingX, Lvfishing, Expfishing, Lvranching, Expranching, ExpcurrX, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
+                        );
 
                     Input == 'w',
                         % Asumsi bergerak 1 tile memakan waktu 1 hour
