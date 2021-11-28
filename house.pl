@@ -13,7 +13,7 @@ house(Hour, Day, _NewHour, _NewDay, EXIT):-
         (
             INPUT == 'tidur',
                 _NewHour is 7, _NewDay is Day + 1,
-                seasonAndWeather(Day, _Season, _Weather)
+                seasonAndWeather(Day, _Season, _Weather),
                 write('Kamu tidur\n\n'),
                 write('Hari : '), write(_NewDay), write('\n'),
                 write('Musim: '), write(_Season), write('\n'),
