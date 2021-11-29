@@ -6,7 +6,10 @@
 
 # How To Run
 1. Buka GNU Prolog
-2. Compile file harvest-star.pl dengan menuliskan _**['harvest-star'].**_
+2. Compile file harvest-star.pl dengan menuliskan 
+    ```
+    | ?- ['harvest-star'].
+    ```
 
 ## Daftar Anggota Kelompok
 
