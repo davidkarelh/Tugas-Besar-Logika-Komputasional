@@ -32,7 +32,7 @@ writeDiary(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Ex
         retract(diary(Day, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _));
         true
     ),
-    write('Write your diary for Day '), write(Day), write('\n'),
+    write('Write your diary for Day '), write(Day), write('\n> '),
     read(InputDiary),
     inventory_item_list(ItemList),
     inventory_equipment_list(EquipmentList),
@@ -48,7 +48,7 @@ writeDiary(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Ex
     loadCrop(DataCrop),
     updateMap,
     assertz(diary(Day, InputDiary, Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc, ItemList, EquipmentList, Chicken, Cow, Sheep, Pig, Ostrich, Tiger, MythicalDuck, DataCrop)),
-    write('Day '), write(Day), write(' entry saved').
+    nl, write('Day '), write(Day), write(' entry saved'), nl.
 
 % diary(DAY, ISIDIARY, JOB, LV, LVFARMING, EXPFARMING, LVFARMING, EXPFARMING, LVRANCHING, EXPRANCHING, EXPCURR, EXPCAP, GOLD, DAY, HOUR, QHARVEST, QFISH, QRANCH, ALC, INVENTORY_ITEM_LIST, INVENTORY_EQUIPMENT_LIST, CHICKEN, COW, SHEEP, PIG, OSTRICH, TIGER, MYTHICAL_DUCK, CROP)
 % diary(  A,        B,   C,  D,         E,          F,         G,          H,          I,           J,       K,      L,    M,   N,    O,        P,     Q,      R,   S,                   T,                        U,       V,   W,     X,   Y,       Z,    AA,            AB,   AC)
@@ -99,8 +99,8 @@ house(_NewHour, _NewDay, EXIT, Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfis
         write('-  tidur\n'),
         write('-  tulisDiary\n'),
         write('-  bacaDiary\n'),
-        write('-  exit\n'),
-        read(INPUT),
+        write('-  exit\n> '),
+        read(INPUT), nl,
         (
             INPUT == 'tidur',
                 EXIT = false,
@@ -119,14 +119,14 @@ house(_NewHour, _NewDay, EXIT, Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfis
                 _NewDay is Day, _NewHour is Hour;
             INPUT == 'bacaDiary',
                 EXIT = false,
-                write('Diary pada hari apa yang ingin kamu baca?\n'),
+                write('Diary pada hari apa yang ingin kamu baca?\n> '),
                 read(Entry),
                 readDiary(Entry),
                 _NewDay is Day, _NewHour is Hour;
             INPUT == 'exit',
                 write('Apakah anda ingin keluar dari game? Apabila iya, akan otomatis dianggap kalah'), nl,
                 write('1. Iya, saya sudah lelah'), nl,
-                write('0. Tidak, tadi hanya salah tekan saja'), nl,
+                write('0. Tidak, tadi hanya salah tekan saja\n> '),
                 read(Confirm),
                 (
                     (Confirm =:= 1) ->
@@ -135,8 +135,8 @@ house(_NewHour, _NewDay, EXIT, Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfis
                         EXIT = false,
                         _NewDay is Day,
                         _NewHour is Hour,
-                        write('Silahkan melanjutkan permainan'), nl;
-                    write('Input invalid'), 
+                        write('\nSilahkan melanjutkan permainan!'), nl;
+                    write('\nInput invalid'), 
                     EXIT = false,
                     _NewDay is Day,
                     _NewHour is Hour,nl

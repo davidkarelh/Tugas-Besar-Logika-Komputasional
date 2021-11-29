@@ -216,7 +216,7 @@ moveW(M, X, Y) :-
    retract(player_position(_, _) ),
    asserta(player_position(X1, Y) ),
    updateMap,
-   write('Anda bergerak ke arah barat.'),nl.
+   write('Anda bergerak ke arah barat.'),nl,nl.
 
 %Melakukan perpindahan P(player) dengan arah yang ditentukan(East)
 moveE(M, X, Y) :-
@@ -224,7 +224,7 @@ moveE(M, X, Y) :-
    retract(player_position(_, _) ),
    asserta(player_position(X1, Y) ),
    updateMap,
-   write('Anda bergerak ke arah timur.'),nl.
+   write('Anda bergerak ke arah timur.'),nl,nl.
 
 %Melakukan perpindahan P(player) dengan arah yang ditentukan(North)
 moveN(M, X, Y) :-
@@ -232,7 +232,7 @@ moveN(M, X, Y) :-
    retract(player_position(_, _) ),
    asserta(player_position(X, Y1) ),
    updateMap,
-   write('Anda bergerak ke arah utara.'),nl.
+   write('Anda bergerak ke arah utara.'),nl,nl.
 
 %Melakukan perpindahan P(player) dengan arah yang ditentukan(South)
 moveS(M, X, Y) :-
@@ -240,7 +240,7 @@ moveS(M, X, Y) :-
    retract(player_position(_, _) ),
    asserta(player_position(X, Y1) ),
    updateMap,
-   write('Anda bergerak ke arah selatan.'),nl.
+   write('Anda bergerak ke arah selatan.'),nl,nl.
 
 %Memanggil fungsi map untuk langsung mengeprint matrix map
 map :-    

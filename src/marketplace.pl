@@ -5,7 +5,7 @@
 % I.S. Gold terdefinisi
 % F.S. menghasilkan GoldOut sesuai dengan buy atau sell
 market(Season, Gold, GoldOut) :-
-    write('\nWhat do you want to do?'),
+    write('What do you want to do?'),
     write('\nBuy'),
     write('\nSell\n> '),
     read(_X),

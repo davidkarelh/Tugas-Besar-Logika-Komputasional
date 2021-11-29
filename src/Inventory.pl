@@ -16,7 +16,7 @@ inventory_equipment_list([]).
 % F.S. Menampilkan seluruh Item dan Equipment pada layar
 inventory :- 
     totalInventory(_N),
-    write('\nYour inventory ('), write(_N), write(' / 100)\n'), !,
+    write('Your inventory ('), write(_N), write(' / 100)\n'), !,
     displayInventory.
 
 % throwItem.

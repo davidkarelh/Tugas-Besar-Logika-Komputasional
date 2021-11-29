@@ -9,19 +9,39 @@ start :-
     nl, nl, nl, nl, nl,
     nl, nl, nl, nl, nl,
     nl, nl, nl, nl, nl,
-    write('Setelah mendapat berita Bitkowin auto cuan'), nl,
-    write('Brianaldo pun langsung gaskan menjual semua asetnya'), nl,
-    write('untuk membeli Bitkowin. Ia bahkan juga meminjam uang'), nl,
-    write('dari rentenir sebesar 2.000.000 gold'), nl,
-    write('Keesokan harinya, ternyata harga Bitkowin turun'), nl,
-    write('secara drastis sehingga Brianaldo menjadi terjerat'), nl,
-    write('utang sebesar 200.000 gold'), nl,
-    write('Hal ini pun membuat Brianaldo berpikir keras'), nl,
-    write('bagaimana cara untuk mengembalikan uang tersebut'), nl,
-    write('Setelah beberapa jam berpikir keras, Brianaldo'), nl,
-    write('tiba-tiba terpikirkan bahwa Ia memiliki ladang di'), nl,
-    write('kampung halamannya. Oleh karena itu, Ia memutuskan'), nl,
-    write('untuk balik ke kampung halamannya untuk bekerja'), nl,
+    write(' _  _   __   ___  _  _  ___  ___  ____    ___  ____  __   ___ \n'),  
+    write('( )( ) (  ) (  ,)( )( )(  _)/ __)(_  _)  / __)(_  _)(  ) (  ,) \n'), 
+    write(' )__(  /__\\  )  \\ \\\\//  ) _)\\__ \\  )(    \\__ \\  )(  /__\\  )  \\\n'),
+    write('(_)(_)(_)(_)(_)\\_)(__) (___)(___/ (__)   (___/ (__)(_)(_)(_)\\_)\n'), nl,
+    write('                          by G01 K03'), nl, nl, nl,
+    sleep(1),
+    write('Setelah mendapat berita Bitkowin auto cuan, '), nl, nl,
+    sleep(1),
+    write('Brianaldo pun langsung gaskan menjual semua asetnya untuk membeli Bitkowin.'), nl, nl,
+    sleep(2),
+    write('Ia bahkan juga meminjam uang dari rentenir sebesar 2.000.000 gold.'), nl, nl,
+    sleep(2),
+    write('Keesokan harinya, ternyata harga Bitkowin turun secara drastis sehingga'), nl,
+    write('Brianaldo menjadi terjerat utang sebesar 200.000 gold.'), nl, nl,
+    sleep(2),
+    write('Hal ini pun membuat Brianaldo berpikir keras bagaimana cara untuk'), nl,
+    write('mengembalikan uang tersebut.'), nl, nl,
+    sleep(2),
+    write('Setelah beberapa jam berpikir keras, Brianaldo tiba-tiba terpikirkan'), nl,
+    write('bahwa Ia memiliki ladang di kampung halamannya.'), nl, nl,
+    sleep(2),
+    write('Oleh karena itu, Ia memutuskan untuk balik ke kampung halamannya untuk bekerja....'), nl, nl,
+    sleep(5),
+    nl, nl, nl, nl, nl,
+    nl, nl, nl, nl, nl,
+    nl, nl, nl, nl, nl,
+    nl, nl, nl, nl, nl,
+    nl, nl, nl, nl, nl,
+    write(' _  _   __   ___  _  _  ___  ___  ____    ___  ____  __   ___ \n'),  
+    write('( )( ) (  ) (  ,)( )( )(  _)/ __)(_  _)  / __)(_  _)(  ) (  ,) \n'), 
+    write(' )__(  /__\\  )  \\ \\\\//  ) _)\\__ \\  )(    \\__ \\  )(  /__\\  )  \\\n'),
+    write('(_)(_)(_)(_)(_)\\_)(__) (___)(___/ (__)   (___/ (__)(_)(_)(_)\\_)\n'), nl,
+    write('                        by G01 K03'), nl, nl,
     chooseJob(Job, Lvfarming, Lvfishing, Lvranching), nl,
     initiate_true_map,
     /* mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc), */
@@ -35,7 +55,7 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                 write('\n'),
                 write('Enter Command:\n'),
                 write('| ?- '),
-                read(Input),
+                read(Input), nl,
                 (
                     Input == 'status',
                         status(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc),
@@ -97,6 +117,10 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
 
                     Input == 'inventory',
                         inventory,
+                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc);
+
+                    Input == 'throwItem',
+                        throwItem,
                         mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc);
 
                     Input == 'fish',
@@ -381,11 +405,24 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                         redQranch(Qranch, QranchX),
                         mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, QranchX, Alc);
 
+                    write('Invalid Input!\n'),
                     mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
                 )
-            ;write('Penagih hutang tiba di kebun anda dan anda langsung melunasi hutang anda \nCONGRATULATION YOU WIN!\n')
+            ;write('Penagih hutang tiba di kebun anda dan anda langsung melunasi hutang anda!'), nl, nl,
+            write(' _  _   __   ___  _  _  ___  ___  ____    ___  ____  __   ___ \n'),  
+            write('( )( ) (  ) (  ,)( )( )(  _)/ __)(_  _)  / __)(_  _)(  ) (  ,) \n'), 
+            write(' )__(  /__\\  )  \\ \\\\//  ) _)\\__ \\  )(    \\__ \\  )(  /__\\  )  \\\n'),
+            write('(_)(_)(_)(_)(_)\\_)(__) (___)(___/ (__)   (___/ (__)(_)(_)(_)\\_)\n'), nl,
+            write('                          by G01 K03'), nl, nl,
+            write('\n               > > > CONGRATULATION YOU WIN! < < <\n')
         )
-    ;write('Penagih hutang tiba di kebun dan mengambil alih kebun \nGAME OVER\n').
+    ;write('Penagih hutang tiba di kebun dan mengambil alih kebun!'), nl, nl,
+    write(' _  _   __   ___  _  _  ___  ___  ____    ___  ____  __   ___ \n'),  
+    write('( )( ) (  ) (  ,)( )( )(  _)/ __)(_  _)  / __)(_  _)(  ) (  ,) \n'), 
+    write(' )__(  /__\\  )  \\ \\\\//  ) _)\\__ \\  )(    \\__ \\  )(  /__\\  )  \\\n'),
+    write('(_)(_)(_)(_)(_)\\_)(__) (___)(___/ (__)   (___/ (__)(_)(_)(_)\\_)\n'), nl,
+    write('                          by G01 K03'), nl, nl, nl,
+    write('\n                  > > > GAME OVER < < <\n').
 
 startGame :-
     nl, nl, nl, nl, nl,
@@ -393,30 +430,39 @@ startGame :-
     nl, nl, nl, nl, nl,
     nl, nl, nl, nl, nl,
     nl, nl, nl, nl, nl,
-    write('Welcome To Harvest Star'), nl,
-    nl, nl, 
-    write('>>> HARVEST STAR <<<'), nl,
-    write('1. start     : memulai permainan'), nl,
-    write('2. map       : menampilkan peta'), nl,
-    write('3. status    : menampilkan kondisi terkini'), nl,
-    write('4. w         : bergerak 1 langkah ke utara'), nl,
-    write('5. s         : bergerak 1 langkah ke selatan'), nl,
-    write('6. d         : bergerak 1 langkah ke timur'), nl,
-    write('7. a         : bergerak 1 langkah ke barat'), nl,
-    write('8. help      : menampilkan segala bantuan'), nl,
+    write(' _  _   __   ___  _  _  ___  ___  ____    ___  ____  __   ___ \n'),  
+    write('( )( ) (  ) (  ,)( )( )(  _)/ __)(_  _)  / __)(_  _)(  ) (  ,) \n'), 
+    write(' )__(  /__\\  )  \\ \\\\//  ) _)\\__ \\  )(    \\__ \\  )(  /__\\  )  \\\n'),
+    write('(_)(_)(_)(_)(_)\\_)(__) (___)(___/ (__)   (___/ (__)(_)(_)(_)\\_)\n'), nl,
+    write('                          by G01 K03'), nl, nl, nl,
+    write('                type \'start\' to start the game'),
+    % write('>>> HARVEST STAR <<<'), nl,
+    % write('1. start     : memulai permainan'), nl,
+    % write('2. map       : menampilkan peta'), nl,
+    % write('3. status    : menampilkan kondisi terkini'), nl,
+    % write('4. w         : bergerak 1 langkah ke utara'), nl,
+    % write('5. s         : bergerak 1 langkah ke selatan'), nl,
+    % write('6. d         : bergerak 1 langkah ke timur'), nl,
+    % write('7. a         : bergerak 1 langkah ke barat'), nl,
+    % write('8. help      : menampilkan segala bantuan'), nl,
     nl, !.
 
 exitGame :-
-    nl,nl,
-    write('>> GAME OVER <<'), nl.
+    nl, nl,
+    write(' _  _   __   ___  _  _  ___  ___  ____    ___  ____  __   ___ \n'),  
+    write('( )( ) (  ) (  ,)( )( )(  _)/ __)(_  _)  / __)(_  _)(  ) (  ,) \n'), 
+    write(' )__(  /__\\  )  \\ \\\\//  ) _)\\__ \\  )(    \\__ \\  )(  /__\\  )  \\\n'),
+    write('(_)(_)(_)(_)(_)\\_)(__) (___)(___/ (__)   (___/ (__)(_)(_)(_)\\_)\n'), nl,
+    write('                          by G01 K03'), nl, nl,
+    write('\n                    > > > GAME OVER < < <\n').
 
 chooseJob(Job, Lvfarming, Lvfishing, Lvranching) :-
     nl,
     write('Welcome to Harvest Star, Choose your job'), nl,
     write('1. Fisherman'), nl,
     write('2. Farmer'), nl,
-    write('3. Rancher'), nl,
-    read(JobX),
+    write('3. Rancher\n> '),
+    read(JobX), nl,
     (
         (JobX =:= 1) ->
             Job is JobX,
@@ -425,7 +471,7 @@ chooseJob(Job, Lvfarming, Lvfishing, Lvranching) :-
             Lvfishing is 5,
             Lvranching is 0,
             insertEquipment(37, 1),
-            write('You choose Fisherman, let\'s go');
+            write('You choose Fisherman, let\'s go!');
 
         (JobX =:= 2) ->
             Job is JobX,
@@ -435,7 +481,7 @@ chooseJob(Job, Lvfarming, Lvfishing, Lvranching) :-
             Lvranching is 0,
             insertEquipment(36, 1),
             insertItem(9, 10),
-            write('You choose Farmer, let\'s go');
+            write('You choose Farmer, let\'s go!');
 
         (JobX =:= 3) ->
             Job is JobX,
@@ -444,14 +490,15 @@ chooseJob(Job, Lvfarming, Lvfishing, Lvranching) :-
             Lvfishing is 0,
             Lvranching is 5,
             insertEquipment(38, 1),
-            write('You choose Rancher, let\'s go');
+            write('You choose Rancher, let\'s go!');
 
         write('Invalid Input'),
         chooseJob(Job, Lvfarming, Lvfishing, Lvranching)
     ).
 
 status(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc) :-
-    write('Job: '),
+    write('----------- STATUS -----------'), nl,
+    write('Job              : '),
     (
         Job =:= 1,
             write('Fisherman\n');
@@ -460,22 +507,22 @@ status(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expran
         Job =:= 3,
             write('Rancher\n')
     ),
-    write('Level: '), write(Lv), nl,
-    write('Level farming: '), write(Lvfarming), nl,
-    write('Exp farming: '), write(Expfarming), nl,
-    write('Level fishing: '), write(Lvfishing), nl,
-    write('Exp fishing: '), write(Expfishing), nl,
-    write('Level ranching: '), write(Lvranching), nl,
-    write('Exp ranching: '), write(Expranching), nl,
-    write('Exp: '), write(Expcurr), write('/'), write(Expcap), nl,
-    write('Gold: '), write(Gold), nl,
-    write('Time Details:'), nl,
-    write('Day: '), write(Day), nl,
-    write('Hour: '), write(Hour), nl,
+    write('Level            : '), write(Lv), nl,
+    write('Level farming    : '), write(Lvfarming), nl,
+    write('Exp farming      : '), write(Expfarming), nl,
+    write('Level fishing    : '), write(Lvfishing), nl,
+    write('Exp fishing      : '), write(Expfishing), nl,
+    write('Level ranching   : '), write(Lvranching), nl,
+    write('Exp ranching     : '), write(Expranching), nl,
+    write('Exp              : '), write(Expcurr), write(' / '), write(Expcap), nl,
+    write('Gold             : '), write(Gold), nl, nl,
+    write('------------ TIME ------------'), nl,
+    write('Day              : '), write(Day), nl,
+    write('Hour             : '), write(Hour), nl, nl,
+    write('----------- QUEST ------------'), nl,
     (
         (Qharvest=:=0, Qfish=:=0, Qranch=:=0) ->
-            write('You have done your quest, you can now claim the reward');
-        write('You have ongoing quest')
+            write('You have done your quest, you can now claim the reward!');
+        write('You have ongoing quest!')
     ),
-    nl,
     nl.
