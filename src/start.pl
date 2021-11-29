@@ -143,7 +143,7 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                                     write('Level Up!\n'),
                                     addlv(Lv, LvX),
                                     addexpcapv(Expcap, ExpcapX)
-                                ; ExpcapX is Expcap
+                                ; ExpcapX is Expcap, LvX is Lv
                             ),  
                             NHour is Hour + 2,
                             (
@@ -177,7 +177,7 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                                 write('Level Up!\n'),
                                 addlv(Lv, LvX),
                                 addexpcapv(Expcap, ExpcapX)
-                            ; ExpcapX is Expcap
+                            ; ExpcapX is Expcap, LvX is Lv
                         ),
                         NHour is Hour + 3,
                             (
@@ -235,7 +235,7 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                                 write('Level Up!\n'),
                                 addlv(Lv, LvX),
                                 addexpcapv(Expcap, ExpcapX)
-                            ; ExpcapX is Expcap
+                            ; ExpcapX is Expcap, LvX is Lv
                         ),
                         NHour is Hour + 2,
                         (
