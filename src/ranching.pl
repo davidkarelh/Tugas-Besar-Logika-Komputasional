@@ -195,7 +195,7 @@ chickenEgg(Day, Lvranching, ExpOut) :-
                         ; NChick is Chick * 5, insertItem(30, NChick), write('Ayam kamu menghasilkan '), write(NChick), write(' telur.\n'), retract(chickenLastTaken(D)), asserta(chickenLastTaken(Day)), ExpOut is 20 * Chick, write(ExpOut), write(' exp ranching!\n'), !
                     )
             )
-        ; write('Ayam kamu belum menghasilkan telur\n'), ExpOut is 15 * Chick, write('Kamu mendapat '), write(ExpOut), write(' exp ranchig!\n'), !
+        ; write('Ayam kamu belum menghasilkan telur\n'), ExpOut is 15 * Chick, write('Kamu mendapat '), write(ExpOut), write(' exp ranching!\n'), !
     ).
 
 cowMilk(Day, Lvranching, ExpOut) :-
