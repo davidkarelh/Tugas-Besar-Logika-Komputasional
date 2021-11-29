@@ -45,6 +45,7 @@ writeDiary(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Ex
     mythical_duck(MythicalDuck),
     saveHarvest,
     crop(DataCrop),
+    retractall(dataHarvest(_, _, _, _, _)),
     loadCrop(DataCrop),
     updateMap,
     assertz(diary(Day, InputDiary, Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc, ItemList, EquipmentList, Chicken, Cow, Sheep, Pig, Ostrich, Tiger, MythicalDuck, DataCrop)),
@@ -75,6 +76,7 @@ readDiary(Day) :-
     asserta(tiger(AA)),
     retractall(mythical_duck(_)),
     asserta(mythical_duck(AB)),
+    retractall(dataHarvest(_, _, _, _, _)),
     loadCrop(AC),
     % chicken, cow, sheep, pig, ostrich, tiger, mythical_duck, crop
     updateMap,
@@ -82,7 +84,6 @@ readDiary(Day) :-
 
 loadCrop([]).
 loadCrop([Head | Tail]) :- 
-    retractall(dataHarvest(_, _, _, _, _)),
     Head = [A, B, C, D, E],
     An is A,
     Bn is B,
