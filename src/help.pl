@@ -1,6 +1,6 @@
 /* Rules */
 help:-
-    write('|----------------------------COMMAND LIST----------------------------|'),
+    write('|----------------------------COMMAND LIST----------------------------|\n'),
     write('| map      : menampilkan peta                                        |\n'),
     write('| house    : menampilkan apa yang bisa kamu lakukan di rumah         |\n'),
     write('| status   : menampilkan kondisimu terkini                           |\n'),
