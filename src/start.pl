@@ -465,7 +465,7 @@ chooseJob(Job, Lvfarming, Lvfishing, Lvranching) :-
             Job is JobX,
             % Advantage Role
             Lvfarming is 0,
-            Lvfishing is 5,
+            Lvfishing is 10,
             Lvranching is 0,
             insertEquipment(37, 1),
             write('You choose Fisherman, let\'s go!');
@@ -473,7 +473,7 @@ chooseJob(Job, Lvfarming, Lvfishing, Lvranching) :-
         (JobX =:= 2) ->
             Job is JobX,
             % Advantage Role
-            Lvfarming is 5,
+            Lvfarming is 10,
             Lvfishing is 0,
             Lvranching is 0,
             insertEquipment(36, 1),
@@ -484,7 +484,7 @@ chooseJob(Job, Lvfarming, Lvfishing, Lvranching) :-
             % Advantage Role
             Lvfarming is 0,
             Lvfishing is 0,
-            Lvranching is 5,
+            Lvranching is 10,
             insertEquipment(38, 1),
             write('You choose Rancher, let\'s go!');
 
