@@ -369,12 +369,12 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                         add_dayv(Day, DayX),
                         mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, DayX, Hour, Qharvest, Qfish, Qranch, Alc);
 
-                    /* Game Debug Cheat */
+                    /* CHEAT */
                     Input == 'rich',
                         add_goldcheatv(Gold, GoldX),
                         mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, GoldX, Day, Hour, Qharvest, Qfish, Qranch, Alc);
 
-                    Input == 'daypp',
+                    Input == 'old',
                         add_daycheatv(Day, DayX),
                         mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, DayX, Hour, Qharvest, Qfish, Qranch, Alc);
 
@@ -390,7 +390,6 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                             ;mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, HourX, Qharvest, Qfish, Qranch, Alc)
                         );
 
-                    /* Bagian bawah cuman testing reduce aspek aja */
                     Input == 'redQharvest',
                         redQharvest(Qharvest, QharvestX),
                         mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, QharvestX, Qfish, Qranch, Alc);
@@ -478,7 +477,6 @@ chooseJob(Job, Lvfarming, Lvfishing, Lvranching) :-
             Lvfishing is 0,
             Lvranching is 0,
             insertEquipment(36, 1),
-            insertItem(9, 10),
             write('You choose Farmer, let\'s go!');
 
         (JobX =:= 3) ->
