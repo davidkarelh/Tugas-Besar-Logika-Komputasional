@@ -154,7 +154,7 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                                 ; DayX is Day, NNHour is NHour
                             ),
                         redQfish(Qfish, QfishX),
-                        mainLoop(Job, Lv, Lvfarming, Expfarming, LvfishingX, ExpfishingX, Lvranching, Expranching, ExpcurrX, ExpcapX, Gold, DayX, NNHour, Qharvest, QfishX, Qranch, Alc)
+                        mainLoop(Job, LvX, Lvfarming, Expfarming, LvfishingX, ExpfishingX, Lvranching, Expranching, ExpcurrX, ExpcapX, Gold, DayX, NNHour, Qharvest, QfishX, Qranch, Alc)
                             ;
                
                     Input == 'ranch',
@@ -188,7 +188,7 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                                 ; DayX is Day, NNHour is NHour
                             ),
                         redQranch(Qranch, QranchX),
-                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, LvranchingX, ExpranchingX, ExpcurrX, ExpcapX, Gold, DayX, NNHour, Qharvest, Qfish, QranchX, Alc)
+                        mainLoop(Job, LvX, Lvfarming, Expfarming, Lvfishing, Expfishing, LvranchingX, ExpranchingX, ExpcurrX, ExpcapX, Gold, DayX, NNHour, Qharvest, Qfish, QranchX, Alc)
                         ;
 
                     Input == 'dig',
@@ -246,7 +246,7 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                             ; DayX is Day
                         ),
                     redQharvest(Qharvest, QharvestX),
-                    mainLoop(Job, Lv, LvfarmingX, ExpfarmingX, Lvfishing, Expfishing, Lvranching, Expranching, ExpcurrX, Expcap, Gold, DayX, NHour, QharvestX, Qfish, Qranch, Alc);
+                    mainLoop(Job, LvX, LvfarmingX, ExpfarmingX, Lvfishing, Expfishing, Lvranching, Expranching, ExpcurrX, Expcap, Gold, DayX, NHour, QharvestX, Qfish, Qranch, Alc);
 
                     Input == 'w',
                         % Asumsi bergerak 1 tile memakan waktu 1 hour
