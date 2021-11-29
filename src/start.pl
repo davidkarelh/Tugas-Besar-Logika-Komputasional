@@ -402,7 +402,6 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                         redQranch(Qranch, QranchX),
                         mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, QranchX, Alc);
 
-                    write('Invalid Input!\n'),
                     mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, Day, Hour, Qharvest, Qfish, Qranch, Alc)
                 )
             ;write('Penagih hutang tiba di kebun anda dan anda langsung melunasi hutang anda!'), nl, nl,

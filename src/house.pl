@@ -13,11 +13,16 @@
 crop([]).
 
 saveHarvest :-
-    (dataHarvest(X, Y, IDSeed, DayHarvest, HourHavest) ->
+    (dataHarvest(X, Y, IDSeed, DayHarvest, HourHarvest) ->
         !,
-        retract(dataHarvest(X, Y, IDSeed, DayHarvest, HourHavest)),
+        retract(dataHarvest(X, Y, IDSeed, DayHarvest, HourHarvest)),
         crop(_B),
-        append(_B, [[X, Y, IDSeed, DayHarvest, HourHavest]], A),
+        NX is X,
+        NY is Y,
+        NIDSeed is IDSeed,
+        NDayHarvest is DayHarvest,
+        NHourHarvest is HourHarvest,
+        append(_B, [[NX, NY, NIDSeed, NDayHarvest, NHourHarvest]], A),
         retractall(crop(_)),
         asserta(crop(A)),
         saveHarvest;
