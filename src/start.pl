@@ -477,6 +477,7 @@ chooseJob(Job, Lvfarming, Lvfishing, Lvranching) :-
             Lvfishing is 0,
             Lvranching is 0,
             insertEquipment(36, 1),
+            insertItem(9, 10),
             write('You choose Farmer, let\'s go!');
 
         (JobX =:= 3) ->
