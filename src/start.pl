@@ -148,13 +148,13 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                             NHour is Hour + 2,
                             (
                                 (NHour >= 24) ->
-                                    write('Its a New Day!\n'),
+                                    write('\nIt\'s a New Day!\n'),
                                     add_dayv(Day, DayX),
-                                    NHour is mod(NHour, 24)
-                                ; DayX is Day
+                                    NNHour is mod(NHour, 24)
+                                ; DayX is Day, NNHour is NHour
                             ),
                         redQfish(Qfish, QfishX),
-                        mainLoop(Job, Lv, Lvfarming, Expfarming, LvfishingX, ExpfishingX, Lvranching, Expranching, ExpcurrX, ExpcapX, Gold, DayX, NHour, Qharvest, QfishX, Qranch, Alc)
+                        mainLoop(Job, Lv, Lvfarming, Expfarming, LvfishingX, ExpfishingX, Lvranching, Expranching, ExpcurrX, ExpcapX, Gold, DayX, NNHour, Qharvest, QfishX, Qranch, Alc)
                             ;
                
                     Input == 'ranch',
@@ -182,13 +182,13 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                         NHour is Hour + 3,
                             (
                                 (NHour >= 24) ->
-                                    write('Its a New Day!\n'),
+                                    write('\nIt\'s a New Day!\n'),
                                     add_dayv(Day, DayX),
-                                    NHour is mod(NHour, 24)
-                                ; DayX is Day
+                                    NNHour is mod(NHour, 24)
+                                ; DayX is Day, NNHour is NHour
                             ),
                         redQranch(Qranch, QranchX),
-                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, LvranchingX, ExpranchingX, ExpcurrX, ExpcapX, Gold, DayX, NHour, Qharvest, Qfish, QranchX, Alc)
+                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, LvranchingX, ExpranchingX, ExpcurrX, ExpcapX, Gold, DayX, NNHour, Qharvest, Qfish, QranchX, Alc)
                         ;
 
                     Input == 'dig',
@@ -196,24 +196,24 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                         NHour is Hour + 1,
                             (
                                 (NHour >= 24) ->
-                                    write('Its a New Day!\n'),
+                                    write('\nIt\'s a New Day!\n'),
                                     add_dayv(Day, DayX),
-                                    NHour is mod(NHour, 24)
-                                ; DayX is Day
+                                    NNHour is mod(NHour, 24)
+                                ; DayX is Day, NNHour is NHour
                             ),
-                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, DayX, NHour, Qharvest, Qfish, Qranch, Alc);
+                        mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, DayX, NNHour, Qharvest, Qfish, Qranch, Alc);
 
                     Input == 'plant',
                         plant(Day, Hour),
                         NHour is Hour + 2,
                         (
                             (NHour >= 24) ->
-                                write('Its a New Day!\n'),
+                                write('\nIt\'s a New Day!\n'),
                                 add_dayv(Day, DayX),
-                                NHour is mod(NHour, 24)
-                            ; DayX is Day
+                                NNHour is mod(NHour, 24)
+                            ; DayX is Day, NNHour is NHour
                         ),
-                    mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, DayX, NHour, Qharvest, Qfish, Qranch, Alc);
+                    mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, DayX, NNHour, Qharvest, Qfish, Qranch, Alc);
 
                     Input == 'harvest',
                         harvest(Day, Hour, Lvfarming, ExpOut),
@@ -240,7 +240,7 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                         NHour is Hour + 2,
                         (
                             (NHour >= 24) ->
-                                write('Its a New Day!\n'),
+                                write('\nIt\'s a New Day!\n'),
                                 add_dayv(Day, DayX),
                                 NHour is mod(NHour, 24)
                             ; DayX is Day
@@ -255,7 +255,7 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                         add_hourv(Hour, HourX),
                         (
                             (HourX >= 24) ->
-                                write('Its a New Day!\n'),
+                                write('\nIt\'s a New Day!\n'),
                                 add_dayv(Day, DayX),
                                 HourY is 0,
                                 mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, DayX, HourY, Qharvest, Qfish, Qranch, Alc)
@@ -269,7 +269,7 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                         add_hourv(Hour, HourX),
                         (
                             (HourX >= 24) ->
-                                write('Its a New Day!\n'),
+                                write('\nIt\'s a New Day!\n'),
                                 add_dayv(Day, DayX),
                                 HourY is 0,
                                 mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, DayX, HourY, Qharvest, Qfish, Qranch, Alc)
@@ -283,7 +283,7 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                         add_hourv(Hour, HourX),
                         (
                             (HourX >= 24) ->
-                                write('Its a New Day!\n'),
+                                write('\nIt\'s a New Day!\n'),
                                 add_dayv(Day, DayX),
                                 HourY is 0,
                                 mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, DayX, HourY, Qharvest, Qfish, Qranch, Alc)
@@ -297,7 +297,7 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                         add_hourv(Hour, HourX),
                         (
                             (HourX >= 24) ->
-                                write('Its a New Day!\n'),
+                                write('\nIt\'s a New Day!\n'),
                                 add_dayv(Day, DayX),
                                 HourY is 0,
                                 mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, DayX, HourY, Qharvest, Qfish, Qranch, Alc)
@@ -358,7 +358,7 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                         add_hourv(Hour, HourX),
                         (
                             (HourX >= 24) ->
-                                write('Its a New Day!\n'),
+                                write('\nIt\'s a New Day!\n'),
                                 add_dayv(Day, DayX),
                                 HourY is 0,
                                 mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, DayX, HourY, Qharvest, Qfish, Qranch, Alc)
@@ -383,7 +383,7 @@ mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expr
                         add_hourcheatv(Hour, HourX),
                         (
                             (HourX >= 24) ->
-                                write('Its a New Day!\n'),
+                                write('\nIt\'s a New Day!\n'),
                                 add_dayv(Day, DayX),
                                 HourY is (HourX-24),
                                 mainLoop(Job, Lv, Lvfarming, Expfarming, Lvfishing, Expfishing, Lvranching, Expranching, Expcurr, Expcap, Gold, DayX, HourY, Qharvest, Qfish, Qranch, Alc)
